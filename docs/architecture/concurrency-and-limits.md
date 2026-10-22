@@ -63,6 +63,10 @@ must produce identical bytes to serial fills for the same input.
 - Race detector on all shared types (`TST-009`).
 - Leak tests: after cancellation, cursors closed and goroutines drained
   (`TST-009`).
+- M1 tests run 32 concurrent fills of one template under the race detector.
+  Cancellation tests include a cursor that blocks until context cancellation
+  and one that requires explicit release despite ignoring context; both assert
+  one Close call and a stable goroutine count with a bounded wait.
 - Budget tests: each limit is exercised with a fixture that trips it
   (`OPS-001-001`).
 

@@ -206,7 +206,7 @@ Spec: [`features/TST.md`](features/TST.md) · Plan: [`TEST_STRATEGY.md`](TEST_ST
 | TST-006 | Differential JasperReports harness (test-only) | TST | P2 | M5 | Not Started | TST-003 | [TST](features/TST.md) | INDEX | planned: harness (isolated) |
 | TST-007 | Fuzzing (XML, expressions) | TST | P2 | M2 | Not Started | JRX-001, EXP-003 | [TST](features/TST.md) | INDEX | planned: fuzz targets |
 | TST-008 | Property-based tests | TST | P3 | M5 | Not Started | TST-007 | [TST](features/TST.md) | INDEX | planned: property suite |
-| TST-009 | Race, cancellation and leak tests | TST | P1 | M2 | Not Started | FND-009 | [TST](features/TST.md) | [TST-009-001](tasks/M1/029-TST-009-001-race-cancellation-leak-tests.md) | planned: race/leak tests |
+| TST-009 | Race, cancellation and leak tests | TST | P1 | M1 | Done | FND-009 | [TST](features/TST.md) | [TST-009-001](tasks/M1/029-TST-009-001-race-cancellation-leak-tests.md) | `TestConcurrentFillsSharedTemplate`, `TestCancellationClosesCursorAndDrainsGoroutines` |
 | TST-010 | Benchmarks and profiling | TST | P2 | M5 | Not Started | FND-001 | [TST](features/TST.md) | INDEX | planned: benchmarks |
 | TST-011 | Cross-platform smoke tests | TST | P2 | M5 | Not Started | OUT-001 | [TST](features/TST.md) | INDEX | planned: OS matrix |
 | TST-012 | Compatibility fixture corpus | TST | P1 | M2 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: corpus |
