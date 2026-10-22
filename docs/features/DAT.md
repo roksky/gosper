@@ -51,3 +51,5 @@ type Cursor interface {
 - Driver/DB availability in CI; use ephemeral or in-memory fixtures only.
 
 `DAT-003` is implemented by `internal/datasource/json.go`; `testdata/json/basic.json` and `internal/datasource/json_test.go` cover ordered rows, typed values, nested values, and malformed input.
+
+`DAT-004` is implemented by `internal/datasource/csv.go`; `testdata/csv/basic.csv` and `internal/datasource/csv_test.go` cover headers, quoted fields, BOM, delimiter options, and malformed rows. Values are strings.

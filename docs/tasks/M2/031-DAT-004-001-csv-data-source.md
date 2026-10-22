@@ -1,6 +1,6 @@
 # DAT-004-001: CSV data source
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [DAT-004](../../FEATURE_MATRIX.md#dat--data-sources-and-queries)
 - **Milestone:** M2
 - **Priority:** P2
@@ -35,9 +35,9 @@ func FromCSV(r io.Reader, opts ...CSVOption) DataSource
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement decode + record access.
-- [ ] Tests against `testdata/csv/basic.csv`.
-- [ ] Run `make check`.
+- [x] Implement decode + record access.
+- [x] Tests against `testdata/csv/basic.csv`.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
@@ -59,3 +59,7 @@ Implemented/tested; linked in `features/DAT.md`.
 ## References and downstream dependencies
 
 - Feature: `DAT-004`.
+
+## Verification and compatibility
+
+`make check` passes; `internal/datasource/csv_test.go` exercises `testdata/csv/basic.csv`. Fields remain strings, including numeric-looking values. A UTF-8 BOM is accepted; empty input, duplicate/empty headers, and ragged rows return parse diagnostics from `Open`.
