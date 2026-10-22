@@ -198,7 +198,7 @@ Spec: [`features/TST.md`](features/TST.md) · Plan: [`TEST_STRATEGY.md`](TEST_ST
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TST-001 | Reproducible baseline and fixture infrastructure | TST | P0 | M0 | In Progress | — | [TST](features/TST.md) | [TST-001-001](tasks/M0/TST-001-001-deterministic-test-environment-helpers.md), [TST-001-002](tasks/M0/TST-001-002-fixture-conventions-and-golden-workflow.md) | baseline (`Makefile`, CI) + `internal/testutil` helpers |
+| TST-001 | Reproducible baseline and fixture infrastructure | TST | P0 | M0 | **Done** | — | [TST](features/TST.md) | [TST-001-001](tasks/M0/TST-001-001-deterministic-test-environment-helpers.md), [TST-001-002](tasks/M0/TST-001-002-fixture-conventions-and-golden-workflow.md) | baseline (`Makefile`, CI) + `internal/testutil` + fixture conventions (`testdata/README.md`) |
 | TST-002 | Golden fixture harness | TST | P0 | M1 | Not Started | TST-001 | [TST](features/TST.md) | [TST-002-001](tasks/M1/TST-002-001-golden-fixture-harness.md) | planned: harness test |
 | TST-003 | Semantic assertions | TST | P1 | M2 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: assertion helpers |
 | TST-004 | Pagination/page-count assertions | TST | P1 | M2 | Not Started | TST-002, LAY-011 | [TST](features/TST.md) | INDEX | planned: page-count test |
@@ -250,8 +250,8 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | Metric | Count |
 | --- | --- |
 | Total features | 146 |
-| Done | 7 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`) |
-| In Progress | 5 (`TST-001`, `EXP-001`, `PRT-001`, `FND-001`, `JRX-001`) |
+| Done | 8 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`, `TST-001`) |
+| In Progress | 4 (`EXP-001`, `PRT-001`, `FND-001`, `JRX-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
 | Not Started | 131 |
 | M0 features | 7 |
