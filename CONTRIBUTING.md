@@ -14,7 +14,8 @@ contributions should advance it in **small, independently reviewable changes**.
 ## Before you start
 
 - Open or reference an issue describing the intended change.
-- Check `docs/architecture.md` for the intended package boundaries.
+- Check `docs/ARCHITECTURE.md` and `docs/architecture/package-boundaries.md`
+  for the intended package boundaries.
 - Confirm the change fits the current milestone; speculative abstractions and
   large dependency additions are discouraged.
 
