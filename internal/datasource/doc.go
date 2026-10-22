@@ -2,6 +2,5 @@
 // fill stage.
 //
 // It provides the DataSource/Cursor/Record contract and a slice source for
-// structs, string-keyed maps, and positional rows. JSON, CSV and SQL sources
-// are deferred to later changes.
+// structs, string-keyed maps, and positional rows. CSV and SQL sources are deferred to later changes.
 package datasource
