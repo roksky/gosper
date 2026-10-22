@@ -53,6 +53,13 @@ read-only value; consumers do not get setters.
 - Resource references (font/image handles) rather than raw bytes where
   possible (`PRT-003`).
 
+## Units
+
+The print IR uses a single integral unit, the **twip** (1/1440 inch), stored as
+`int64` (`printdoc.Unit`). Points, inches and millimetres convert to it exactly
+or with half-away-from-zero rounding at the boundary. This resolves OQ-2; see
+[`adr/0004-print-ir-unit-system.md`](../adr/0004-print-ir-unit-system.md).
+
 ## Persistence and caching caveats
 
 - **Compiled IR persistence is deferred** (`PRT-006`). If added, it requires a
@@ -73,15 +80,14 @@ read-only value; consumers do not get setters.
 
 ## Linked features and tasks
 
-- `PRT-001` Typed print document — tasks `PRT-001-001`, `PRT-001-002`.
+- `PRT-001` Typed print document — tasks `PRT-001-001` (contract, **Done**), `PRT-001-002`.
 - `PRT-002` Resolved styles — task `PRT-002-001`.
 - `FND-004` Compile cache; `PRT-005` spill-to-disk; `PRT-006` serialization.
 - Decision: [`adr/0002-split-compiled-ir-from-print-ir.md`](../adr/0002-split-compiled-ir-from-print-ir.md).
 
 ## Assumptions and unresolved alternatives
 
-- **Unresolved:** internal unit system (twips vs points vs sub-point integers)
-  for the print IR. Tracked in [`FEATURE_MATRIX.md`](../FEATURE_MATRIX.md) open
-  questions and by `PRT-001-001`.
+- **Resolved:** internal unit system is the twip (OQ-2); see
+  [`adr/0004-print-ir-unit-system.md`](../adr/0004-print-ir-unit-system.md).
 - **Unresolved:** whether print IR is a value model or a streaming event
   stream. `PRT-004`/`OUT-009` decide.

@@ -16,7 +16,8 @@ remains under default copyright and should be treated as "all rights reserved".
    own license terms. Verifying compatibility of intended behavior and any
    reference tooling against the chosen license is required.
 2. **Third-party dependencies.** Every future dependency's license must be
-   reviewed for compatibility with the project license and with each other.
+   reviewed for compatibility with the project license and with each other. See
+   the [dependency policy](DEPENDENCY_POLICY.md) for the review process.
 3. **Distribution model.** Whether the engine is embedded in applications,
    distributed as a binary, or offered as a service may influence the choice.
 4. **Contribution terms.** `CONTRIBUTING.md` currently does not require a

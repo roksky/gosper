@@ -21,6 +21,10 @@
 5. **`.jasper` binaries are out of scope.** JRXML source only (`JRX-021`).
 6. **No JVM in production.** Reference tooling is test-only and isolated
    (`TST-006`), licensed appropriately (`OPS-009`).
+7. **Sandboxed expressions.** Expressions are interpreted by a closed
+   implementation. Custom classes, Groovy/JavaScript and arbitrary Java
+   evaluation are `Unsupported` (`EXP-019`, `EXP-018`); see the sandbox policy
+   in [`architecture/expressions-and-types.md`](architecture/expressions-and-types.md).
 
 ## Status vocabulary
 
@@ -100,3 +104,23 @@ today (`TST-006`, `OPS-009`).
 When a construct gains a fixture and passing test, update its status and record
 the fixture path. Changes to this file go in the **same PR** as the test that
 justifies them. See [`CONTRIBUTING_TASKS.md`](CONTRIBUTING_TASKS.md).
+
+## Fixture registry and naming
+
+Every `Verified` or `Partial` claim must point at a fixture and its test.
+
+- **Location:** `testdata/<suite>/`, where `<suite>` groups by area (for example
+  `jrxml`, `layout`, `pdf`).
+- **Naming:** `<feature-id>-<NNN>-<slug>` (for example
+  `jrxml/JRX-001-001-minimal-report.jrxml`), matching the feature/task ID that
+  introduces it.
+- **Goldens:** expected outputs live under `testdata/<suite>/golden/` and are
+  regenerated only through the explicit (future) `-update` flag; see
+  [`TEST_STRATEGY.md`](TEST_STRATEGY.md).
+- **`Unsupported` rows** cite the policy and need no fixture.
+- **Rule:** a row may only move to `Verified` in the same PR that adds the
+  fixture and a passing test; the Notes/fixture column must link that path.
+  `Planned`/`Not Tested` rows may name the intended feature/task but not a
+  nonexistent fixture.
+
+This registry is maintained by `JRX-022` (task `JRX-022-001`, **Done**).

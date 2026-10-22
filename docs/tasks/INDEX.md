@@ -18,18 +18,18 @@ packages/docs, so they are broadly parallel-safe.
 
 | Task | Title | Feature | Status | Deps | Package / files | File |
 | --- | --- | --- | --- | --- | --- | --- |
-| FND-003-001 | Diagnostic and error code model | FND-003 | Not Started | none | `internal/diag` | [file](M0/FND-003-001-diagnostic-error-code-model.md) |
-| FND-009-001 | Context and resource-budget contract | FND-009 | Not Started | none | `internal/limits` | [file](M0/FND-009-001-context-and-resource-budget-contract.md) |
+| FND-003-001 | Diagnostic and error code model | FND-003 | Done | none | `internal/diag` | [file](M0/FND-003-001-diagnostic-error-code-model.md) |
+| FND-009-001 | Context and resource-budget contract | FND-009 | Done | none | `internal/limits` | [file](M0/FND-009-001-context-and-resource-budget-contract.md) |
 | FND-001-001 | Public SDK surface contract | FND-001 | Not Started | FND-003-001, FND-009-001 | `report` (proposed) | [file](M0/FND-001-001-public-sdk-surface-contract.md) |
 | JRX-001-001 | Parser I/O contract and version detection | JRX-001 | Not Started | FND-003-001 | `internal/jrxml` | [file](M0/JRX-001-001-parser-io-contract-and-version-detection.md) |
 | DAT-002-001 | DataSource cursor interface contract | DAT-002 | Done | none | `internal/datasource` | [file](M0/DAT-002-001-datasource-cursor-interface-contract.md) |
-| EXP-001-001 | Expression symbol/scope contract | EXP-001 | Not Started | none | `internal/expression` | [file](M0/EXP-001-001-expression-symbol-scope-contract.md) |
-| EXP-019-001 | Expression sandbox policy | EXP-019 | Not Started | none | `internal/expression`, `docs/` | [file](M0/EXP-019-001-expression-sandbox-policy.md) |
-| PRT-001-001 | Print document IR contract | PRT-001 | Not Started | none | `internal/printdoc` | [file](M0/PRT-001-001-print-document-ir-contract.md) |
-| TST-001-001 | Deterministic test environment helpers | TST-001 | Not Started | none | `internal/testutil` | [file](M0/TST-001-001-deterministic-test-environment-helpers.md) |
+| EXP-001-001 | Expression symbol/scope contract | EXP-001 | Done | none | `internal/expression` | [file](M0/EXP-001-001-expression-symbol-scope-contract.md) |
+| EXP-019-001 | Expression sandbox policy | EXP-019 | Done | none | `internal/expression`, `docs/` | [file](M0/EXP-019-001-expression-sandbox-policy.md) |
+| PRT-001-001 | Print document IR contract | PRT-001 | Done | none | `internal/printdoc` | [file](M0/PRT-001-001-print-document-ir-contract.md) |
+| TST-001-001 | Deterministic test environment helpers | TST-001 | Done | none | `internal/testutil` | [file](M0/TST-001-001-deterministic-test-environment-helpers.md) |
 | TST-001-002 | Fixture conventions and golden workflow | TST-001 | Not Started | TST-001-001 | `testdata/`, `docs/TEST_STRATEGY.md` | [file](M0/TST-001-002-fixture-conventions-and-golden-workflow.md) |
-| OPS-008-001 | Dependency/license review policy and SBOM | OPS-008 | Not Started | none | `docs/`, `.github/` | [file](M0/OPS-008-001-dependency-and-license-review-policy.md) |
-| JRX-022-001 | Compatibility matrix and fixture registry | JRX-022 | Not Started | none | `docs/COMPATIBILITY.md`, `testdata/` | [file](M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) |
+| OPS-008-001 | Dependency/license review policy and SBOM | OPS-008 | Done | none | `docs/`, `.github/` | [file](M0/OPS-008-001-dependency-and-license-review-policy.md) |
+| JRX-022-001 | Compatibility matrix and fixture registry | JRX-022 | Done | none | `docs/COMPATIBILITY.md`, `testdata/` | [file](M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) |
 
 ## M1 — First vertical slice (walking skeleton)
 

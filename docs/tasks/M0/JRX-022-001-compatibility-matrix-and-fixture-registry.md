@@ -1,6 +1,6 @@
 # JRX-022-001: Compatibility matrix and fixture registry
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-022](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M0
 - **Priority:** P1
@@ -40,9 +40,9 @@ Registry convention only; no code.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Audit `COMPATIBILITY.md` rows against `FEATURE_MATRIX.md` construct IDs.
-- [ ] Add the fixture-link convention where rows can already reference paths.
-- [ ] State the same-PR rule clearly.
+- [x] Audit `COMPATIBILITY.md` rows against `FEATURE_MATRIX.md` construct IDs.
+- [x] Add the fixture-link convention where rows can already reference paths.
+- [x] State the same-PR rule clearly.
 
 ## Acceptance criteria (observable)
 

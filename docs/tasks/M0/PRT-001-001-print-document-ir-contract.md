@@ -1,6 +1,6 @@
 # PRT-001-001: Define the print document IR contract
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [PRT-001](../../FEATURE_MATRIX.md#prt--print-document-and-storage)
 - **Milestone:** M0
 - **Priority:** P0
@@ -50,12 +50,12 @@ Integration: `internal/layout` builds it; `internal/exporter` consumes it.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Define unit type and conversions (inch/mm/point ↔ unit) with rounding
+- [x] Define unit type and conversions (inch/mm/point ↔ unit) with rounding
       rules.
-- [ ] Define document/page/element/metadata types.
-- [ ] Add tests for conversion round-trips and boundary values.
-- [ ] Record the unit decision (ADR or task note).
-- [ ] Run `make check`.
+- [x] Define document/page/element/metadata types.
+- [x] Add tests for conversion round-trips and boundary values.
+- [x] Record the unit decision (ADR or task note).
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

@@ -1,6 +1,6 @@
 # FND-003-001: Define the diagnostic and error code model
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FND-003](../../FEATURE_MATRIX.md#fnd--foundation-public-api-cli-infrastructure)
 - **Milestone:** M0
 - **Priority:** P0
@@ -57,11 +57,11 @@ Integration: `internal/jrxml` and `internal/compiler` produce `*Diagnostic`;
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add `internal/diag` package with the types above.
-- [ ] Ensure `Error()` format is stable and documented.
-- [ ] Implement `errors.As` compatibility (use `Unwrap`/`Is` as needed).
-- [ ] Add table-driven tests.
-- [ ] Run `make check`.
+- [x] Add `internal/diag` package with the types above.
+- [x] Ensure `Error()` format is stable and documented.
+- [x] Implement `errors.As` compatibility (use `Unwrap`/`Is` as needed).
+- [x] Add table-driven tests.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

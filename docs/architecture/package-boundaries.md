@@ -68,7 +68,7 @@ flowchart LR
 | --- | --- | --- |
 | `report` *(proposed)* | Public types and lifecycle entry points; error facade. | Parsing/layout/rendering logic. |
 | `internal/exec` *(proposed)* | Orchestration, stage wiring, cancellation boundaries. | Format-specific logic. |
-| `internal/diag` *(proposed)* | Error codes, severity, spans, formatting. | Business logic. |
+| `internal/diag` | Error codes, severity, spans, formatting. | Business logic. |
 | `internal/jrxml` | XML decoding, version detection, normalization. | Evaluation, layout, IO beyond the reader. |
 | `internal/compiler` | Validation, compiled IR construction. | Runtime state, rendering. |
 | `internal/expression` | Grammar, AST, evaluation, function registry. | Symbol storage (injected), IO. |
@@ -80,16 +80,20 @@ flowchart LR
 | `internal/text` *(proposed)* | Font metrics, shaping, line breaking. | Report semantics. |
 | `internal/cache` *(proposed)* | Versioned compile cache. | Report semantics. |
 | `internal/resources` *(proposed)* | Resource URI resolution and allowlists. | Format-specific rendering. |
-| `internal/limits` *(proposed)* | Budgets, cancellation helpers, counters. | Feature logic. |
-| `internal/testutil` *(proposed)* | Deterministic clock/locale/timezone/font helpers. | Non-test production code. |
+| `internal/limits` | Budgets, cancellation helpers, counters. | Feature logic. |
+| `internal/testutil` | Deterministic clock/locale/timezone helpers. | Non-test production code. |
 
-## Proposed interfaces — non-binding
+## Interfaces
+
+`DataSource`/`Cursor`/`Record` are defined in `internal/datasource` (`DAT-002`,
+**Done**). `Resolver` remains proposed:
 
 ```go
-// Proposed interface — non-binding. Subject to ADR/task review.
+// Implemented — internal/datasource.
 
 // DataSource yields records for a dataset. Implementations own their cursor;
-// Close is idempotent and must release resources even after an error.
+// Next returns (nil, false, nil) when exhausted or after Close; Close is
+// idempotent.
 type DataSource interface {
     Open(ctx context.Context) (Cursor, error)
 }
