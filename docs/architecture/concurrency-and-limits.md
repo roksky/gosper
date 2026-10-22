@@ -35,6 +35,13 @@ diagnostic with code `diag.CodeLimit` (`OPS-001`, `OPS-007`), never a panic or
 unbounded allocation. Each guard call checks the context first and returns
 `ctx.Err()` unchanged.
 
+`report.WithBudget` applies these per-run limits. The M1 fill loop counts one
+step per record, selected field, and parameter declaration; byte accounting
+covers retained scalar field and parameter payloads plus their names. Layout
+counts pages before appending them. The limits are checked at exact boundaries,
+and accounting saturates rather than overflowing. Full expression-operation
+and exporter-byte accounting remain for later budget work.
+
 ```go
 type Budget struct {
     MaxRecords int
@@ -56,6 +63,10 @@ must produce identical bytes to serial fills for the same input.
 - Race detector on all shared types (`TST-009`).
 - Leak tests: after cancellation, cursors closed and goroutines drained
   (`TST-009`).
+- M1 tests run 32 concurrent fills of one template under the race detector.
+  Cancellation tests include a cursor that blocks until context cancellation
+  and one that requires explicit release despite ignoring context; both assert
+  one Close call and a stable goroutine count with a bounded wait.
 - Budget tests: each limit is exercised with a fixture that trips it
   (`OPS-001-001`).
 

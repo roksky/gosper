@@ -1,6 +1,6 @@
 # OPS-001-001: Resource limits enforcement
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [OPS-001](../../FEATURE_MATRIX.md#ops--security-performance-diagnostics-integration)
 - **Milestone:** M1
 - **Priority:** P0
@@ -37,9 +37,9 @@ Wire `limits.Budget` from `report` options into fill.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Wire guard calls into fill.
-- [ ] Tests for each tripped limit.
-- [ ] Run `make check`.
+- [x] Wire guard calls into fill and page creation.
+- [x] Tests for each tripped limit.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

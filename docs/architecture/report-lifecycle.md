@@ -9,6 +9,13 @@ and cancellation boundaries. This is the reference for
 
 ## Stage contracts
 
+The M1 `report` facade now connects `jrxml.Parse`, `layout.FromJRXML`,
+`fill.RunWithParams`, `layout.Layout`, and `exporter.PDF`. `report.FromSlice`
+provides a public data-source constructor. Compilation returns an immutable
+template; each fill owns its print document and exposes its page count.
+`report.Version()` supplies the same linker-injectable build identifier shown
+by `gosper --version`; an empty value falls back to `dev`.
+
 | Stage | Input | Output | Ownership of output |
 | --- | --- | --- | --- |
 | Parse | JRXML bytes + `Resolver` | template model | per-call; discarded after compile |

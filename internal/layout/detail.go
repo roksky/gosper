@@ -6,6 +6,7 @@ import (
 	"github.com/roksky/gosper/internal/expression"
 	"github.com/roksky/gosper/internal/fill"
 	"github.com/roksky/gosper/internal/jrxml"
+	"github.com/roksky/gosper/internal/limits"
 	"github.com/roksky/gosper/internal/printdoc"
 	"github.com/roksky/gosper/internal/text"
 	"strconv"
@@ -87,6 +88,11 @@ func FromJRXML(t *jrxml.Template) (*DetailSpec, error) {
 // placed once, while page headers and footers occur on every produced page.
 // Empty data without a title yields an empty document.
 func Layout(ctx context.Context, filled *fill.Filled, spec *DetailSpec) (*printdoc.Document, error) {
+	return LayoutWithBudget(ctx, filled, spec, limits.Budget{})
+}
+
+// LayoutWithBudget enforces the page budget as pages are created.
+func LayoutWithBudget(ctx context.Context, filled *fill.Filled, spec *DetailSpec, budget limits.Budget) (*printdoc.Document, error) {
 	if ctx == nil || filled == nil || spec == nil {
 		return nil, fmt.Errorf("layout: nil input")
 	}
@@ -100,7 +106,7 @@ func Layout(ctx context.Context, filled *fill.Filled, spec *DetailSpec) (*printd
 	body := spec.Page
 	body.Top += headerH
 	body.Bottom += footerH
-	canvas, err := NewCanvas(body)
+	canvas, err := NewCanvasWithGuard(body, budget.Guard(ctx))
 	if err != nil {
 		return nil, err
 	}

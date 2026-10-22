@@ -2,6 +2,7 @@ package limits
 
 import (
 	"context"
+	"math"
 
 	"github.com/roksky/gosper/internal/diag"
 )
@@ -55,9 +56,11 @@ func (g *Guard) Record() error {
 	if err := g.check(); err != nil {
 		return err
 	}
-	g.records++
-	if g.budget.MaxRecords > 0 && g.records > g.budget.MaxRecords {
+	if g.budget.MaxRecords > 0 && g.records >= g.budget.MaxRecords {
 		return limitErr("record budget exceeded")
+	}
+	if g.records < math.MaxInt {
+		g.records++
 	}
 	return nil
 }
@@ -67,9 +70,11 @@ func (g *Guard) Page() error {
 	if err := g.check(); err != nil {
 		return err
 	}
-	g.pages++
-	if g.budget.MaxPages > 0 && g.pages > g.budget.MaxPages {
+	if g.budget.MaxPages > 0 && g.pages >= g.budget.MaxPages {
 		return limitErr("page budget exceeded")
+	}
+	if g.pages < math.MaxInt {
+		g.pages++
 	}
 	return nil
 }
@@ -80,9 +85,16 @@ func (g *Guard) Step(n int64) error {
 	if err := g.check(); err != nil {
 		return err
 	}
-	g.steps += n
-	if g.budget.MaxSteps > 0 && g.steps > g.budget.MaxSteps {
+	if n < 0 {
+		return limitErr("negative evaluation step count")
+	}
+	if g.budget.MaxSteps > 0 && n > g.budget.MaxSteps-g.steps {
 		return limitErr("evaluation step budget exceeded")
+	}
+	if n > math.MaxInt64-g.steps {
+		g.steps = math.MaxInt64
+	} else {
+		g.steps += n
 	}
 	return nil
 }
@@ -93,9 +105,16 @@ func (g *Guard) Bytes(n int64) error {
 	if err := g.check(); err != nil {
 		return err
 	}
-	g.bytes += n
-	if g.budget.MaxBytes > 0 && g.bytes > g.budget.MaxBytes {
+	if n < 0 {
+		return limitErr("negative byte count")
+	}
+	if g.budget.MaxBytes > 0 && n > g.budget.MaxBytes-g.bytes {
 		return limitErr("byte budget exceeded")
+	}
+	if n > math.MaxInt64-g.bytes {
+		g.bytes = math.MaxInt64
+	} else {
+		g.bytes += n
 	}
 	return nil
 }

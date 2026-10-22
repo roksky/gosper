@@ -4,7 +4,7 @@ BIN_DIR ?= bin
 BIN := $(BIN_DIR)/gosper
 PKG := ./...
 GO_FILES := $(shell find . -name '*.go' -not -path './vendor/*' -not -path './bin/*')
-LDFLAGS := -X main.version=$(VERSION)
+LDFLAGS := -X github.com/roksky/gosper/report.version=$(VERSION)
 
 .PHONY: all help fmt fmt-check vet test test-race coverage build lint check clean
 

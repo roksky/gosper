@@ -28,12 +28,12 @@ Spec: [`features/FND.md`](features/FND.md) · Architect: [`architecture/package-
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | In Progress | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/025-FND-001-002-public-sdk-walking-skeleton.md) | contract stubs in `report` (`api_test.go`); behavior pending FND-001-002 |
+| FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | Done | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/025-FND-001-002-public-sdk-walking-skeleton.md) | `TestPublicWalkingSkeleton`, `TestCancellationClosesCursor` |
 | FND-002 | Template loading and resource resolution | FND | P1 | M1 | **Done** | — | [FND](features/FND.md) | [FND-002-001](tasks/M1/001-FND-002-001-template-loading-and-resource-resolution.md) | `internal/resources/resolver_test.go`; branch `task/FND-002-001-template-loading-and-resource-resolution` |
 | FND-003 | Error model and diagnostic codes with source spans | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-003-001](tasks/M0/FND-003-001-diagnostic-error-code-model.md) | `internal/diag/diag_test.go`; branch `task/M0-contracts` |
 | FND-004 | Compilation cache with versioned keys | FND | P2 | M3 | Not Started | FND-001, JRX-020 | [FND](features/FND.md) | INDEX | planned: invalidation test |
 | FND-005 | CLI report commands (compile/fill/export) | FND | P2 | M4 | Not Started | FND-001, OUT-001 | [FND](features/FND.md) | INDEX | planned: CLI integration test |
-| FND-006 | Build/version metadata surfaced via API | FND | P2 | M1 | Not Started | — | [FND](features/FND.md) | [FND-006-001](tasks/M1/026-FND-006-001-build-and-version-metadata.md) | planned: version test |
+| FND-006 | Build/version metadata surfaced via API | FND | P2 | M1 | Done | — | [FND](features/FND.md) | [FND-006-001](tasks/M1/026-FND-006-001-build-and-version-metadata.md) | `TestVersionDefaultAndOverride`, `TestLinkedVersionOverride` |
 | FND-007 | Logging and telemetry hooks | FND | P3 | M5 | Not Started | — | [FND](features/FND.md) | INDEX | planned: hook invocation test |
 | FND-008 | Optional server transport module (deferred) | FND | P3 | M6 | Not Started | FND-001 | [FND](features/FND.md) | INDEX | planned: adapter smoke test |
 | FND-009 | Context cancellation and resource-budget API | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-009-001](tasks/M0/FND-009-001-context-and-resource-budget-contract.md) | `internal/limits/limits_test.go`; branch `task/M0-contracts` |
@@ -199,14 +199,14 @@ Spec: [`features/TST.md`](features/TST.md) · Plan: [`TEST_STRATEGY.md`](TEST_ST
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TST-001 | Reproducible baseline and fixture infrastructure | TST | P0 | M0 | **Done** | — | [TST](features/TST.md) | [TST-001-001](tasks/M0/TST-001-001-deterministic-test-environment-helpers.md), [TST-001-002](tasks/M0/TST-001-002-fixture-conventions-and-golden-workflow.md) | baseline (`Makefile`, CI) + `internal/testutil` + fixture conventions (`testdata/README.md`) |
-| TST-002 | Golden fixture harness | TST | P0 | M1 | Not Started | TST-001 | [TST](features/TST.md) | [TST-002-001](tasks/M1/027-TST-002-001-golden-fixture-harness.md) | planned: harness test |
+| TST-002 | Golden fixture harness | TST | P0 | M1 | Done | TST-001 | [TST](features/TST.md) | [TST-002-001](tasks/M1/027-TST-002-001-golden-fixture-harness.md) | `TestGoldenUpdateCompareAndDiff`, `TestPDFGolden` |
 | TST-003 | Semantic assertions | TST | P1 | M2 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: assertion helpers |
 | TST-004 | Pagination/page-count assertions | TST | P1 | M2 | Not Started | TST-002, LAY-011 | [TST](features/TST.md) | INDEX | planned: page-count test |
 | TST-005 | Visual regression testing | TST | P2 | M5 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: render diff |
 | TST-006 | Differential JasperReports harness (test-only) | TST | P2 | M5 | Not Started | TST-003 | [TST](features/TST.md) | INDEX | planned: harness (isolated) |
 | TST-007 | Fuzzing (XML, expressions) | TST | P2 | M2 | Not Started | JRX-001, EXP-003 | [TST](features/TST.md) | INDEX | planned: fuzz targets |
 | TST-008 | Property-based tests | TST | P3 | M5 | Not Started | TST-007 | [TST](features/TST.md) | INDEX | planned: property suite |
-| TST-009 | Race, cancellation and leak tests | TST | P1 | M2 | Not Started | FND-009 | [TST](features/TST.md) | [TST-009-001](tasks/M1/029-TST-009-001-race-cancellation-leak-tests.md) | planned: race/leak tests |
+| TST-009 | Race, cancellation and leak tests | TST | P1 | M1 | Done | FND-009 | [TST](features/TST.md) | [TST-009-001](tasks/M1/029-TST-009-001-race-cancellation-leak-tests.md) | `TestConcurrentFillsSharedTemplate`, `TestCancellationClosesCursorAndDrainsGoroutines` |
 | TST-010 | Benchmarks and profiling | TST | P2 | M5 | Not Started | FND-001 | [TST](features/TST.md) | INDEX | planned: benchmarks |
 | TST-011 | Cross-platform smoke tests | TST | P2 | M5 | Not Started | OUT-001 | [TST](features/TST.md) | INDEX | planned: OS matrix |
 | TST-012 | Compatibility fixture corpus | TST | P1 | M2 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: corpus |
@@ -217,7 +217,7 @@ Spec: [`features/OPS.md`](features/OPS.md) · Architect: [`architecture/concurre
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| OPS-001 | Resource limit enforcement | OPS | P0 | M1 | Not Started | FND-009 | [OPS](features/OPS.md) | [OPS-001-001](tasks/M1/028-OPS-001-001-resource-limits-enforcement.md) | planned: limit tests |
+| OPS-001 | Resource limit enforcement | OPS | P0 | M1 | Done | FND-009 | [OPS](features/OPS.md) | [OPS-001-001](tasks/M1/028-OPS-001-001-resource-limits-enforcement.md) | `TestFillBudgetBoundaries`, `TestLayoutPageBudget`, `TestPublicBudgetOption` |
 | OPS-002 | Resource URI allowlists (SSRF/path traversal) | OPS | P1 | M4 | Not Started | FND-002 | [OPS](features/OPS.md) | INDEX | planned: allowlist tests |
 | OPS-003 | SQL permissions and safe binding | OPS | P1 | M2 | Not Started | DAT-005, DAT-006 | [OPS](features/OPS.md) | INDEX | planned: injection tests |
 | OPS-004 | Recursion/decompression/archive limits | OPS | P2 | M4 | Not Started | FIL-013 | [OPS](features/OPS.md) | INDEX | planned: limit tests |

@@ -1,6 +1,6 @@
 # TST-009-001: Race, cancellation and leak tests
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [TST-009](../../FEATURE_MATRIX.md#tst--test-infrastructure-and-correctness-suites)
 - **Milestone:** M1
 - **Priority:** P1
@@ -39,9 +39,9 @@ Uses a fake data source that records `Close` and can block until cancel.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add concurrency + cancellation + leak tests.
-- [ ] Run `make test-race`.
-- [ ] Fix any revealed leaks/races (small, isolated).
+- [x] Add concurrency + cancellation + leak tests.
+- [x] Run `make test-race`.
+- [x] Fix any revealed leaks/races (none found).
 
 ## Acceptance criteria (observable)
 

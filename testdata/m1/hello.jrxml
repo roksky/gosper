@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport version="6.20.0" name="hello" pageWidth="200" pageHeight="100" topMargin="10" bottomMargin="10" leftMargin="10" rightMargin="10" columnWidth="180">
+  <parameter name="suffix" class="java.lang.String"><defaultValueExpression><![CDATA["!"]]></defaultValueExpression></parameter>
+  <field name="name" class="java.lang.String"/>
+  <detail><band height="40"><textField><reportElement x="0" y="0" width="160" height="20"/><textFieldExpression><![CDATA[$F{name} + $P{suffix}]]></textFieldExpression></textField></band></detail>
+</jasperReport>

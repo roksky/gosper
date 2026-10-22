@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/roksky/gosper/internal/expression"
+	"github.com/roksky/gosper/internal/limits"
 )
 
 // ParameterDefault declares a parameter and its optional compiled default.
@@ -32,15 +33,21 @@ func cloneValues(src map[string]expression.Value) map[string]expression.Value {
 	return dst
 }
 
-func resolveParameters(ctx context.Context, decls []ParameterDefault, overrides map[string]expression.Value) (map[string]expression.Value, error) {
+func resolveParameters(ctx context.Context, decls []ParameterDefault, overrides map[string]expression.Value, guard *limits.Guard) (map[string]expression.Value, error) {
 	params := cloneValues(overrides)
 	for name, v := range params {
 		if v == nil {
 			params[name] = expression.NullValue
 		}
+		if err := guard.Bytes(int64(len(name)) + valueSize(params[name])); err != nil {
+			return nil, err
+		}
 	}
 	seen := make(map[string]bool, len(decls))
 	for _, decl := range decls {
+		if err := guard.Step(1); err != nil {
+			return nil, err
+		}
 		if err := ctx.Err(); err != nil {
 			return nil, err
 		}
@@ -53,6 +60,9 @@ func resolveParameters(ctx context.Context, decls []ParameterDefault, overrides 
 		}
 		if decl.Default == nil {
 			params[decl.Name] = expression.NullValue
+			if err := guard.Bytes(int64(len(decl.Name))); err != nil {
+				return nil, err
+			}
 			continue
 		}
 		v, err := decl.Default.Eval(ctx, expression.Scope{parameterSymbols(params)})
@@ -60,6 +70,9 @@ func resolveParameters(ctx context.Context, decls []ParameterDefault, overrides 
 			return nil, fmt.Errorf("parameter %q default: %w", decl.Name, err)
 		}
 		params[decl.Name] = v
+		if err := guard.Bytes(int64(len(decl.Name)) + valueSize(v)); err != nil {
+			return nil, err
+		}
 	}
 	return params, nil
 }

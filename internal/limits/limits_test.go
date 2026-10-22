@@ -3,6 +3,7 @@ package limits
 import (
 	"context"
 	"errors"
+	"math"
 	"testing"
 
 	"github.com/roksky/gosper/internal/diag"
@@ -113,5 +114,34 @@ func TestDeadlinePassthrough(t *testing.T) {
 	g := Budget{MaxRecords: 1}.Guard(ctx)
 	if err := g.Record(); !errors.Is(err, context.Canceled) {
 		t.Fatalf("cancellation should take precedence over limits, got %v", err)
+	}
+}
+
+func TestAccountingCannotWrapOrSubtract(t *testing.T) {
+	g := Budget{MaxSteps: 5, MaxBytes: 5}.Guard(context.Background())
+	if err := g.Step(math.MaxInt64); err == nil {
+		t.Fatal("large step count bypassed limit")
+	}
+	if err := g.Bytes(math.MaxInt64); err == nil {
+		t.Fatal("large byte count bypassed limit")
+	}
+	if err := g.Step(-1); err == nil {
+		t.Fatal("negative step count accepted")
+	}
+	if err := g.Bytes(-1); err == nil {
+		t.Fatal("negative byte count accepted")
+	}
+	unlimited := Budget{}.Guard(context.Background())
+	if err := unlimited.Step(math.MaxInt64); err != nil {
+		t.Fatal(err)
+	}
+	if err := unlimited.Step(1); err != nil {
+		t.Fatal(err)
+	}
+	if err := unlimited.Bytes(math.MaxInt64); err != nil {
+		t.Fatal(err)
+	}
+	if err := unlimited.Bytes(1); err != nil {
+		t.Fatal(err)
 	}
 }
