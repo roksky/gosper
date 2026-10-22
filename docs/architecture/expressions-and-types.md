@@ -71,6 +71,14 @@ that they fail safely.
 
 ## Type semantics
 
+The evaluator accepts integer and decimal literals, strings, booleans, null,
+references, unary `!`/`+`/`-`, arithmetic, comparisons and boolean operators.
+Precedence from low to high is `||`, `&&`, equality, ordering, `+`/`-`,
+`*`/`/`/`%`, unary operators. Jasper keywords `or`, `and`, `not` are aliases.
+Integer arithmetic detects overflow; division and modulo by zero are errors.
+String concatenation uses `+` for two strings. Decimal arithmetic awaits
+`EXP-008` and returns a runtime diagnostic.
+
 - A small closed type set: null, boolean, integer (`int64`), decimal
   (arbitrary precision), string, date/time, and opaque/unknown.
 - **Decimals are mandatory for financial expressions.** Binary floating point

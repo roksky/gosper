@@ -78,9 +78,9 @@ Spec: [`features/EXP.md`](features/EXP.md) · Architect: [`architecture/expressi
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | EXP-001 | `$F`/`$P`/`$V` references and lexical scope | EXP | P0 | M1 | In Progress | — | [EXP](features/EXP.md) | [EXP-001-001](tasks/M0/EXP-001-001-expression-symbol-scope-contract.md), [EXP-001-002](tasks/M1/010-EXP-001-002-symbol-resolution.md) | value/symbol contract done (`symbols_test.go`); evaluator pending |
-| EXP-002 | Literals and constants | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/011-EXP-003-001-expression-parser-and-evaluator.md) | planned: literal test |
-| EXP-003 | Operator grammar and precedence | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/011-EXP-003-001-expression-parser-and-evaluator.md) | planned: precedence test |
-| EXP-004 | Boolean logic and comparisons | EXP | P0 | M1 | Not Started | EXP-003 | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/011-EXP-003-001-expression-parser-and-evaluator.md) | planned: boolean test |
+| EXP-002 | Literals and constants | EXP | P0 | M1 | Done | — | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/011-EXP-003-001-expression-parser-and-evaluator.md) | `TestEvaluation` |
+| EXP-003 | Operator grammar and precedence | EXP | P0 | M1 | Done | — | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/011-EXP-003-001-expression-parser-and-evaluator.md) | `TestEvaluation`, `TestParseErrorsHavePositions` |
+| EXP-004 | Boolean logic and comparisons | EXP | P0 | M1 | Done | EXP-003 | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/011-EXP-003-001-expression-parser-and-evaluator.md) | `TestEvaluation` |
 | EXP-005 | Conditional (ternary) expressions | EXP | P1 | M1 | Not Started | EXP-004 | [EXP](features/EXP.md) | INDEX | planned: ternary test |
 | EXP-006 | Null semantics and missing values | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-006-001](tasks/M1/012-EXP-006-001-null-semantics.md) | planned: null test |
 | EXP-007 | Type system and coercion rules | EXP | P0 | M2 | Not Started | EXP-002 | [EXP](features/EXP.md) | INDEX | planned: coercion test |
