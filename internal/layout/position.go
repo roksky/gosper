@@ -22,10 +22,20 @@ func (c *Canvas) AbsoluteBounds(p Placement, relative printdoc.Bounds) (printdoc
 
 // PlaceText appends already-bound text at an absolute page position.
 func (c *Canvas) PlaceText(p Placement, relative printdoc.Bounds, value string) error {
+	return c.PlaceStyledText(p, relative, value, printdoc.DefaultStyle())
+}
+
+// PlaceStyledText appends already-bound text with a resolved style.
+func (c *Canvas) PlaceStyledText(p Placement, relative printdoc.Bounds, value string, style printdoc.Style) error {
+	if err := style.Validate(); err != nil {
+		return err
+	}
 	absolute, err := c.AbsoluteBounds(p, relative)
 	if err != nil {
 		return err
 	}
-	c.Doc.Pages[p.Page-1].Elements = append(c.Doc.Pages[p.Page-1].Elements, printdoc.NewTextElement(absolute, value))
+	element := printdoc.NewTextElement(absolute, value)
+	element.Style = style
+	c.Doc.Pages[p.Page-1].Elements = append(c.Doc.Pages[p.Page-1].Elements, element)
 	return nil
 }

@@ -170,11 +170,11 @@ func bandHeight(b *Band) printdoc.Unit {
 func isNewPagePlacement(c *Canvas, p Placement) bool { return p.Y == c.area.Y }
 func appendBodyBand(ctx context.Context, c *Canvas, p Placement, b Band, record *fill.FilledRecord) error {
 	for _, item := range b.Texts {
-		value, bounds, err := measuredText(ctx, item, record)
+		value, bounds, style, err := measuredText(ctx, item, record)
 		if err != nil {
 			return err
 		}
-		if err := c.PlaceText(p, bounds, value); err != nil {
+		if err := c.PlaceStyledText(p, bounds, value, style); err != nil {
 			return err
 		}
 	}
@@ -186,7 +186,7 @@ func appendBand(ctx context.Context, c *Canvas, page int, x, y printdoc.Unit, b 
 		return err
 	}
 	for _, item := range b.Texts {
-		value, bounds, err := measuredText(ctx, item, record)
+		value, bounds, style, err := measuredText(ctx, item, record)
 		if err != nil {
 			return err
 		}
@@ -194,13 +194,15 @@ func appendBand(ctx context.Context, c *Canvas, page int, x, y printdoc.Unit, b 
 			return fmt.Errorf("layout: element outside header or footer band")
 		}
 		absolute := printdoc.Bounds{X: x + bounds.X, Y: y + bounds.Y, Width: bounds.Width, Height: bounds.Height}
-		c.Doc.Pages[page-1].Elements = append(c.Doc.Pages[page-1].Elements, printdoc.NewTextElement(absolute, value))
+		element := printdoc.NewTextElement(absolute, value)
+		element.Style = style
+		c.Doc.Pages[page-1].Elements = append(c.Doc.Pages[page-1].Elements, element)
 	}
 	return nil
 }
-func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord) (string, printdoc.Bounds, error) {
+func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord) (string, printdoc.Bounds, printdoc.Style, error) {
 	if err := ctx.Err(); err != nil {
-		return "", printdoc.Bounds{}, err
+		return "", printdoc.Bounds{}, printdoc.Style{}, err
 	}
 	value := item.Literal
 	if item.Expr != nil {
@@ -210,7 +212,7 @@ func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord)
 		}
 		result, err := item.Expr.Eval(ctx, scope)
 		if err != nil {
-			return "", printdoc.Bounds{}, err
+			return "", printdoc.Bounds{}, printdoc.Style{}, err
 		}
 		value = valueString(result)
 	}
@@ -220,18 +222,21 @@ func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord)
 	}
 	font, err := text.Resolve(item.Font, 0, size)
 	if err != nil {
-		return "", printdoc.Bounds{}, err
+		return "", printdoc.Bounds{}, printdoc.Style{}, err
 	}
 	metrics, err := text.Measure(value, font)
 	if err != nil {
-		return "", printdoc.Bounds{}, err
+		return "", printdoc.Bounds{}, printdoc.Style{}, err
 	}
 	bounds := item.Bounds
 	if metrics.Width > bounds.Width {
-		return "", printdoc.Bounds{}, fmt.Errorf("layout: text width %d exceeds box width %d", metrics.Width, bounds.Width)
+		return "", printdoc.Bounds{}, printdoc.Style{}, fmt.Errorf("layout: text width %d exceeds box width %d", metrics.Width, bounds.Width)
 	}
 	bounds.Width = metrics.Width
-	return value, bounds, nil
+	style := printdoc.DefaultStyle()
+	style.Font = font.Name
+	style.Size = printdoc.FromPoints(size)
+	return value, bounds, style, nil
 }
 func valueString(v expression.Value) string {
 	switch x := v.(type) {

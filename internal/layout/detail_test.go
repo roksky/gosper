@@ -100,3 +100,18 @@ func TestDetailExactlyFullPageAndCancel(t *testing.T) {
 		t.Fatalf("cancel error=%v", err)
 	}
 }
+
+func TestLayoutCarriesResolvedTextStyle(t *testing.T) {
+	spec := &DetailSpec{
+		Page:   PageGeometry{Width: 2000, Height: 1000, Top: 100, Bottom: 100, Left: 100, Right: 100},
+		Detail: Band{Height: 400, Texts: []TextItem{{Bounds: printdoc.Bounds{Width: 1000, Height: 300}, Literal: "Hi", Font: "Times", Size: 12}}},
+	}
+	doc, err := Layout(context.Background(), &fill.Filled{Records: []fill.FilledRecord{{}}}, spec)
+	if err != nil {
+		t.Fatal(err)
+	}
+	style := doc.Pages[0].Elements[0].Style
+	if style.Font != "Serif" || style.Size != 240 || style.Color != 0 {
+		t.Fatalf("style=%+v", style)
+	}
+}

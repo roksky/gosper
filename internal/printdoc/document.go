@@ -21,17 +21,17 @@ type ShapePayload struct{ Kind ShapeKind }
 
 // NewTextElement creates a positioned text element.
 func NewTextElement(bounds Bounds, text string) Element {
-	return Element{Kind: ElementText, Bounds: bounds, Text: text}
+	return Element{Kind: ElementText, Bounds: bounds, Text: text, Style: DefaultStyle()}
 }
 
 // NewImageElement creates a positioned image reference.
 func NewImageElement(bounds Bounds, resource string) Element {
-	return Element{Kind: ElementImage, Bounds: bounds, Image: &ImagePayload{Resource: resource}}
+	return Element{Kind: ElementImage, Bounds: bounds, Image: &ImagePayload{Resource: resource}, Style: DefaultStyle()}
 }
 
 // NewShapeElement creates a positioned shape.
 func NewShapeElement(bounds Bounds, kind ShapeKind) Element {
-	return Element{Kind: ElementShape, Bounds: bounds, Shape: &ShapePayload{Kind: kind}}
+	return Element{Kind: ElementShape, Bounds: bounds, Shape: &ShapePayload{Kind: kind}, Style: DefaultStyle()}
 }
 
 // AppendPage validates and appends a page, assigning a sequential one-based
@@ -69,6 +69,9 @@ func (d *Document) AppendPage(page Page) error {
 }
 
 func validateElement(e Element) error {
+	if err := e.EffectiveStyle().Validate(); err != nil {
+		return err
+	}
 	if e.Bounds.Width < 0 || e.Bounds.Height < 0 {
 		return fmt.Errorf("negative element size")
 	}

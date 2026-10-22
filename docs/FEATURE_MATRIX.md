@@ -168,7 +168,7 @@ Spec: [`features/PRT.md`](features/PRT.md) · Architect: [`architecture/intermed
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | PRT-001 | Typed print document model | PRT | P0 | M1 | Done | — | [PRT](features/PRT.md) | [PRT-001-001](tasks/M0/PRT-001-001-print-document-ir-contract.md), [PRT-001-002](tasks/M1/018-PRT-001-002-print-document-model.md) | `TestDocumentAppendAndIterate`, `TestDocumentRejectsInvalidElementsAndStopsOnError` |
-| PRT-002 | Resolved style data in print IR | PRT | P1 | M1 | Not Started | PRT-001 | [PRT](features/PRT.md) | [PRT-002-001](tasks/M1/022-PRT-002-001-resolved-style-data.md) | planned: style test |
+| PRT-002 | Resolved style data in print IR | PRT | P1 | M1 | Done | PRT-001 | [PRT](features/PRT.md) | [PRT-002-001](tasks/M1/022-PRT-002-001-resolved-style-data.md) | `TestDefaultAndExplicitStyles`, `TestLayoutCarriesResolvedTextStyle` |
 | PRT-003 | Resource references (fonts/images) | PRT | P1 | M2 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: reference test |
 | PRT-004 | Lazy/streaming print storage | PRT | P2 | M3 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: streaming test |
 | PRT-005 | Spill-to-disk storage for large documents | PRT | P3 | M5 | Not Started | PRT-004 | [PRT](features/PRT.md) | INDEX | planned: large-doc test |

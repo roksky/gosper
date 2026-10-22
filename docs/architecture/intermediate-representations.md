@@ -58,6 +58,10 @@ and a page count maintained by `AppendPage`. Elements carry exact twip bounds
 and text, image-reference, or primitive-shape payloads. `Validate` checks the
 document and accepts an empty document. `ForEachPage` and `ForEachElement`
 visit in document order and stop on the first error.
+Each element carries a resolved `printdoc.Style`: a canonical core font,
+point size in twips, RGB color, horizontal alignment, bold/italic flags, and
+padding. The M1 default is 10-point SansSerif, black, left aligned, with no
+padding. Layout writes canonical font names after resolving aliases.
 
 ## Units
 
