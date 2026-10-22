@@ -181,15 +181,15 @@ Spec: [`features/OUT.md`](features/OUT.md) · Architect: [`architecture/exporter
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| OUT-001 | Baseline PDF exporter | OUT | P0 | M1 | Not Started | PRT-001, PRT-007, OUT-009 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | planned: PDF golden |
-| OUT-002 | PDF text and font rendering | OUT | P0 | M1 | Not Started | OUT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | planned: text golden |
+| OUT-001 | Baseline PDF exporter | OUT | P0 | M1 | Done | PRT-001, PRT-007, OUT-009 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFStructureAndText` |
+| OUT-002 | PDF text and font rendering | OUT | P0 | M1 | Done | OUT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFEscapesTextAndUsesResolvedStyle` |
 | OUT-003 | PDF vector geometry and images | OUT | P1 | M2 | Not Started | OUT-001, LAY-014 | [OUT](features/OUT.md) | INDEX | planned: shape golden |
 | OUT-004 | PDF font embedding | OUT | P1 | M2 | Not Started | OUT-002, LAY-005 | [OUT](features/OUT.md) | INDEX | planned: embedding golden |
 | OUT-005 | PDF metadata and links | OUT | P2 | M3 | Not Started | OUT-001, LAY-018 | [OUT](features/OUT.md) | INDEX | planned: metadata test |
 | OUT-006 | XLSX exporter | OUT | P2 | M4 | Not Started | PRT-002 | [OUT](features/OUT.md) | INDEX | planned: XLSX golden |
 | OUT-007 | HTML exporter | OUT | P2 | M4 | Not Started | PRT-002 | [OUT](features/OUT.md) | INDEX | planned: HTML golden |
 | OUT-008 | CSV exporter | OUT | P2 | M4 | Not Started | PRT-002, FIL-001 | [OUT](features/OUT.md) | INDEX | planned: CSV golden |
-| OUT-009 | Streaming `io.Writer` output | OUT | P0 | M1 | Not Started | PRT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | planned: streaming test |
+| OUT-009 | Streaming `io.Writer` output | OUT | P0 | M1 | Done | PRT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFEmptyWriterErrorAndUnsupported` |
 | OUT-010 | Deterministic output | OUT | P1 | M1 | Not Started | OUT-001 | [OUT](features/OUT.md) | [OUT-010-001](tasks/M1/024-OUT-010-001-deterministic-output-tests.md) | planned: byte-stability test |
 
 ## TST — Test infrastructure and correctness suites
@@ -274,5 +274,5 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | OQ-2 | Internal unit system for print IR (twips/points/sub-point)? | `PRT-001`, `LAY-*` | **Resolved: twips** (`ADR-0004`, `PRT-001-001`) |
 | OQ-3 | Text shaping backend (pure-Go vs dependency)? | `LAY-006`, `LAY-007` | ADR when `LAY-007` starts |
 | OQ-4 | Are remote fonts/images ever permitted, and under what policy? | `OPS-002`, `DAT-011` | `OPS-002` |
-| OQ-5 | PDF library choice (pure-Go vs dependency)? | `OUT-001` | `OUT-001-001` / ADR |
+| OQ-5 | PDF library choice (pure-Go vs dependency)? | `OUT-001` | **Resolved: standard-library PDF 1.4 writer** (`OUT-001-001`) |
 | OQ-6 | Does `internal/exec` exist, or does `report` orchestrate? | `FND-001` | **Resolved: `report` orchestrates; `internal/exec` deferred** (`ADR-0005`) |

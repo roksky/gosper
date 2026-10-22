@@ -1,11 +1,11 @@
 # OUT-001-001: Baseline PDF exporter
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [OUT-001](../../FEATURE_MATRIX.md#out--format-exporters)
 - **Milestone:** M1
 - **Priority:** P0
 - **Dependencies:** PRT-001-002, PRT-002-001
-- **Blocked by:** PDF library choice (OQ-5)
+- **Blocked by:** none (OQ-5 resolved: standard-library PDF writer)
 - **Primary owner/package:** `internal/exporter`
 - **Likely touched files:** `internal/exporter/pdf.go`, `internal/exporter/pdf_test.go`, possibly `go.mod` (if a lib is chosen)
 - **Collision risk:** High — the M1 end-to-end exporter; also may touch `go.mod`. Isolate the dependency decision and record it.
@@ -45,10 +45,10 @@ func PDF(ctx context.Context, doc *printdoc.Document, w io.Writer) error
 
 ## Implementation checklist (future agent only)
 
-- [ ] Decide PDF approach; record ADR/dependency review if needed.
-- [ ] Emit pages + text; stream to writer.
-- [ ] Tests validating structure and page count.
-- [ ] Run `make check`.
+- [x] Decide PDF approach; record ADR/dependency review if needed.
+- [x] Emit pages + text; stream to writer.
+- [x] Tests validating structure and page count.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

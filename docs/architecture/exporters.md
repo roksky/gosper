@@ -41,6 +41,15 @@ elements to cells/rows. This asymmetry is intentional and documented in
 
 ## PDF baseline
 
+The M1 exporter writes PDF 1.4 with the Go standard library. It emits the
+catalog, page tree, page and content objects, core Type 1 font resources, and
+cross-reference table directly to `io.Writer`; only object offsets and font
+names are retained. No external PDF dependency or font asset is used. The M1
+text subset is printable ASCII in Helvetica, Times, and Courier families;
+images, shapes, font embedding, and Unicode text remain later features.
+Text coordinates use the print IR's twips and resolved style values. The
+exporter rejects unsupported elements and propagates writer errors.
+
 - `OUT-001` establishes page output; `OUT-002` adds text; `OUT-003` adds
   vector/images; `OUT-004` embeds fonts; `OUT-005` adds metadata/links.
 - Output streams to `io.Writer` (`OUT-009`) and is deterministic (`OUT-010`).
@@ -69,5 +78,4 @@ elements to cells/rows. This asymmetry is intentional and documented in
 
 ## Assumptions and unresolved alternatives
 
-- **Unresolved:** PDF library choice (pure-Go vs substantial dependency) — OQ-5.
-  Decision by task `OUT-001-001` / an ADR if a dependency is added.
+- **Resolved:** OQ-5 uses the standard-library PDF writer for the M1 subset.
