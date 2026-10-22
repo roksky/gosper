@@ -83,6 +83,10 @@ type Element struct {
 	Bounds Bounds
 	// Text is set when Kind is ElementText.
 	Text string
+	// Image is set when Kind is ElementImage.
+	Image *ImagePayload
+	// Shape is set when Kind is ElementShape.
+	Shape *ShapePayload
 }
 
 // Page is a single printed page.
