@@ -15,6 +15,12 @@ expression null. Supported values are expression values, Go strings, booleans,
 and signed or fitting unsigned integers. Other conversions await `DAT-007` and
 return an error. The cursor is closed on every return path, including errors
 and cancellation.
+`RunWithParams` accepts expression-value overrides. Missing parameters use
+compiled defaults, evaluated in declaration order; later defaults can use
+earlier parameters. All overrides are available before defaults run. An
+unresolved forward reference evaluates as null. An explicit null override
+suppresses the default. Each filled record snapshots `REPORT_COUNT` after the
+record increment, starting at 1.
 
 ## Record iteration
 

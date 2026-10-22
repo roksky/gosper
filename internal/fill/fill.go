@@ -11,10 +11,17 @@ import (
 
 // Template is the immutable field selection for a fill run. Callers must not
 // mutate Fields while a run is active.
-type Template struct{ Fields []string }
+type Template struct {
+	Fields     []string
+	Parameters []ParameterDefault
+}
 
 // FilledRecord owns a snapshot of the requested fields for one source record.
-type FilledRecord struct{ Fields map[string]expression.Value }
+type FilledRecord struct {
+	Fields     map[string]expression.Value
+	Parameters map[string]expression.Value
+	Variables  map[string]expression.Value
+}
 
 // Field implements the field part of expression.Symbols.
 func (r FilledRecord) Field(name string) (expression.Value, bool) {
@@ -22,18 +29,32 @@ func (r FilledRecord) Field(name string) (expression.Value, bool) {
 	return v, ok
 }
 
-// Parameter has no value until FIL-002 supplies parameter state.
-func (r FilledRecord) Parameter(string) (expression.Value, bool) { return nil, false }
+// Parameter resolves a parameter snapshot for this record.
+func (r FilledRecord) Parameter(name string) (expression.Value, bool) {
+	v, ok := r.Parameters[name]
+	return v, ok
+}
 
-// Variable has no value until FIL-002 supplies variable state.
-func (r FilledRecord) Variable(string) (expression.Value, bool) { return nil, false }
+// Variable resolves a built-in variable snapshot for this record.
+func (r FilledRecord) Variable(name string) (expression.Value, bool) {
+	v, ok := r.Variables[name]
+	return v, ok
+}
 
 // Filled holds the record snapshots produced by one fill run.
-type Filled struct{ Records []FilledRecord }
+type Filled struct {
+	Records    []FilledRecord
+	Parameters map[string]expression.Value
+}
 
 // Run opens the source, copies selected fields from each record, and closes
 // the cursor on every exit path. Each invocation owns all mutable run state.
 func Run(ctx context.Context, tmpl *Template, ds datasource.DataSource, budget limits.Budget) (result *Filled, err error) {
+	return RunWithParams(ctx, tmpl, ds, nil, budget)
+}
+
+// RunWithParams runs with supplied parameter overrides and declared defaults.
+func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource, overrides map[string]expression.Value, budget limits.Budget) (result *Filled, err error) {
 	if ctx == nil {
 		return nil, fmt.Errorf("fill: nil context")
 	}
@@ -41,6 +62,10 @@ func Run(ctx context.Context, tmpl *Template, ds datasource.DataSource, budget l
 		return nil, fmt.Errorf("fill: nil template or data source")
 	}
 	if err = ctx.Err(); err != nil {
+		return nil, err
+	}
+	params, err := resolveParameters(ctx, tmpl.Parameters, overrides)
+	if err != nil {
 		return nil, err
 	}
 	cur, err := ds.Open(ctx)
@@ -57,7 +82,7 @@ func Run(ctx context.Context, tmpl *Template, ds datasource.DataSource, budget l
 		}
 	}()
 	guard := budget.Guard(ctx)
-	filled := &Filled{}
+	filled := &Filled{Parameters: cloneValues(params)}
 	for {
 		if err = ctx.Err(); err != nil {
 			return nil, err
@@ -90,7 +115,10 @@ func Run(ctx context.Context, tmpl *Template, ds datasource.DataSource, budget l
 			}
 			fields[name] = value
 		}
-		filled.Records = append(filled.Records, FilledRecord{Fields: fields})
+		filled.Records = append(filled.Records, FilledRecord{
+			Fields: fields, Parameters: cloneValues(params),
+			Variables: map[string]expression.Value{"REPORT_COUNT": expression.Int(len(filled.Records) + 1)},
+		})
 	}
 	return filled, nil
 }

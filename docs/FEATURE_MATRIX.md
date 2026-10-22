@@ -122,7 +122,7 @@ Spec: [`features/FIL.md`](features/FIL.md) · Architect: [`architecture/filling-
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | FIL-001 | Report execution state and record iteration | FIL | P0 | M1 | Done | DAT-002, FND-001 | [FIL](features/FIL.md) | [FIL-001-001](tasks/M1/014-FIL-001-001-fill-record-iteration.md) | `TestRunSnapshotsAndMissing`, `TestRunConcurrentIsolation` |
-| FIL-002 | Built-in variables and parameter defaults | FIL | P1 | M1 | Not Started | FIL-001 | [FIL](features/FIL.md) | [FIL-002-001](tasks/M1/015-FIL-002-001-builtin-variables-and-parameter-defaults.md) | planned: builtin test |
+| FIL-002 | Built-in variables and parameter defaults | FIL | P1 | M1 | Done | FIL-001 | [FIL](features/FIL.md) | [FIL-002-001](tasks/M1/015-FIL-002-001-builtin-variables-and-parameter-defaults.md) | `TestReportCountPerRecord`, `TestParameterDefaultsAndOverrides` |
 | FIL-003 | Variable calculations (count/sum/avg/min/max) | FIL | P1 | M3 | Not Started | FIL-005 | [FIL](features/FIL.md) | INDEX | planned: calculation test |
 | FIL-004 | Distinct-count calculation | FIL | P2 | M3 | Not Started | FIL-003 | [FIL](features/FIL.md) | INDEX | planned: distinct test |
 | FIL-005 | Evaluation/increment/reset scopes and timing | FIL | P1 | M3 | Not Started | FIL-001 | [FIL](features/FIL.md) | INDEX | planned: scope test |
