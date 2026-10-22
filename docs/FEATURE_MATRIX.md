@@ -33,7 +33,7 @@ Spec: [`features/FND.md`](features/FND.md) · Architect: [`architecture/package-
 | FND-003 | Error model and diagnostic codes with source spans | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-003-001](tasks/M0/FND-003-001-diagnostic-error-code-model.md) | `internal/diag/diag_test.go`; branch `task/M0-contracts` |
 | FND-004 | Compilation cache with versioned keys | FND | P2 | M3 | Not Started | FND-001, JRX-020 | [FND](features/FND.md) | INDEX | planned: invalidation test |
 | FND-005 | CLI report commands (compile/fill/export) | FND | P2 | M4 | Not Started | FND-001, OUT-001 | [FND](features/FND.md) | INDEX | planned: CLI integration test |
-| FND-006 | Build/version metadata surfaced via API | FND | P2 | M1 | Not Started | — | [FND](features/FND.md) | [FND-006-001](tasks/M1/026-FND-006-001-build-and-version-metadata.md) | planned: version test |
+| FND-006 | Build/version metadata surfaced via API | FND | P2 | M1 | Done | — | [FND](features/FND.md) | [FND-006-001](tasks/M1/026-FND-006-001-build-and-version-metadata.md) | `TestVersionDefaultAndOverride`, `TestLinkedVersionOverride` |
 | FND-007 | Logging and telemetry hooks | FND | P3 | M5 | Not Started | — | [FND](features/FND.md) | INDEX | planned: hook invocation test |
 | FND-008 | Optional server transport module (deferred) | FND | P3 | M6 | Not Started | FND-001 | [FND](features/FND.md) | INDEX | planned: adapter smoke test |
 | FND-009 | Context cancellation and resource-budget API | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-009-001](tasks/M0/FND-009-001-context-and-resource-budget-contract.md) | `internal/limits/limits_test.go`; branch `task/M0-contracts` |

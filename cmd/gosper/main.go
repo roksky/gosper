@@ -9,17 +9,13 @@ import (
 	"fmt"
 	"io"
 	"os"
-)
 
-// version is the reported build version. It defaults to "dev" and can be
-// overridden at build time with:
-//
-//	go build -ldflags "-X main.version=<version>"
-var version = "dev"
+	"github.com/roksky/gosper/report"
+)
 
 const usage = `gosper - a Go-native, JasperReports-compatible reporting engine.
 
-Scaffold only: report generation is not implemented yet.
+CLI report commands are not implemented yet.
 
 Usage:
   gosper [command]
@@ -52,7 +48,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprint(stdout, usage)
 		return 0
 	case "-v", "--version", "version":
-		fmt.Fprintf(stdout, "gosper %s\n", version)
+		fmt.Fprintf(stdout, "gosper %s\n", report.Version())
 		return 0
 	default:
 		fmt.Fprintf(stderr, "gosper: unknown command %q\n\n", args[0])

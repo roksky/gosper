@@ -1,6 +1,6 @@
 # FND-006-001: Build and version metadata
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FND-006](../../FEATURE_MATRIX.md#fnd--foundation-public-api-cli-infrastructure)
 - **Milestone:** M1
 - **Priority:** P2
@@ -41,8 +41,8 @@ func Version() string
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add shared version; wire CLI; tests.
-- [ ] Run `make check`.
+- [x] Add shared version; wire CLI; tests.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

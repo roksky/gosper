@@ -2,8 +2,12 @@ package main
 
 import (
 	"bytes"
+	"os/exec"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/roksky/gosper/report"
 )
 
 func TestRunHelp(t *testing.T) {
@@ -40,7 +44,7 @@ func TestRunVersion(t *testing.T) {
 		if code := run(args, &stdout, &stderr); code != 0 {
 			t.Errorf("run(%q) = %d, want 0", args, code)
 		}
-		if got, want := stdout.String(), "gosper "+version+"\n"; got != want {
+		if got, want := stdout.String(), "gosper "+report.Version()+"\n"; got != want {
 			t.Errorf("run(%q) stdout = %q, want %q", args, got, want)
 		}
 		if stderr.Len() != 0 {
@@ -68,7 +72,19 @@ func TestRunUnknownCommand(t *testing.T) {
 }
 
 func TestVersionDefault(t *testing.T) {
-	if version == "" {
+	if report.Version() == "" {
 		t.Fatal("version must not be empty")
+	}
+}
+
+func TestLinkedVersionOverride(t *testing.T) {
+	bin := filepath.Join(t.TempDir(), "gosper")
+	build := exec.Command("go", "build", "-ldflags", "-X github.com/roksky/gosper/report.version=9.8.7", "-o", bin, ".")
+	if output, err := build.CombinedOutput(); err != nil {
+		t.Fatalf("build: %v\n%s", err, output)
+	}
+	output, err := exec.Command(bin, "--version").CombinedOutput()
+	if err != nil || string(output) != "gosper 9.8.7\n" {
+		t.Fatalf("linked CLI version = %q, %v", output, err)
 	}
 }
