@@ -23,7 +23,7 @@ names come from the bootstrap scaffold.
 
 ```mermaid
 flowchart TD
-    CLI[cmd/gosper] --> API[report proposed]
+    CLI[cmd/gosper] --> API[report]
     API --> EXEC[internal/exec proposed]
     EXEC --> CMP[internal/compiler]
     EXEC --> FILL[internal/fill]
@@ -66,7 +66,7 @@ flowchart LR
 
 | Package | Owns | Must not contain |
 | --- | --- | --- |
-| `report` *(proposed)* | Public types and lifecycle entry points; error facade. | Parsing/layout/rendering logic. |
+| `report` | Public types and lifecycle entry points; error facade. | Parsing/layout/rendering logic. |
 | `internal/exec` *(proposed)* | Orchestration, stage wiring, cancellation boundaries. | Format-specific logic. |
 | `internal/diag` | Error codes, severity, spans, formatting. | Business logic. |
 | `internal/jrxml` | XML decoding, version detection, normalization. | Evaluation, layout, IO beyond the reader. |
@@ -138,8 +138,7 @@ type Resolver interface {
 
 ## Assumptions and unresolved alternatives
 
-- **Assumption:** the public package is named `report` at the module root.
-  Alternative: a `/gosper` or `/report` subpackage. Decision deferred to
-  `FND-001-001`; see [`CONTRIBUTING_TASKS.md`](../CONTRIBUTING_TASKS.md).
-- **Unresolved:** whether `internal/exec` exists or orchestration lives in
-  `report`. Tracked by task `FND-001-001`.
+- **Resolved:** the public package is `report` at the module root, and early
+  orchestration lives there (`internal/exec` deferred); see
+  [`../adr/0005-public-api-package.md`](../adr/0005-public-api-package.md)
+  (OQ-6).

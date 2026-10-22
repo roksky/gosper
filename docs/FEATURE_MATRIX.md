@@ -28,7 +28,7 @@ Spec: [`features/FND.md`](features/FND.md) · Architect: [`architecture/package-
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | Not Started | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/FND-001-002-public-sdk-walking-skeleton.md) | planned: API round-trip test |
+| FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | In Progress | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/FND-001-002-public-sdk-walking-skeleton.md) | contract stubs in `report` (`api_test.go`); behavior pending FND-001-002 |
 | FND-002 | Template loading and resource resolution | FND | P1 | M1 | Not Started | — | [FND](features/FND.md) | [FND-002-001](tasks/M1/FND-002-001-template-loading-and-resource-resolution.md) | planned: resolver allowlist test |
 | FND-003 | Error model and diagnostic codes with source spans | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-003-001](tasks/M0/FND-003-001-diagnostic-error-code-model.md) | `internal/diag/diag_test.go`; branch `task/M0-contracts` |
 | FND-004 | Compilation cache with versioned keys | FND | P2 | M3 | Not Started | FND-001, JRX-020 | [FND](features/FND.md) | INDEX | planned: invalidation test |
@@ -251,9 +251,9 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | --- | --- |
 | Total features | 146 |
 | Done | 7 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`) |
-| In Progress | 3 (`TST-001`, `EXP-001`, `PRT-001`) |
+| In Progress | 4 (`TST-001`, `EXP-001`, `PRT-001`, `FND-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 133 |
+| Not Started | 132 |
 | M0 features | 7 |
 | M1 features | 35 |
 | M2 features | 33 |
@@ -275,4 +275,4 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | OQ-3 | Text shaping backend (pure-Go vs dependency)? | `LAY-006`, `LAY-007` | ADR when `LAY-007` starts |
 | OQ-4 | Are remote fonts/images ever permitted, and under what policy? | `OPS-002`, `DAT-011` | `OPS-002` |
 | OQ-5 | PDF library choice (pure-Go vs dependency)? | `OUT-001` | `OUT-001-001` / ADR |
-| OQ-6 | Does `internal/exec` exist, or does `report` orchestrate? | `FND-001` | `FND-001-001` |
+| OQ-6 | Does `internal/exec` exist, or does `report` orchestrate? | `FND-001` | **Resolved: `report` orchestrates; `internal/exec` deferred** (`ADR-0005`) |

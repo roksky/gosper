@@ -92,7 +92,8 @@ marked *stub*.
 
 | Package | Responsibility | Intended dependencies | State |
 | --- | --- | --- | --- |
-| `cmd/gosper` | CLI front end (metadata only today). | `report` (proposed) | Metadata implemented |
+| `report` (module root) | Public SDK facade: `Compile`, `Fill`, `Export`, shared types. | `internal/*` | Contract stubs only |
+| `cmd/gosper` | CLI front end (metadata only today). | `report` | Metadata implemented |
 | `internal/diag` | Diagnostics: error codes, severity, source spans. | stdlib | Contract implemented |
 | `internal/limits` | Resource budgets, cancellation plumbing. | `diag` | Contract implemented |
 | `internal/expression` | Parse and evaluate report expressions. | `diag` | Value/symbol contracts implemented |
@@ -110,19 +111,23 @@ Proposed additional packages (see
 
 | Package | Responsibility |
 | --- | --- |
-| `report` (module root) | Public SDK facade: `Compile`, `Fill`, `Export`, convenience. |
 | `internal/resources` | Resource resolution (templates, images, fonts, URIs). |
 | `internal/text` | Font resolution, metrics, shaping, line breaking. |
 | `internal/cache` | Optional compilation cache with versioned keys. |
-| `internal/exec` | Orchestration of compile → fill → layout → export. |
+| `internal/exec` | Orchestration split-out from `report` (deferred; see ADR-0005). |
 
 ## Public API surface
 
-There is intentionally **no public `pkg/` hierarchy**. A stable public API
-belongs at the module root (package `report`, *proposed*) and is introduced with
-its first real consumer. Prefer immutability, explicitness and small interfaces.
-The API contract is tracked by `FND-001` and defined by task
-`FND-001-001`.
+The public package is **`report` at the module root** (import path
+`github.com/roksky/gosper/report`), decided in
+[`adr/0005-public-api-package.md`](adr/0005-public-api-package.md). There is no
+public `pkg/` hierarchy. The package currently defines the contract only —
+exported types (`CompiledReport`, `FilledReport`, `Format`, `Option`, `Params`,
+and the `DataSource`/`Cursor`/`Record` aliases) and `Compile`/`Fill`/`Export`
+signatures that return `ErrNotImplemented`. Behavior is implemented by
+`FND-001-002` and later tasks. `report` may import `internal/*`; no `internal/*`
+package may import `report`. The API contract is tracked by `FND-001` and
+defined by task `FND-001-001`.
 
 ## Consumers
 

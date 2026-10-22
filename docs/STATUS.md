@@ -31,6 +31,7 @@
 | Print model + unit (`internal/printdoc`) | Present | `internal/printdoc/model_test.go` |
 | Data-source cursor contract (`internal/datasource`) | Present | `internal/datasource/datasource_test.go` |
 | Deterministic test helpers (`internal/testutil`) | Present | `internal/testutil/env_test.go` |
+| Public SDK contract (`report`) | Contract stubs | `report/api_test.go` (entry points return `ErrNotImplemented`) |
 | Editor/build hygiene | Present | `.editorconfig`, `.gitignore` |
 | Documentation (bootstrap) | Present | `README.md`, `CONTRIBUTING.md`, `docs/` |
 
@@ -64,9 +65,9 @@ From [`FEATURE_MATRIX.md`](FEATURE_MATRIX.md):
 | Status | Count |
 | --- | --- |
 | Done | 7 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`) |
-| In Progress | 3 (`TST-001`, `EXP-001`, `PRT-001`) |
+| In Progress | 4 (`TST-001`, `EXP-001`, `PRT-001`, `FND-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 133 |
+| Not Started | 132 |
 | **Total** | **146** |
 
 Conditional verification note: `go test ./...`, `go vet ./...`, `go build`, and
