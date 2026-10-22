@@ -1,6 +1,6 @@
 # JRX-003-001: Parse report parameters
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-003](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -38,9 +38,9 @@ Adds `Template.Parameters []Parameter{Name, Type, DefaultExpr string}`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Handler for `<parameter>` and its default expression.
-- [ ] Tests with a fixture containing typed and untyped parameters.
-- [ ] Run `make check`.
+- [x] Handler for `<parameter>` and its default expression.
+- [x] Tests with a fixture containing typed and untyped parameters.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

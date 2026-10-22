@@ -1,6 +1,6 @@
 # JRX-002-001: Parse report metadata and page properties
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-002](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -40,10 +40,10 @@ Populates `Template.Page` (a `printdoc`-style geometry struct). Depends on
 
 ## Implementation checklist (future agent only)
 
-- [ ] Register a `jasperReport` attribute/property handler.
-- [ ] Parse and convert page properties.
-- [ ] Tests against a fixture template.
-- [ ] Run `make check`.
+- [x] Register a `jasperReport` attribute/property handler.
+- [x] Parse and convert page properties.
+- [x] Tests against a fixture template.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

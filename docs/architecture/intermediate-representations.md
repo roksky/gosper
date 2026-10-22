@@ -77,6 +77,9 @@ or with half-away-from-zero rounding at the boundary. This resolves OQ-2; see
   import graph.
 - Cache invalidation tests must change a template flag and assert a different
   compiled IR (`FND-004`).
+- Parsing must not silently drop constructs: unsupported elements emit a coded
+  `unsupported` diagnostic with a source span, and known-but-deferred
+  constructs are reported by name (`JRX-019`, `internal/jrxml/unsupported.go`).
 
 ## Linked features and tasks
 

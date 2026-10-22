@@ -1,6 +1,6 @@
 # JRX-014-001: Parse common element settings
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-014](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -40,9 +40,9 @@ Adds fields to `Element`: coordinates/size, `Stretch bool`,
 
 ## Implementation checklist (future agent only)
 
-- [ ] Parse/convert attributes.
-- [ ] Tests for defaults and explicit values.
-- [ ] Run `make check`.
+- [x] Parse/convert attributes.
+- [x] Tests for defaults and explicit values.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

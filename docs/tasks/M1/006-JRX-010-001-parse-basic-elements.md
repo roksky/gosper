@@ -1,6 +1,6 @@
 # JRX-010-001: Parse basic elements (staticText, textField)
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-010](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -45,10 +45,10 @@ Integration: consumed by layout after fill binds values.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Parse text/static content and expression fields.
-- [ ] Register with the band/element dispatcher.
-- [ ] Tests for static and expression text.
-- [ ] Run `make check`.
+- [x] Parse text/static content and expression fields.
+- [x] Register with the band/element dispatcher.
+- [x] Tests for static and expression text.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

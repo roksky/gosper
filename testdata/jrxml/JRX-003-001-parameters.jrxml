@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport version="6.20.0" name="parameters">
+    <parameter name="title" class="java.lang.String">
+        <defaultValueExpression><![CDATA["Report"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="count" class="java.lang.Integer">
+        <defaultValueExpression>1</defaultValueExpression>
+    </parameter>
+    <parameter name="untyped"/>
+</jasperReport>

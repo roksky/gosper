@@ -42,14 +42,14 @@ complete the M0 prerequisite `TST-001-002`, which is still Not Started. Task
 | Task | Title | Feature | Status | Deps | Package / files | File |
 | --- | --- | --- | --- | --- | --- | --- |
 | FND-002-001 | Template loading and resource resolution | FND-002 | Done | none | `internal/resources` | [file](M1/001-FND-002-001-template-loading-and-resource-resolution.md) |
-| JRX-001-002 | Decode skeleton and version detection | JRX-001 | Not Started | JRX-001-001 | `internal/jrxml` | [file](M1/002-JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) |
-| JRX-002-001 | Report metadata and page properties | JRX-002 | Not Started | JRX-001-002 | `internal/jrxml` | [file](M1/003-JRX-002-001-report-metadata-and-page-properties.md) |
-| JRX-003-001 | Parse parameters | JRX-003 | Not Started | JRX-001-002 | `internal/jrxml` | [file](M1/004-JRX-003-001-parse-parameters.md) |
-| JRX-004-001 | Parse fields | JRX-004 | Not Started | JRX-001-002 | `internal/jrxml` | [file](M1/005-JRX-004-001-parse-fields.md) |
-| JRX-010-001 | Parse basic elements | JRX-010 | Not Started | JRX-001-002 | `internal/jrxml` | [file](M1/006-JRX-010-001-parse-basic-elements.md) |
-| JRX-008-001 | Parse core bands | JRX-008 | Not Started | JRX-002-001, JRX-010-001 | `internal/jrxml` | [file](M1/007-JRX-008-001-parse-core-bands.md) |
-| JRX-014-001 | Parse element settings | JRX-014 | Not Started | JRX-010-001 | `internal/jrxml` | [file](M1/008-JRX-014-001-parse-element-settings.md) |
-| JRX-019-001 | Unsupported-construct diagnostics | JRX-019 | Not Started | JRX-001-002, FND-003-001 | `internal/jrxml` | [file](M1/009-JRX-019-001-unsupported-construct-diagnostics.md) |
+| JRX-001-002 | Decode skeleton and version detection | JRX-001 | Done | JRX-001-001 | `internal/jrxml` | [file](M1/002-JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) |
+| JRX-002-001 | Report metadata and page properties | JRX-002 | Done | JRX-001-002 | `internal/jrxml` | [file](M1/003-JRX-002-001-report-metadata-and-page-properties.md) |
+| JRX-003-001 | Parse parameters | JRX-003 | Done | JRX-001-002 | `internal/jrxml` | [file](M1/004-JRX-003-001-parse-parameters.md) |
+| JRX-004-001 | Parse fields | JRX-004 | Done | JRX-001-002 | `internal/jrxml` | [file](M1/005-JRX-004-001-parse-fields.md) |
+| JRX-010-001 | Parse basic elements | JRX-010 | Done | JRX-001-002 | `internal/jrxml` | [file](M1/006-JRX-010-001-parse-basic-elements.md) |
+| JRX-008-001 | Parse core bands | JRX-008 | Done | JRX-002-001, JRX-010-001 | `internal/jrxml` | [file](M1/007-JRX-008-001-parse-core-bands.md) |
+| JRX-014-001 | Parse element settings | JRX-014 | Done | JRX-010-001 | `internal/jrxml` | [file](M1/008-JRX-014-001-parse-element-settings.md) |
+| JRX-019-001 | Unsupported-construct diagnostics | JRX-019 | Done | JRX-001-002, FND-003-001 | `internal/jrxml` | [file](M1/009-JRX-019-001-unsupported-construct-diagnostics.md) |
 | EXP-001-002 | Symbol resolution | EXP-001 | Not Started | EXP-001-001 | `internal/expression` | [file](M1/010-EXP-001-002-symbol-resolution.md) |
 | EXP-003-001 | Expression parser and evaluator | EXP-003 | Not Started | EXP-001-002, EXP-019-001 | `internal/expression` | [file](M1/011-EXP-003-001-expression-parser-and-evaluator.md) |
 | EXP-006-001 | Null semantics | EXP-006 | Not Started | EXP-003-001 | `internal/expression` | [file](M1/012-EXP-006-001-null-semantics.md) |

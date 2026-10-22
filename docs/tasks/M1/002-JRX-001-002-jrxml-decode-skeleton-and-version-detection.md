@@ -1,6 +1,6 @@
 # JRX-001-002: JRXML decode skeleton and version detection
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-001](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -40,11 +40,11 @@ Prefer `xml.Decoder` token stream with a dispatcher, or per-element
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement `Parse` over a token stream.
-- [ ] Emit diagnostics for malformed XML.
-- [ ] Add the dispatcher/handler seam and document it.
-- [ ] Tests for root detection and malformed input.
-- [ ] Run `make check`.
+- [x] Implement `Parse` over a token stream.
+- [x] Emit diagnostics for malformed XML.
+- [x] Add the dispatcher/handler seam and document it.
+- [x] Tests for root detection and malformed input.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
