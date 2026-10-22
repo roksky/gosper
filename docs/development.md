@@ -65,8 +65,9 @@ is selected and verified.
 ## How CI runs
 
 `.github/workflows/ci.yml` runs on pull requests and pushes to `main`/`dev`:
-a `gofmt` check, vet/test/build across Linux, macOS and Windows, and a separate
-race-detector job on Linux. Workflow permissions are read-only.
+a `gofmt` check, vet/test/build on Linux, and a separate race-detector job on
+Linux. Workflow permissions are read-only. macOS and Windows matrix entries are
+temporarily disabled; see the comment in the workflow to re-enable them.
 
 ## Changing the module path
 
