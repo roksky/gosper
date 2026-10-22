@@ -27,7 +27,7 @@ packages/docs, so they are broadly parallel-safe.
 | EXP-019-001 | Expression sandbox policy | EXP-019 | Done | none | `internal/expression`, `docs/` | [file](M0/EXP-019-001-expression-sandbox-policy.md) |
 | PRT-001-001 | Print document IR contract | PRT-001 | Done | none | `internal/printdoc` | [file](M0/PRT-001-001-print-document-ir-contract.md) |
 | TST-001-001 | Deterministic test environment helpers | TST-001 | Done | none | `internal/testutil` | [file](M0/TST-001-001-deterministic-test-environment-helpers.md) |
-| TST-001-002 | Fixture conventions and golden workflow | TST-001 | Not Started | TST-001-001 | `testdata/`, `docs/TEST_STRATEGY.md` | [file](M0/TST-001-002-fixture-conventions-and-golden-workflow.md) |
+| TST-001-002 | Fixture conventions and golden workflow | TST-001 | Done | TST-001-001 | `testdata/`, `docs/TEST_STRATEGY.md` | [file](M0/TST-001-002-fixture-conventions-and-golden-workflow.md) |
 | OPS-008-001 | Dependency/license review policy and SBOM | OPS-008 | Done | none | `docs/`, `.github/` | [file](M0/OPS-008-001-dependency-and-license-review-policy.md) |
 | JRX-022-001 | Compatibility matrix and fixture registry | JRX-022 | Done | none | `docs/COMPATIBILITY.md`, `testdata/` | [file](M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) |
 

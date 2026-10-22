@@ -107,7 +107,8 @@ justifies them. See [`CONTRIBUTING_TASKS.md`](CONTRIBUTING_TASKS.md).
 
 ## Fixture registry and naming
 
-Every `Verified` or `Partial` claim must point at a fixture and its test.
+Every `Verified` or `Partial` claim must point at a fixture and its test. Full
+conventions are in [`../testdata/README.md`](../testdata/README.md); summary:
 
 - **Location:** `testdata/<suite>/`, where `<suite>` groups by area (for example
   `jrxml`, `layout`, `pdf`).
@@ -115,8 +116,9 @@ Every `Verified` or `Partial` claim must point at a fixture and its test.
   `jrxml/JRX-001-001-minimal-report.jrxml`), matching the feature/task ID that
   introduces it.
 - **Goldens:** expected outputs live under `testdata/<suite>/golden/` and are
-  regenerated only through the explicit (future) `-update` flag; see
-  [`TEST_STRATEGY.md`](TEST_STRATEGY.md).
+  regenerated only through the explicit `-update` test flag, then reviewed
+  before committing; see [`TEST_STRATEGY.md`](TEST_STRATEGY.md) and
+  [`../testdata/README.md`](../testdata/README.md).
 - **`Unsupported` rows** cite the policy and need no fixture.
 - **Rule:** a row may only move to `Verified` in the same PR that adds the
   fixture and a passing test; the Notes/fixture column must link that path.

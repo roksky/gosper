@@ -1,6 +1,6 @@
 # TST-001-002: Fixture conventions and golden update workflow
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [TST-001](../../FEATURE_MATRIX.md#tst--test-infrastructure-and-correctness-suites)
 - **Milestone:** M0
 - **Priority:** P0
@@ -41,9 +41,9 @@ Convention: `testdata/<suite>/{input.jrxml,data.json,golden/*.pdf}` and a
 
 ## Implementation checklist (future agent only)
 
-- [ ] Update `testdata/README.md` with the layout and naming rules.
-- [ ] Cross-link from `docs/TEST_STRATEGY.md`.
-- [ ] State that goldens are never auto-committed without review.
+- [x] Update `testdata/README.md` with the layout and naming rules.
+- [x] Cross-link from `docs/TEST_STRATEGY.md`.
+- [x] State that goldens are never auto-committed without review.
 
 ## Acceptance criteria (observable)
 

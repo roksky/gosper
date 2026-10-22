@@ -19,19 +19,28 @@ make test-race
 make coverage
 ```
 
-No parser/layout/exporter test exists yet because no engine code exists.
+No engine behavior (parsing, layout, exporting) is implemented yet. Existing
+tests are contract/unit tests for the M0 packages plus the CLI; see
+[`STATUS.md`](STATUS.md).
 
-## Fixture conventions (planned)
+## Fixture conventions
 
-- **Location:** `testdata/` at the repository root; per-suite subdirectories.
-- **Inputs:** `.jrxml` templates and data fixtures (JSON/CSV) side by side.
-- **Expected:** golden outputs under `testdata/<suite>/golden/`.
+The canonical, detailed conventions live in
+[`../testdata/README.md`](../testdata/README.md). In summary:
+
+- **Location:** `testdata/<suite>/` at the repository root; suites are short,
+  lowercase area names (`jrxml`, `layout`, `pdf`, …).
 - **Naming:** `<feature-id>-<NNN>-<slug>` matching the compatibility registry
-  (`JRX-022`).
-- **Updates:** goldens are updated only via an explicit `-update` flag and must
-  be reviewed in the diff; never auto-overwritten silently.
+  ([`COMPATIBILITY.md`](COMPATIBILITY.md), `JRX-022`).
+- **Inputs:** `.jrxml` templates and `.data.json` / `.data.csv` side by side.
+- **Goldens:** expected outputs under `testdata/<suite>/golden/`, same base name
+  with the output extension.
+- **Updates:** goldens are regenerated only via an explicit `-update` test flag,
+  then reviewed with `git diff` before committing — never auto-overwritten or
+  auto-committed. Missing goldens without `-update` fail with guidance.
 
-See task `TST-001-002` and `TST-002-001`.
+The comparison harness is `TST-002-001`; this section fixes the conventions it
+must follow.
 
 ## Deterministic inputs
 
@@ -97,10 +106,12 @@ Template ideas for future fixtures: minimal text report; tabular multi-page
 report; grouped report with variables; subreport composition; shapes and
 borders; Unicode text; conditional styles. Data ideas: slice, JSON, CSV, SQL.
 These are **ideas**, not existing files; `testdata/` remains empty of engine
-fixtures until the features that use them land.
+fixtures until the features that use them land. Naming and placement follow
+[`../testdata/README.md`](../testdata/README.md).
 
 ## References
 
+- [`../testdata/README.md`](../testdata/README.md)
 - [`COMPATIBILITY.md`](COMPATIBILITY.md)
 - [`architecture/concurrency-and-limits.md`](architecture/concurrency-and-limits.md)
 - [`tasks/INDEX.md`](tasks/INDEX.md)
