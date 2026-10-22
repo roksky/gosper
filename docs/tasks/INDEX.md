@@ -22,7 +22,7 @@ packages/docs, so they are broadly parallel-safe.
 | FND-009-001 | Context and resource-budget contract | FND-009 | Not Started | none | `internal/limits` | [file](M0/FND-009-001-context-and-resource-budget-contract.md) |
 | FND-001-001 | Public SDK surface contract | FND-001 | Not Started | FND-003-001, FND-009-001 | `report` (proposed) | [file](M0/FND-001-001-public-sdk-surface-contract.md) |
 | JRX-001-001 | Parser I/O contract and version detection | JRX-001 | Not Started | FND-003-001 | `internal/jrxml` | [file](M0/JRX-001-001-parser-io-contract-and-version-detection.md) |
-| DAT-002-001 | DataSource cursor interface contract | DAT-002 | Not Started | none | `internal/datasource` | [file](M0/DAT-002-001-datasource-cursor-interface-contract.md) |
+| DAT-002-001 | DataSource cursor interface contract | DAT-002 | Done | none | `internal/datasource` | [file](M0/DAT-002-001-datasource-cursor-interface-contract.md) |
 | EXP-001-001 | Expression symbol/scope contract | EXP-001 | Not Started | none | `internal/expression` | [file](M0/EXP-001-001-expression-symbol-scope-contract.md) |
 | EXP-019-001 | Expression sandbox policy | EXP-019 | Not Started | none | `internal/expression`, `docs/` | [file](M0/EXP-019-001-expression-sandbox-policy.md) |
 | PRT-001-001 | Print document IR contract | PRT-001 | Not Started | none | `internal/printdoc` | [file](M0/PRT-001-001-print-document-ir-contract.md) |

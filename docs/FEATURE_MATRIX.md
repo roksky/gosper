@@ -104,7 +104,7 @@ Spec: [`features/DAT.md`](features/DAT.md) · Architect: [`architecture/data-and
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | DAT-001 | Slice/struct/map data source | DAT | P0 | M1 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-001-001](tasks/M1/DAT-001-001-slice-data-source.md) | planned: slice source test |
-| DAT-002 | DataSource cursor lifecycle interface | DAT | P0 | M0 | Not Started | — | [DAT](features/DAT.md) | [DAT-002-001](tasks/M0/DAT-002-001-datasource-cursor-interface-contract.md) | planned: interface test |
+| DAT-002 | DataSource cursor lifecycle interface | DAT | P0 | M0 | **Done** | — | [DAT](features/DAT.md) | [DAT-002-001](tasks/M0/DAT-002-001-datasource-cursor-interface-contract.md) | `internal/datasource/datasource_test.go`; branch `task/DAT-002-001` |
 | DAT-003 | JSON data source | DAT | P1 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-003-001](tasks/M2/DAT-003-001-json-data-source.md) | planned: JSON fixture |
 | DAT-004 | CSV data source | DAT | P2 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-004-001](tasks/M2/DAT-004-001-csv-data-source.md) | planned: CSV fixture |
 | DAT-005 | SQL via `database/sql` | DAT | P1 | M2 | Not Started | DAT-002, DAT-006 | [DAT](features/DAT.md) | INDEX | planned: SQL fixture (test DB) |
@@ -250,10 +250,10 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | Metric | Count |
 | --- | --- |
 | Total features | 146 |
-| Done | 1 (`FND-011`) |
+| Done | 2 (`FND-011`, `DAT-002`) |
 | In Progress | 2 (`TST-001`, `JRX-022`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 140 |
+| Not Started | 139 |
 | M0 features | 7 |
 | M1 features | 35 |
 | M2 features | 33 |

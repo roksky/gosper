@@ -1,6 +1,8 @@
-// Package datasource will define pluggable sources of business data that feed
-// the fill stage, such as SQL, JSON or CSV providers.
+// Package datasource defines pluggable sources of business data that feed the
+// fill stage.
 //
-// It is intentionally empty in the bootstrap milestone; concrete data sources
-// are deferred to a future change.
+// This package currently provides only the DataSource/Cursor/Record contract
+// and its lifecycle rules (see datasource.go). Concrete sources — slices,
+// JSON, CSV and SQL — are deferred to later changes (DAT-001, DAT-003,
+// DAT-004, DAT-005).
 package datasource
