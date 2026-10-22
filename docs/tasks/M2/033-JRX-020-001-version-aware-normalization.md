@@ -1,6 +1,6 @@
 # JRX-020-001: Version-aware normalization
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-020](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M2
 - **Priority:** P1
@@ -39,9 +39,9 @@ compilation.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement normalizations discovered from fixtures.
-- [ ] Tests asserting canonical equality.
-- [ ] Run `make check`.
+- [x] Implement normalizations discovered from fixtures.
+- [x] Tests asserting canonical equality.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
@@ -64,3 +64,7 @@ Implemented/tested; compatibility notes updated.
 
 - Feature: `JRX-020`; [`ADR-0003`](../../adr/0003-jrxml-6x-subset-first.md).
 - Unblocks: `FND-004` (cache keys) and M3 semantics.
+
+## Verification and compatibility
+
+`GOCACHE=/tmp/gosper-go-cache make check` passes. `internal/jrxml/normalize_test.go` compares `testdata/jrxml/versions/JRX-020-001-{legacy,modern}.jrxml` and checks warning cases; `report/normalize_test.go` verifies the active compile path. Normalization targets the supported 6.x subset: default Java language, canonical 6.x dialect, and legacy `isStretchWithOverflow` versus `textAdjust="StretchHeight"`. Unknown versions and uncertain text adjustments produce warnings. The exact source version should be read before normalization if needed for provenance.

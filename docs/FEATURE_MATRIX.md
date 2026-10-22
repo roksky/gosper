@@ -65,7 +65,7 @@ Spec: [`features/JRX.md`](features/JRX.md) · Compat: [`COMPATIBILITY.md`](COMPA
 | JRX-017 | Subreport element | JRX | P2 | M4 | Not Started | JRX-016 | [JRX](features/JRX.md) | INDEX | planned: subreport fixture |
 | JRX-018 | Conditional styles and hyperlinks | JRX | P3 | M4 | Not Started | JRX-013 | [JRX](features/JRX.md) | INDEX | planned: conditional style fixture |
 | JRX-019 | Unsupported-construct diagnostics and extension points | JRX | P1 | M1 | **Done** | JRX-001, FND-003 | [JRX](features/JRX.md) | [JRX-019-001](tasks/M1/009-JRX-019-001-unsupported-construct-diagnostics.md) | `testdata/jrxml/JRX-019-001-unsupported.jrxml`; `unsupported_test.go` |
-| JRX-020 | Version-aware normalization | JRX | P1 | M2 | Not Started | JRX-001, JRX-019 | [JRX](features/JRX.md) | [JRX-020-001](tasks/M2/033-JRX-020-001-version-aware-normalization.md) | planned: version fixture |
+| JRX-020 | Version-aware normalization | JRX | P1 | M2 | Done | JRX-001, JRX-019 | [JRX](features/JRX.md) | [JRX-020-001](tasks/M2/033-JRX-020-001-version-aware-normalization.md) | `testdata/jrxml/versions/`; `internal/jrxml/normalize_test.go` |
 | JRX-021 | Compiled `.jasper` binary loading | JRX | P3 | — | **Deferred** | — | [JRX](features/JRX.md) | — | Out of scope; see compat policy |
 | JRX-022 | Compatibility matrix and fixture registry | JRX | P1 | M0 | **Done** | — | [JRX](features/JRX.md) | [JRX-022-001](tasks/M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) | [`COMPATIBILITY.md`](COMPATIBILITY.md) fixture registry |
 | JRX-023 | Font declarations in JRXML | JRX | P2 | M4 | Not Started | LAY-005 | [JRX](features/JRX.md) | INDEX | planned: font fixture |

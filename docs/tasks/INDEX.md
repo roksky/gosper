@@ -78,7 +78,7 @@ complete the M0 prerequisite `TST-001-002`, which is still Not Started. Task
 | DAT-003-001 | JSON data source | DAT-003 | Done | DAT-002-001 | `internal/datasource` | [file](M2/030-DAT-003-001-json-data-source.md) |
 | DAT-004-001 | CSV data source | DAT-004 | Done | DAT-002-001 | `internal/datasource` | [file](M2/031-DAT-004-001-csv-data-source.md) |
 | LAY-008-001 | Text wrapping and alignment | LAY-008 | Done | LAY-006-001 | `internal/text`, `internal/layout` | [file](M2/032-LAY-008-001-text-wrapping-and-alignment.md) |
-| JRX-020-001 | Version-aware normalization | JRX-020 | Not Started | JRX-001-002, JRX-019-001 | `internal/jrxml` | [file](M2/033-JRX-020-001-version-aware-normalization.md) |
+| JRX-020-001 | Version-aware normalization | JRX-020 | Done | JRX-001-002, JRX-019-001 | `internal/jrxml` | [file](M2/033-JRX-020-001-version-aware-normalization.md) |
 
 ## Backlog (M3+) — tasks not yet authored
 
