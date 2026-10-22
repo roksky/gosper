@@ -21,8 +21,9 @@ func (g PageGeometry) PrintableArea() (printdoc.Bounds, error) {
 
 // Placement is the absolute origin of one band on a one-based page number.
 type Placement struct {
-	Page int
-	X, Y printdoc.Unit
+	Page   int
+	X, Y   printdoc.Unit
+	Height printdoc.Unit
 }
 
 // Canvas owns pagination state and the resulting print document for one run.
@@ -58,7 +59,7 @@ func (c *Canvas) Place(height printdoc.Unit) (Placement, error) {
 		}
 		c.cursor = c.area.Y
 	}
-	result := Placement{Page: len(c.Doc.Pages), X: c.area.X, Y: c.cursor}
+	result := Placement{Page: len(c.Doc.Pages), X: c.area.X, Y: c.cursor, Height: height}
 	c.cursor += height
 	return result, nil
 }

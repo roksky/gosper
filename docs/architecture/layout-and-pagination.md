@@ -16,6 +16,9 @@ the print IR.
   unit system is an open decision (`PRT-001-001`, OQ-2).
 - Band origin tracks a current vertical cursor; elements position relative to
   their band.
+- `Canvas.AbsoluteBounds` adds a band's absolute origin to element offsets.
+  M1 rejects elements extending beyond the printable width or band height;
+  `PlaceText` appends accepted text to the corresponding print page.
 
 ## Layout flow
 
