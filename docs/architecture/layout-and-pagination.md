@@ -9,12 +9,25 @@ the print IR.
 ## Geometry model
 
 - Page size and margins come from the compiled IR (`JRX-002`).
+- `layout.PageGeometry.PrintableArea` subtracts margins in twips and rejects
+  invalid dimensions. `Canvas.Place` advances a fixed-height band cursor and
+  appends a page when the next band would overflow; an oversized band errors.
 - All coordinates are absolute within a page's printable area; the internal
   unit system is an open decision (`PRT-001-001`, OQ-2).
 - Band origin tracks a current vertical cursor; elements position relative to
   their band.
+- `Canvas.AbsoluteBounds` adds a band's absolute origin to element offsets.
+  M1 rejects elements extending beyond the printable width or band height;
+  `PlaceText` appends accepted text to the corresponding print page.
 
 ## Layout flow
+
+The M1 `layout.FromJRXML` converts one-column title, page header, detail, and
+page footer bands into a fixed-height specification. `layout.Layout` places a
+detail band for each filled record, reserves header/footer space on each page,
+and measures each single-line text run before emitting it to the print IR.
+Text wider than its declared box returns an error. Empty data yields an empty
+document unless a title band is present.
 
 ```mermaid
 flowchart TD

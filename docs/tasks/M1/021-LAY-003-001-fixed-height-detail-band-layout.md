@@ -1,6 +1,6 @@
 # LAY-003-001: Fixed-height detail band layout
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [LAY-003](../../FEATURE_MATRIX.md#lay--layout-typography-pagination)
 - **Milestone:** M1
 - **Priority:** P0
@@ -39,9 +39,9 @@ Entry: `Layout(ctx, filled, metrics) (*printdoc.Document, error)`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement the M1 layout loop.
-- [ ] Tests for multi-page output.
-- [ ] Run `make check`.
+- [x] Implement the M1 layout loop.
+- [x] Tests for multi-page output.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

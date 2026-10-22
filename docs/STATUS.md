@@ -95,7 +95,7 @@ in `README.md` and `CONTRIBUTING.md` were updated.
 | OQ-2 | Print IR unit system | `PRT-001`, `LAY-*` | `PRT-001-001` |
 | OQ-3 | Text shaping backend | `LAY-006`, `LAY-007` | ADR when `LAY-007` starts |
 | OQ-4 | Remote resource policy | `OPS-002`, `DAT-011` | `OPS-002` |
-| OQ-5 | PDF library choice | `OUT-001` | `OUT-001-001` / ADR |
+| OQ-5 | PDF library choice | `OUT-001` | Resolved: standard-library PDF 1.4 writer (`OUT-001-001`) |
 | OQ-6 | `internal/exec` vs `report` orchestration | `FND-001` | `FND-001-001` |
 
 See [`FEATURE_MATRIX.md#open-questions`](FEATURE_MATRIX.md#open-questions).

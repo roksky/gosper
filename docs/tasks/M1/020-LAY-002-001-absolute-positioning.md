@@ -1,6 +1,6 @@
 # LAY-002-001: Absolute positioning
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [LAY-002](../../FEATURE_MATRIX.md#lay--layout-typography-pagination)
 - **Milestone:** M1
 - **Priority:** P0
@@ -37,9 +37,9 @@ Consumes `Element{X,Y,W,H}` from the model; writes `printdoc` elements.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement offset translation.
-- [ ] Tests with known band origin + element offsets.
-- [ ] Run `make check`.
+- [x] Implement offset translation.
+- [x] Tests with known band origin + element offsets.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

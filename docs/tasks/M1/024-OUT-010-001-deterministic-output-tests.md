@@ -1,6 +1,6 @@
 # OUT-010-001: Deterministic output tests
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [OUT-010](../../FEATURE_MATRIX.md#out--format-exporters)
 - **Milestone:** M1
 - **Priority:** P1
@@ -39,9 +39,9 @@ timestamps.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add a clock/timestamp injection point if missing.
-- [ ] Add the byte-equality test.
-- [ ] Run `make check`.
+- [x] Add a clock/timestamp injection point if missing (not needed: PDF emits no timestamps).
+- [x] Add the byte-equality test.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

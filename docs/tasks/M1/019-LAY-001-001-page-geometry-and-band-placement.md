@@ -1,6 +1,6 @@
 # LAY-001-001: Page geometry and band placement
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [LAY-001](../../FEATURE_MATRIX.md#lay--layout-typography-pagination)
 - **Milestone:** M1
 - **Priority:** P0
@@ -44,10 +44,10 @@ func (c *Canvas) Place(b *Band, h printdoc.Unit) (printdoc.Unit, error)
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement printable area + cursor.
-- [ ] Emit pages into `printdoc.Document`.
-- [ ] Tests for placement and page break.
-- [ ] Run `make check`.
+- [x] Implement printable area + cursor.
+- [x] Emit pages into `printdoc.Document`.
+- [x] Tests for placement and page break.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

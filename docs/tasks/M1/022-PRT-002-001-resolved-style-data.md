@@ -1,6 +1,6 @@
 # PRT-002-001: Resolved style data
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [PRT-002](../../FEATURE_MATRIX.md#prt--print-document-and-storage)
 - **Milestone:** M1
 - **Priority:** P1
@@ -41,9 +41,9 @@ type Style struct { Font string; Size Unit; Bold, Italic bool; Color uint32; Ali
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement `Style` with defaults.
-- [ ] Tests for default and set values.
-- [ ] Run `make check`.
+- [x] Implement `Style` with defaults.
+- [x] Tests for default and set values.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

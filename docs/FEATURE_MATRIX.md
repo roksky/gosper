@@ -142,9 +142,9 @@ Spec: [`features/LAY.md`](features/LAY.md) · Architect: [`architecture/layout-a
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LAY-001 | Page geometry and band placement | LAY | P0 | M1 | Not Started | JRX-002, PRT-001 | [LAY](features/LAY.md) | [LAY-001-001](tasks/M1/019-LAY-001-001-page-geometry-and-band-placement.md) | planned: geometry test |
-| LAY-002 | Absolute/float positioning | LAY | P0 | M1 | Not Started | LAY-001 | [LAY](features/LAY.md) | [LAY-002-001](tasks/M1/020-LAY-002-001-absolute-positioning.md) | planned: position test |
-| LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Not Started | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | planned: layout golden |
+| LAY-001 | Page geometry and band placement | LAY | P0 | M1 | Done | JRX-002, PRT-001 | [LAY](features/LAY.md) | [LAY-001-001](tasks/M1/019-LAY-001-001-page-geometry-and-band-placement.md) | `TestPrintableAreaAndBandPlacement`, `TestGeometryInvalidAndOversizeBand` |
+| LAY-002 | Absolute/float positioning | LAY | P0 | M1 | Done | LAY-001 | [LAY](features/LAY.md) | [LAY-002-001](tasks/M1/020-LAY-002-001-absolute-positioning.md) | `TestAbsoluteTextPlacement`, `TestAbsolutePositionRejectsOverflow` |
+| LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Done | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | `TestDetailLayoutFromJRXML`, `TestDetailExactlyFullPageAndCancel` |
 | LAY-004 | Relative stretching | LAY | P1 | M2 | Not Started | LAY-003 | [LAY](features/LAY.md) | INDEX | planned: stretch fixture |
 | LAY-005 | Font resolver (bundled core fonts) | LAY | P0 | M1 | Done | — | [LAY](features/LAY.md) | [LAY-005-001](tasks/M1/016-LAY-005-001-font-resolver.md) | `TestResolveCoreFontsAndFallback`, `TestMetricTableStable` |
 | LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Done | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | `TestMeasureFixedStrings`, `TestMeasureDeterminismAndScale` |
@@ -168,7 +168,7 @@ Spec: [`features/PRT.md`](features/PRT.md) · Architect: [`architecture/intermed
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | PRT-001 | Typed print document model | PRT | P0 | M1 | Done | — | [PRT](features/PRT.md) | [PRT-001-001](tasks/M0/PRT-001-001-print-document-ir-contract.md), [PRT-001-002](tasks/M1/018-PRT-001-002-print-document-model.md) | `TestDocumentAppendAndIterate`, `TestDocumentRejectsInvalidElementsAndStopsOnError` |
-| PRT-002 | Resolved style data in print IR | PRT | P1 | M1 | Not Started | PRT-001 | [PRT](features/PRT.md) | [PRT-002-001](tasks/M1/022-PRT-002-001-resolved-style-data.md) | planned: style test |
+| PRT-002 | Resolved style data in print IR | PRT | P1 | M1 | Done | PRT-001 | [PRT](features/PRT.md) | [PRT-002-001](tasks/M1/022-PRT-002-001-resolved-style-data.md) | `TestDefaultAndExplicitStyles`, `TestLayoutCarriesResolvedTextStyle` |
 | PRT-003 | Resource references (fonts/images) | PRT | P1 | M2 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: reference test |
 | PRT-004 | Lazy/streaming print storage | PRT | P2 | M3 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: streaming test |
 | PRT-005 | Spill-to-disk storage for large documents | PRT | P3 | M5 | Not Started | PRT-004 | [PRT](features/PRT.md) | INDEX | planned: large-doc test |
@@ -181,16 +181,16 @@ Spec: [`features/OUT.md`](features/OUT.md) · Architect: [`architecture/exporter
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| OUT-001 | Baseline PDF exporter | OUT | P0 | M1 | Not Started | PRT-001, PRT-007, OUT-009 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | planned: PDF golden |
-| OUT-002 | PDF text and font rendering | OUT | P0 | M1 | Not Started | OUT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | planned: text golden |
+| OUT-001 | Baseline PDF exporter | OUT | P0 | M1 | Done | PRT-001, PRT-007, OUT-009 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFStructureAndText` |
+| OUT-002 | PDF text and font rendering | OUT | P0 | M1 | Done | OUT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFEscapesTextAndUsesResolvedStyle` |
 | OUT-003 | PDF vector geometry and images | OUT | P1 | M2 | Not Started | OUT-001, LAY-014 | [OUT](features/OUT.md) | INDEX | planned: shape golden |
 | OUT-004 | PDF font embedding | OUT | P1 | M2 | Not Started | OUT-002, LAY-005 | [OUT](features/OUT.md) | INDEX | planned: embedding golden |
 | OUT-005 | PDF metadata and links | OUT | P2 | M3 | Not Started | OUT-001, LAY-018 | [OUT](features/OUT.md) | INDEX | planned: metadata test |
 | OUT-006 | XLSX exporter | OUT | P2 | M4 | Not Started | PRT-002 | [OUT](features/OUT.md) | INDEX | planned: XLSX golden |
 | OUT-007 | HTML exporter | OUT | P2 | M4 | Not Started | PRT-002 | [OUT](features/OUT.md) | INDEX | planned: HTML golden |
 | OUT-008 | CSV exporter | OUT | P2 | M4 | Not Started | PRT-002, FIL-001 | [OUT](features/OUT.md) | INDEX | planned: CSV golden |
-| OUT-009 | Streaming `io.Writer` output | OUT | P0 | M1 | Not Started | PRT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | planned: streaming test |
-| OUT-010 | Deterministic output | OUT | P1 | M1 | Not Started | OUT-001 | [OUT](features/OUT.md) | [OUT-010-001](tasks/M1/024-OUT-010-001-deterministic-output-tests.md) | planned: byte-stability test |
+| OUT-009 | Streaming `io.Writer` output | OUT | P0 | M1 | Done | PRT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFEmptyWriterErrorAndUnsupported` |
+| OUT-010 | Deterministic output | OUT | P1 | M1 | Done | OUT-001 | [OUT](features/OUT.md) | [OUT-010-001](tasks/M1/024-OUT-010-001-deterministic-output-tests.md) | `TestPDFByteIdenticalRepeated`, `TestPDFByteIdenticalParallel` |
 
 ## TST — Test infrastructure and correctness suites
 
@@ -274,5 +274,5 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | OQ-2 | Internal unit system for print IR (twips/points/sub-point)? | `PRT-001`, `LAY-*` | **Resolved: twips** (`ADR-0004`, `PRT-001-001`) |
 | OQ-3 | Text shaping backend (pure-Go vs dependency)? | `LAY-006`, `LAY-007` | ADR when `LAY-007` starts |
 | OQ-4 | Are remote fonts/images ever permitted, and under what policy? | `OPS-002`, `DAT-011` | `OPS-002` |
-| OQ-5 | PDF library choice (pure-Go vs dependency)? | `OUT-001` | `OUT-001-001` / ADR |
+| OQ-5 | PDF library choice (pure-Go vs dependency)? | `OUT-001` | **Resolved: standard-library PDF 1.4 writer** (`OUT-001-001`) |
 | OQ-6 | Does `internal/exec` exist, or does `report` orchestrate? | `FND-001` | **Resolved: `report` orchestrates; `internal/exec` deferred** (`ADR-0005`) |
