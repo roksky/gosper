@@ -9,6 +9,11 @@ and cancellation boundaries. This is the reference for
 
 ## Stage contracts
 
+The M1 `report` facade now connects `jrxml.Parse`, `layout.FromJRXML`,
+`fill.RunWithParams`, `layout.Layout`, and `exporter.PDF`. `report.FromSlice`
+provides a public data-source constructor. Compilation returns an immutable
+template; each fill owns its print document and exposes its page count.
+
 | Stage | Input | Output | Ownership of output |
 | --- | --- | --- | --- |
 | Parse | JRXML bytes + `Resolver` | template model | per-call; discarded after compile |

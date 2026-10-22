@@ -109,7 +109,7 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 				continue
 			}
 			var value expression.Value
-			value, err = toValue(raw)
+			value, err = ValueOf(raw)
 			if err != nil {
 				return nil, fmt.Errorf("field %q: %w", name, err)
 			}
@@ -122,7 +122,9 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 	}
 	return filled, nil
 }
-func toValue(raw any) (expression.Value, error) {
+
+// ValueOf converts supported Go field and parameter values to expression values.
+func ValueOf(raw any) (expression.Value, error) {
 	if raw == nil {
 		return expression.NullValue, nil
 	}

@@ -28,7 +28,7 @@ Spec: [`features/FND.md`](features/FND.md) · Architect: [`architecture/package-
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | In Progress | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/025-FND-001-002-public-sdk-walking-skeleton.md) | contract stubs in `report` (`api_test.go`); behavior pending FND-001-002 |
+| FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | Done | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/025-FND-001-002-public-sdk-walking-skeleton.md) | `TestPublicWalkingSkeleton`, `TestCancellationClosesCursor` |
 | FND-002 | Template loading and resource resolution | FND | P1 | M1 | **Done** | — | [FND](features/FND.md) | [FND-002-001](tasks/M1/001-FND-002-001-template-loading-and-resource-resolution.md) | `internal/resources/resolver_test.go`; branch `task/FND-002-001-template-loading-and-resource-resolution` |
 | FND-003 | Error model and diagnostic codes with source spans | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-003-001](tasks/M0/FND-003-001-diagnostic-error-code-model.md) | `internal/diag/diag_test.go`; branch `task/M0-contracts` |
 | FND-004 | Compilation cache with versioned keys | FND | P2 | M3 | Not Started | FND-001, JRX-020 | [FND](features/FND.md) | INDEX | planned: invalidation test |

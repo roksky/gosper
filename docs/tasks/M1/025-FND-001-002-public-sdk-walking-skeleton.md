@@ -1,6 +1,6 @@
 # FND-001-002: Public SDK walking skeleton
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FND-001](../../FEATURE_MATRIX.md#fnd--foundation-public-api-cli-infrastructure)
 - **Milestone:** M1
 - **Priority:** P0
@@ -40,9 +40,9 @@ Per `FND-001-001`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement orchestration with cancellation at boundaries.
-- [ ] End-to-end test.
-- [ ] Run `make check`.
+- [x] Implement orchestration with cancellation at boundaries.
+- [x] End-to-end test.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
