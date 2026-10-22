@@ -103,7 +103,7 @@ Spec: [`features/DAT.md`](features/DAT.md) · Architect: [`architecture/data-and
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| DAT-001 | Slice/struct/map data source | DAT | P0 | M1 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-001-001](tasks/M1/013-DAT-001-001-slice-data-source.md) | planned: slice source test |
+| DAT-001 | Slice/struct/map data source | DAT | P0 | M1 | Done | DAT-002 | [DAT](features/DAT.md) | [DAT-001-001](tasks/M1/013-DAT-001-001-slice-data-source.md) | `TestSliceSourceRows`, `TestSliceCancellationAndClose` |
 | DAT-002 | DataSource cursor lifecycle interface | DAT | P0 | M0 | **Done** | — | [DAT](features/DAT.md) | [DAT-002-001](tasks/M0/DAT-002-001-datasource-cursor-interface-contract.md) | `internal/datasource/datasource_test.go`; branch `task/DAT-002-001` |
 | DAT-003 | JSON data source | DAT | P1 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-003-001](tasks/M2/030-DAT-003-001-json-data-source.md) | planned: JSON fixture |
 | DAT-004 | CSV data source | DAT | P2 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-004-001](tasks/M2/031-DAT-004-001-csv-data-source.md) | planned: CSV fixture |

@@ -1,6 +1,6 @@
 # DAT-001-001: Slice data source
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [DAT-001](../../FEATURE_MATRIX.md#dat--data-sources-and-queries)
 - **Milestone:** M1
 - **Priority:** P0
@@ -41,10 +41,10 @@ func FromSlice[T any](rows []T) DataSource
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement slice/map/struct adaptation.
-- [ ] Honor `ctx` in `Next`.
-- [ ] Tests for each shape and cancellation.
-- [ ] Run `make check`.
+- [x] Implement slice/map/struct adaptation.
+- [x] Honor `ctx` in `Next`.
+- [x] Tests for each shape and cancellation.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
