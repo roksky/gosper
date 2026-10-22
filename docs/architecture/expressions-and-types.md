@@ -36,6 +36,11 @@ type Scope []Symbols // first match wins; inner scopes shadow outer
 is deferred to `EXP-008` (OQ-1) and arithmetic on it is undefined until then.
 Names are case-sensitive; a missing symbol returns `(nil, false)` and must not
 panic.
+`ParseReference` accepts explicit `$F{}`, `$P{}` and `$V{}` forms and bare
+names. Explicit references use only their named namespace. Bare names resolve
+in variable, parameter, field order; within each namespace the first (inner)
+scope wins. Braced names may have surrounding whitespace. Empty names and
+nested braces are invalid.
 
 Unresolved symbols are a **compile-time** error when statically known
 (`EXP-016`), otherwise a runtime diagnostic with the expression span.
