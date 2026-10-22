@@ -84,8 +84,13 @@ String concatenation uses `+` for two strings. Decimal arithmetic awaits
 - **Decimals are mandatory for financial expressions.** Binary floating point
   must not be the default (`EXP-008`); the concrete decimal representation is
   an open decision (see below).
-- **Null propagation** follows Jasper-like rules; comparisons and arithmetic
-  with null produce null unless a function defines otherwise (`EXP-006`).
+- **Null propagation:** arithmetic and ordering with null produce null. Equality
+  is null aware: `null == null` is true, `null != null` is false, and a null
+  compared to a non-null value is unequal. Boolean operators use three valued
+  logic: false dominates `&&`, true dominates `||`, and the remaining cases
+  with null produce null. `!null` produces null. Missing symbols are null.
+  The equality and boolean choices are explicit subset semantics; they may
+  differ from Jasper expressions compiled as Java depending on operand types.
 - **Coercion** between numeric types is explicit and documented (`EXP-007`).
 
 ## Proposed contract — non-binding

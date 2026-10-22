@@ -2,10 +2,13 @@ package expression
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/big"
 	"time"
 )
+
+var errBooleanOperand = errors.New("boolean operands required")
 
 // Eval evaluates a program in a scope. Missing symbols evaluate to null.
 // Evaluation visits at most the nodes in the bounded compiled program.
@@ -55,8 +58,8 @@ func (p *Program) eval(ctx context.Context, scope Scope, n *node) (Value, error)
 	return binary(n.op, left, right, p.src, n.offset)
 }
 func unary(op string, v Value, src string, offset int) (Value, error) {
-	if _, ok := v.(Null); ok {
-		return NullValue, nil
+	if result, handled := nullUnary(v); handled {
+		return result, nil
 	}
 	switch op {
 	case "u!":
@@ -78,11 +81,11 @@ func unary(op string, v Value, src string, offset int) (Value, error) {
 	return nil, runtimeError(src, offset, "invalid unary operand")
 }
 func binary(op string, a, b Value, src string, offset int) (Value, error) {
-	if _, ok := a.(Null); ok {
-		return NullValue, nil
-	}
-	if _, ok := b.(Null); ok {
-		return NullValue, nil
+	if result, handled, err := nullBinary(op, a, b); handled {
+		if err != nil {
+			return nil, runtimeError(src, offset, err.Error())
+		}
+		return result, nil
 	}
 	if op == "&&" || op == "||" {
 		x, xok := a.(Bool)
