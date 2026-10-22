@@ -30,7 +30,7 @@ flowchart TD
     EXEC --> LAY[internal/layout]
     EXEC --> OUT[internal/exporter]
     EXEC --> CACHE[internal/cache proposed]
-    EXEC --> RES[internal/resources proposed]
+    EXEC --> RES[internal/resources]
 
     CMP --> JRX[internal/jrxml]
     CMP --> EXP[internal/expression]
@@ -79,14 +79,15 @@ flowchart LR
 | `internal/exporter` | Format encoders (PDF, XLSX, HTML, CSV). | Parsing, filling, layout. |
 | `internal/text` *(proposed)* | Font metrics, shaping, line breaking. | Report semantics. |
 | `internal/cache` *(proposed)* | Versioned compile cache. | Report semantics. |
-| `internal/resources` *(proposed)* | Resource URI resolution and allowlists. | Format-specific rendering. |
+| `internal/resources` | Resource URI resolution and allowlists. | Format-specific rendering. |
 | `internal/limits` | Budgets, cancellation helpers, counters. | Feature logic. |
 | `internal/testutil` | Deterministic clock/locale/timezone helpers. | Non-test production code. |
 
 ## Interfaces
 
 `DataSource`/`Cursor`/`Record` are defined in `internal/datasource` (`DAT-002`,
-**Done**). `Resolver` remains proposed:
+**Done**). `Resolver` is defined in `internal/resources` (`FND-002-001`,
+**Done**):
 
 ```go
 // Implemented — internal/datasource.
@@ -105,9 +106,9 @@ type Cursor interface {
 ```
 
 ```go
-// Proposed interface — non-binding.
-
+// Implemented — internal/resources.
 // Resolver resolves logical resource names to readers, enforcing allowlists.
+// See FND-002-001.
 type Resolver interface {
     Open(ctx context.Context, ref string) (io.ReadCloser, error)
 }

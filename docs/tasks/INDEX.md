@@ -41,7 +41,7 @@ complete the M0 prerequisite `TST-001-002`, which is still Not Started. Task
 
 | Task | Title | Feature | Status | Deps | Package / files | File |
 | --- | --- | --- | --- | --- | --- | --- |
-| FND-002-001 | Template loading and resource resolution | FND-002 | Not Started | none | `internal/resources` | [file](M1/001-FND-002-001-template-loading-and-resource-resolution.md) |
+| FND-002-001 | Template loading and resource resolution | FND-002 | Done | none | `internal/resources` | [file](M1/001-FND-002-001-template-loading-and-resource-resolution.md) |
 | JRX-001-002 | Decode skeleton and version detection | JRX-001 | Not Started | JRX-001-001 | `internal/jrxml` | [file](M1/002-JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) |
 | JRX-002-001 | Report metadata and page properties | JRX-002 | Not Started | JRX-001-002 | `internal/jrxml` | [file](M1/003-JRX-002-001-report-metadata-and-page-properties.md) |
 | JRX-003-001 | Parse parameters | JRX-003 | Not Started | JRX-001-002 | `internal/jrxml` | [file](M1/004-JRX-003-001-parse-parameters.md) |

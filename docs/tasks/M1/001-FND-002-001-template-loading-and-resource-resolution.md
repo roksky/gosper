@@ -1,6 +1,6 @@
 # FND-002-001: Template loading and resource resolution
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FND-002](../../FEATURE_MATRIX.md#fnd--foundation-public-api-cli-infrastructure)
 - **Milestone:** M1
 - **Priority:** P1
@@ -45,10 +45,10 @@ Integration: `report.Compile` uses it to read the template.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement resolver + options for allowlists.
-- [ ] Reject `..` traversal outside root.
-- [ ] Tests for allow/deny cases.
-- [ ] Run `make check`.
+- [x] Implement resolver + options for allowlists.
+- [x] Reject `..` traversal outside root.
+- [x] Tests for allow/deny cases.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
@@ -68,6 +68,9 @@ Integration: `report.Compile` uses it to read the template.
 
 Resolver tested; deny-by-default documented; linked from
 [`../../architecture/data-and-resources.md`](../../architecture/data-and-resources.md).
+
+Implemented in `internal/resources` (`resolver.go`, `doc.go`) with tests in
+`resolver_test.go` using `fstest.MapFS` and `t.TempDir`.
 
 ## References and downstream dependencies
 

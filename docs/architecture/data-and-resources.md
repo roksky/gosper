@@ -32,17 +32,22 @@ CSV (`DAT-004`), SQL via `database/sql` (`DAT-005`).
 
 ## Resource resolution
 
+Implemented in `internal/resources` (`FND-002-001`, **Done**).
+
 ```go
-// Proposed interface — non-binding.
+// Implemented — internal/resources.
 type Resolver interface {
     Open(ctx context.Context, ref string) (io.ReadCloser, error)
 }
 ```
 
 - Resolution supports injected filesystems and explicit allowlists
-  (`OPS-002`).
-- URIs (http/https/file) are **denied by default**; enabling them is explicit
-  and audited.
+  (`OPS-002`): `resources.New(fs.FS, opts...)` is rooted at an injected
+  `fs.FS` (in-memory or `resources.FromDir` for an on-disk tree).
+- URIs (http/https/file) are **denied by default**; enabling a scheme is
+  explicit (`resources.WithAllowedSchemes`) and audited.
+- References are rooted: `..` traversal and absolute paths are rejected with
+  code `validation`; disallowed schemes are rejected with code `unsupported`.
 - Images and fonts are referenced by logical name in compiled IR and resolved
   through the resolver at fill/layout time.
 
