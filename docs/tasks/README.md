@@ -22,9 +22,13 @@ enough to author tasks.
 
 ## Naming
 
-`<MILESTONE>/<FEATURE-ID>-<NNN>-<slug>.md`, e.g.
-`M0/JRX-001-001-parser-io-contract-and-version-detection.md`. The task ID
-`JRX-001-001` appears in both the filename and the `# ` heading.
+M0 files use `<MILESTONE>/<FEATURE-ID>-<NNN>-<slug>.md`, e.g.
+`M0/JRX-001-001-parser-io-contract-and-version-detection.md`. M1 and M2 files
+use `<MILESTONE>/<ORDER>-<FEATURE-ID>-<NNN>-<slug>.md`. The three-digit order
+prefix is unique across M1 and M2, so sorting filenames within each milestone
+puts task prerequisites first. It is not part of the task ID; the task ID
+still appears in the filename and the `# ` heading. Check `INDEX.md` for task
+status and dependencies before starting work.
 
 ## Required template
 
