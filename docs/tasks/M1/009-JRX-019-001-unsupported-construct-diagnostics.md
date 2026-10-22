@@ -1,6 +1,6 @@
 # JRX-019-001: Unsupported-construct diagnostics
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-019](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P1
@@ -40,9 +40,9 @@ Integrates with the `internal/jrxml` dispatcher; emits into `diag.List`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add catch-all diagnostics with element name + span.
-- [ ] Test an unknown element yields `unsupported`/`parse` with span.
-- [ ] Run `make check`.
+- [x] Add catch-all diagnostics with element name + span.
+- [x] Test an unknown element yields `unsupported`/`parse` with span.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

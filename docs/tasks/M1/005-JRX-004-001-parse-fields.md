@@ -1,6 +1,6 @@
 # JRX-004-001: Parse report fields
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-004](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -37,9 +37,9 @@ Adds `Template.Fields []Field{Name, Type string}`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Handler for `<field>`.
-- [ ] Tests with typed fields.
-- [ ] Run `make check`.
+- [x] Handler for `<field>`.
+- [x] Tests with typed fields.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

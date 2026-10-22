@@ -46,25 +46,25 @@ Spec: [`features/JRX.md`](features/JRX.md) · Compat: [`COMPATIBILITY.md`](COMPA
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| JRX-001 | JRXML parsing and version detection | JRX | P0 | M1 | In Progress | FND-003 | [JRX](features/JRX.md) | [JRX-001-001](tasks/M0/JRX-001-001-parser-io-contract-and-version-detection.md), [JRX-001-002](tasks/M1/002-JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) | parser contract + version detection (`internal/jrxml/contract_test.go`); element parsing pending |
-| JRX-002 | Report metadata, page properties, margins, columns | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-002-001](tasks/M1/003-JRX-002-001-report-metadata-and-page-properties.md) | planned: metadata fixture |
-| JRX-003 | Report parameter declarations | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-003-001](tasks/M1/004-JRX-003-001-parse-parameters.md) | planned: parameter fixture |
-| JRX-004 | Report field declarations | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-004-001](tasks/M1/005-JRX-004-001-parse-fields.md) | planned: field fixture |
+| JRX-001 | JRXML parsing and version detection | JRX | P0 | M1 | **Done** | FND-003 | [JRX](features/JRX.md) | [JRX-001-001](tasks/M0/JRX-001-001-parser-io-contract-and-version-detection.md), [JRX-001-002](tasks/M1/002-JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) | `internal/jrxml/parse_test.go`; dispatch seam; branch `task/JRX-m1-parse-skeleton` |
+| JRX-002 | Report metadata, page properties, margins, columns | JRX | P0 | M1 | **Done** | JRX-001 | [JRX](features/JRX.md) | [JRX-002-001](tasks/M1/003-JRX-002-001-report-metadata-and-page-properties.md) | `testdata/jrxml/JRX-002-001-page-properties.jrxml`; `report_test.go` |
+| JRX-003 | Report parameter declarations | JRX | P0 | M1 | **Done** | JRX-001 | [JRX](features/JRX.md) | [JRX-003-001](tasks/M1/004-JRX-003-001-parse-parameters.md) | `testdata/jrxml/JRX-003-001-parameters.jrxml`; `parameters_test.go` |
+| JRX-004 | Report field declarations | JRX | P0 | M1 | **Done** | JRX-001 | [JRX](features/JRX.md) | [JRX-004-001](tasks/M1/005-JRX-004-001-parse-fields.md) | `testdata/jrxml/JRX-004-001-fields.jrxml`; `fields_test.go` |
 | JRX-005 | Report variable declarations | JRX | P1 | M3 | Not Started | JRX-001 | [JRX](features/JRX.md) | INDEX | planned: variable fixture |
 | JRX-006 | Query element parsing | JRX | P1 | M2 | Not Started | JRX-001 | [JRX](features/JRX.md) | INDEX | planned: query fixture |
 | JRX-007 | Report properties and basic styles | JRX | P1 | M3 | Not Started | JRX-001 | [JRX](features/JRX.md) | INDEX | planned: style fixture |
-| JRX-008 | Core bands (title/page/column/detail/summary) | JRX | P0 | M1 | Not Started | JRX-002, JRX-010 | [JRX](features/JRX.md) | [JRX-008-001](tasks/M1/007-JRX-008-001-parse-core-bands.md) | planned: band fixture |
+| JRX-008 | Core bands (title/page/column/detail/summary) | JRX | P0 | M1 | **Done** | JRX-002, JRX-010 | [JRX](features/JRX.md) | [JRX-008-001](tasks/M1/007-JRX-008-001-parse-core-bands.md) | `testdata/jrxml/JRX-008-001-core-bands.jrxml`; `bands_test.go` |
 | JRX-009 | Advanced bands (background/lastPageFooter/noData) | JRX | P2 | M3 | Not Started | JRX-008 | [JRX](features/JRX.md) | INDEX | planned: band fixture |
-| JRX-010 | Basic elements: staticText, textField | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-010-001](tasks/M1/006-JRX-010-001-parse-basic-elements.md) | planned: element fixture |
+| JRX-010 | Basic elements: staticText, textField | JRX | P0 | M1 | **Done** | JRX-001 | [JRX](features/JRX.md) | [JRX-010-001](tasks/M1/006-JRX-010-001-parse-basic-elements.md) | `testdata/jrxml/JRX-010-001-basic-elements.jrxml`; `elements_test.go` |
 | JRX-011 | Drawable elements: line, rectangle, ellipse | JRX | P1 | M2 | Not Started | JRX-010 | [JRX](features/JRX.md) | INDEX | planned: shape fixture |
 | JRX-012 | Image element parsing | JRX | P2 | M4 | Not Started | JRX-010, PRT-003 | [JRX](features/JRX.md) | INDEX | planned: image fixture |
 | JRX-013 | Style inheritance | JRX | P1 | M3 | Not Started | JRX-007 | [JRX](features/JRX.md) | INDEX | planned: inheritance fixture |
-| JRX-014 | Element position/stretch/printWhen/evaluationTime | JRX | P0 | M1 | Not Started | JRX-010 | [JRX](features/JRX.md) | [JRX-014-001](tasks/M1/008-JRX-014-001-parse-element-settings.md) | planned: settings fixture |
+| JRX-014 | Element position/stretch/printWhen/evaluationTime | JRX | P0 | M1 | **Done** | JRX-010 | [JRX](features/JRX.md) | [JRX-014-001](tasks/M1/008-JRX-014-001-parse-element-settings.md) | `testdata/jrxml/JRX-014-001-element-settings.jrxml`; `element_attrs_test.go` |
 | JRX-015 | Group declarations and reset behavior | JRX | P0 | M3 | Not Started | JRX-005 | [JRX](features/JRX.md) | INDEX | planned: group fixture |
 | JRX-016 | Dataset runs and subdatasets | JRX | P2 | M4 | Not Started | JRX-006, DAT-009 | [JRX](features/JRX.md) | INDEX | planned: subdataset fixture |
 | JRX-017 | Subreport element | JRX | P2 | M4 | Not Started | JRX-016 | [JRX](features/JRX.md) | INDEX | planned: subreport fixture |
 | JRX-018 | Conditional styles and hyperlinks | JRX | P3 | M4 | Not Started | JRX-013 | [JRX](features/JRX.md) | INDEX | planned: conditional style fixture |
-| JRX-019 | Unsupported-construct diagnostics and extension points | JRX | P1 | M1 | Not Started | JRX-001, FND-003 | [JRX](features/JRX.md) | [JRX-019-001](tasks/M1/009-JRX-019-001-unsupported-construct-diagnostics.md) | planned: diagnostic fixture |
+| JRX-019 | Unsupported-construct diagnostics and extension points | JRX | P1 | M1 | **Done** | JRX-001, FND-003 | [JRX](features/JRX.md) | [JRX-019-001](tasks/M1/009-JRX-019-001-unsupported-construct-diagnostics.md) | `testdata/jrxml/JRX-019-001-unsupported.jrxml`; `unsupported_test.go` |
 | JRX-020 | Version-aware normalization | JRX | P1 | M2 | Not Started | JRX-001, JRX-019 | [JRX](features/JRX.md) | [JRX-020-001](tasks/M2/033-JRX-020-001-version-aware-normalization.md) | planned: version fixture |
 | JRX-021 | Compiled `.jasper` binary loading | JRX | P3 | — | **Deferred** | — | [JRX](features/JRX.md) | — | Out of scope; see compat policy |
 | JRX-022 | Compatibility matrix and fixture registry | JRX | P1 | M0 | **Done** | — | [JRX](features/JRX.md) | [JRX-022-001](tasks/M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) | [`COMPATIBILITY.md`](COMPATIBILITY.md) fixture registry |
@@ -250,10 +250,10 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | Metric | Count |
 | --- | --- |
 | Total features | 146 |
-| Done | 9 (`FND-002`, `FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`, `TST-001`) |
-| In Progress | 4 (`EXP-001`, `PRT-001`, `FND-001`, `JRX-001`) |
+| Done | 17 (`FND-002`, `FND-003`, `FND-009`, `FND-011`, `JRX-001`, `JRX-002`, `JRX-003`, `JRX-004`, `JRX-008`, `JRX-010`, `JRX-014`, `JRX-019`, `JRX-022`, `DAT-002`, `EXP-019`, `OPS-008`, `TST-001`) |
+| In Progress | 3 (`EXP-001`, `PRT-001`, `FND-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 130 |
+| Not Started | 123 |
 | M0 features | 7 |
 | M1 features | 35 |
 | M2 features | 33 |

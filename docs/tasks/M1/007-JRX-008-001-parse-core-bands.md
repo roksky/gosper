@@ -1,6 +1,6 @@
 # JRX-008-001: Parse core bands
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-008](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M1
 - **Priority:** P0
@@ -42,10 +42,10 @@ type Band struct { Kind string; Height Unit; Elements []Element }
 
 ## Implementation checklist (future agent only)
 
-- [ ] Handler mapping known band element names to `Band`.
-- [ ] Preserve declared order.
-- [ ] Tests for a multi-band fixture.
-- [ ] Run `make check`.
+- [x] Handler mapping known band element names to `Band`.
+- [x] Preserve declared order.
+- [x] Tests for a multi-band fixture.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

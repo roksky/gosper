@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport version="6.20.0" name="element-settings">
+    <detail>
+        <band height="50">
+            <staticText isStretchWithOverflow="true" evaluationTime="Report">
+                <reportElement x="1" y="2" width="30" height="4"
+                               uuid="00000000-0000-0000-0000-000000000002">
+                    <printWhenExpression><![CDATA[$F{show}]]></printWhenExpression>
+                </reportElement>
+                <text>Hi</text>
+            </staticText>
+            <textField>
+                <reportElement x="5" y="6" width="7" height="8"/>
+                <textFieldExpression>1</textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

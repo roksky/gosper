@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport version="6.20.0" name="elements">
+    <detail>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="0" width="100" height="20"/>
+                <text><![CDATA[Hello, world]]></text>
+            </staticText>
+            <textField pattern="#,##0.00" isBlankWhenNull="true">
+                <reportElement x="100" y="0" width="80" height="20"/>
+                <textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

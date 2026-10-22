@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport version="6.20.0" name="core-bands">
+    <title>
+        <band height="40">
+            <staticText>
+                <reportElement x="0" y="0" width="200" height="20"/>
+                <text>Title</text>
+            </staticText>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="20"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="15"/>
+    </columnHeader>
+    <detail>
+        <band height="25">
+            <textField>
+                <reportElement x="0" y="0" width="80" height="15"/>
+                <textFieldExpression>$F{name}</textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="15"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="20"/>
+    </pageFooter>
+    <summary>
+        <band height="30"/>
+    </summary>
+</jasperReport>

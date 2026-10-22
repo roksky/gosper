@@ -1,7 +1,8 @@
 # Compatibility
 
 > **These are targets and a tracking register, not claims of current support.**
-> No compatibility is implemented in the bootstrap/scaffold state. This
+> Parsing support for a small M1 subset is now implemented and evidenced below;
+> all other dimensions (compile/fill/export) remain unimplemented. This
 > supersedes the earlier bootstrap document previously at `docs/compatibility.md`
 > (merged here). See [`STATUS.md`](STATUS.md) for the evidenced baseline.
 
@@ -43,29 +44,31 @@ passes. Planned Go features do **not** imply compatibility parity.
 
 `JRXML construct | Jasper version/dialect | Parse | Compile | Fill | PDF | XLSX | Notes / fixture`
 
-All rows start `Planned`/`Not Tested`; none are `Verified` today.
+Rows below may be `Verified` for syntax parsing where a fixture and passing
+test exist (`JRX-001`/`JRX-002`/`JRX-003`/`JRX-004`/`JRX-008`/`JRX-010`/`JRX-014`);
+compile/fill/export columns remain `Planned`.
 
 | Construct | Dialect | Parse | Compile | Fill | PDF | XLSX | Notes / fixture |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `<jasperReport>` root + namespaces | 6.x | Planned | Planned | — | — | — | `JRX-001`; fixture `testdata/` |
-| Page properties/margins/columns | 6.x | Planned | Planned | — | — | — | `JRX-002` |
-| `<parameter>` | 6.x | Planned | Planned | Planned | — | — | `JRX-003` |
-| `<field>` | 6.x | Planned | Planned | Planned | — | — | `JRX-004` |
+| `<jasperReport>` root + namespaces | 6.x | Verified | Planned | — | — | — | `JRX-001`; fixture `testdata/jrxml/JRX-001-002-minimal-report.jrxml` |
+| Page properties/margins/columns | 6.x | Verified | Planned | — | — | — | `JRX-002`; fixture `testdata/jrxml/JRX-002-001-page-properties.jrxml` |
+| `<parameter>` | 6.x | Verified | Planned | Planned | — | — | `JRX-003`; fixture `testdata/jrxml/JRX-003-001-parameters.jrxml` |
+| `<field>` | 6.x | Verified | Planned | Planned | — | — | `JRX-004`; fixture `testdata/jrxml/JRX-004-001-fields.jrxml` |
 | `<variable>` | 6.x | Planned | Planned | Planned | — | — | `JRX-005` |
 | `<queryString>` | 6.x | Planned | Planned | Planned | — | — | `JRX-006`, `DAT-005` |
 | `<style>` inheritance | 6.x | Planned | Planned | — | Planned | Planned | `JRX-007`, `JRX-013` |
-| Title band | 6.x | Planned | Planned | Planned | Planned | — | `JRX-008` |
-| Page header/footer | 6.x | Planned | Planned | Planned | Planned | — | `JRX-008` |
-| Column header/footer | 6.x | Planned | Planned | Planned | Planned | — | `JRX-008` |
-| Detail band | 6.x | Planned | Planned | Planned | Planned | — | `JRX-008` |
-| Summary band | 6.x | Planned | Planned | Planned | Planned | — | `JRX-008` |
+| Title band | 6.x | Verified | Planned | Planned | Planned | — | `JRX-008`; fixture `testdata/jrxml/JRX-008-001-core-bands.jrxml` |
+| Page header/footer | 6.x | Verified | Planned | Planned | Planned | — | `JRX-008`; fixture `testdata/jrxml/JRX-008-001-core-bands.jrxml` |
+| Column header/footer | 6.x | Verified | Planned | Planned | Planned | — | `JRX-008`; fixture `testdata/jrxml/JRX-008-001-core-bands.jrxml` |
+| Detail band | 6.x | Verified | Planned | Planned | Planned | — | `JRX-008`; fixture `testdata/jrxml/JRX-008-001-core-bands.jrxml` |
+| Summary band | 6.x | Verified | Planned | Planned | Planned | — | `JRX-008`; fixture `testdata/jrxml/JRX-008-001-core-bands.jrxml` |
 | Background/lastPageFooter/noData | 6.x | Planned | Planned | Planned | Planned | — | `JRX-009` |
-| `<staticText>` | 6.x | Planned | Planned | — | Planned | Planned | `JRX-010` |
-| `<textField>` | 6.x | Planned | Planned | Planned | Planned | Planned | `JRX-010` |
+| `<staticText>` | 6.x | Verified | Planned | — | Planned | Planned | `JRX-010`; fixture `testdata/jrxml/JRX-010-001-basic-elements.jrxml` |
+| `<textField>` | 6.x | Verified | Planned | Planned | Planned | Planned | `JRX-010`; fixture `testdata/jrxml/JRX-010-001-basic-elements.jrxml` |
 | `<line>`, `<rectangle>`, `<ellipse>` | 6.x | Planned | Planned | — | Planned | Planned | `JRX-011` |
 | `<image>` | 6.x | Planned | Planned | Planned | Planned | — | `JRX-012` |
-| Element `printWhenExpression` | 6.x | Planned | Planned | Planned | Planned | Planned | `JRX-014`, `FIL-008` |
-| Element `evaluationTime` | 6.x | Planned | Planned | Planned | Planned | — | `JRX-014` |
+| Element `printWhenExpression` | 6.x | Verified | Planned | Planned | Planned | Planned | `JRX-014`; fixture `testdata/jrxml/JRX-014-001-element-settings.jrxml` |
+| Element `evaluationTime` | 6.x | Verified | Planned | Planned | Planned | — | `JRX-014`; fixture `testdata/jrxml/JRX-014-001-element-settings.jrxml` |
 | Groups (headers/footers/reset) | 6.x | Planned | Planned | Planned | Planned | — | `JRX-015` |
 | Subdatasets | 6.x | Planned | Planned | Planned | Planned | — | `JRX-016` |
 | Subreports | 6.x | Planned | Planned | Planned | Planned | — | `JRX-017` |
