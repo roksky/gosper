@@ -65,7 +65,7 @@ Spec: [`features/JRX.md`](features/JRX.md) · Compat: [`COMPATIBILITY.md`](COMPA
 | JRX-017 | Subreport element | JRX | P2 | M4 | Not Started | JRX-016 | [JRX](features/JRX.md) | INDEX | planned: subreport fixture |
 | JRX-018 | Conditional styles and hyperlinks | JRX | P3 | M4 | Not Started | JRX-013 | [JRX](features/JRX.md) | INDEX | planned: conditional style fixture |
 | JRX-019 | Unsupported-construct diagnostics and extension points | JRX | P1 | M1 | **Done** | JRX-001, FND-003 | [JRX](features/JRX.md) | [JRX-019-001](tasks/M1/009-JRX-019-001-unsupported-construct-diagnostics.md) | `testdata/jrxml/JRX-019-001-unsupported.jrxml`; `unsupported_test.go` |
-| JRX-020 | Version-aware normalization | JRX | P1 | M2 | Not Started | JRX-001, JRX-019 | [JRX](features/JRX.md) | [JRX-020-001](tasks/M2/033-JRX-020-001-version-aware-normalization.md) | planned: version fixture |
+| JRX-020 | Version-aware normalization | JRX | P1 | M2 | Done | JRX-001, JRX-019 | [JRX](features/JRX.md) | [JRX-020-001](tasks/M2/033-JRX-020-001-version-aware-normalization.md) | `testdata/jrxml/versions/`; `internal/jrxml/normalize_test.go` |
 | JRX-021 | Compiled `.jasper` binary loading | JRX | P3 | — | **Deferred** | — | [JRX](features/JRX.md) | — | Out of scope; see compat policy |
 | JRX-022 | Compatibility matrix and fixture registry | JRX | P1 | M0 | **Done** | — | [JRX](features/JRX.md) | [JRX-022-001](tasks/M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) | [`COMPATIBILITY.md`](COMPATIBILITY.md) fixture registry |
 | JRX-023 | Font declarations in JRXML | JRX | P2 | M4 | Not Started | LAY-005 | [JRX](features/JRX.md) | INDEX | planned: font fixture |
@@ -105,8 +105,8 @@ Spec: [`features/DAT.md`](features/DAT.md) · Architect: [`architecture/data-and
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | DAT-001 | Slice/struct/map data source | DAT | P0 | M1 | Done | DAT-002 | [DAT](features/DAT.md) | [DAT-001-001](tasks/M1/013-DAT-001-001-slice-data-source.md) | `TestSliceSourceRows`, `TestSliceCancellationAndClose` |
 | DAT-002 | DataSource cursor lifecycle interface | DAT | P0 | M0 | **Done** | — | [DAT](features/DAT.md) | [DAT-002-001](tasks/M0/DAT-002-001-datasource-cursor-interface-contract.md) | `internal/datasource/datasource_test.go`; branch `task/DAT-002-001` |
-| DAT-003 | JSON data source | DAT | P1 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-003-001](tasks/M2/030-DAT-003-001-json-data-source.md) | planned: JSON fixture |
-| DAT-004 | CSV data source | DAT | P2 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-004-001](tasks/M2/031-DAT-004-001-csv-data-source.md) | planned: CSV fixture |
+| DAT-003 | JSON data source | DAT | P1 | M2 | Done | DAT-002 | [DAT](features/DAT.md) | [DAT-003-001](tasks/M2/030-DAT-003-001-json-data-source.md) | `testdata/json/basic.json`; `internal/datasource/json_test.go` |
+| DAT-004 | CSV data source | DAT | P2 | M2 | Done | DAT-002 | [DAT](features/DAT.md) | [DAT-004-001](tasks/M2/031-DAT-004-001-csv-data-source.md) | `testdata/csv/basic.csv`; `internal/datasource/csv_test.go` |
 | DAT-005 | SQL via `database/sql` | DAT | P1 | M2 | Not Started | DAT-002, DAT-006 | [DAT](features/DAT.md) | INDEX | planned: SQL fixture (test DB) |
 | DAT-006 | Query parameter binding | DAT | P1 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | INDEX | planned: binding test |
 | DAT-007 | Field conversion and type mapping | DAT | P1 | M2 | Not Started | DAT-002, EXP-007 | [DAT](features/DAT.md) | INDEX | planned: conversion test |
@@ -149,7 +149,7 @@ Spec: [`features/LAY.md`](features/LAY.md) · Architect: [`architecture/layout-a
 | LAY-005 | Font resolver (bundled core fonts) | LAY | P0 | M1 | Done | — | [LAY](features/LAY.md) | [LAY-005-001](tasks/M1/016-LAY-005-001-font-resolver.md) | `TestResolveCoreFontsAndFallback`, `TestMetricTableStable` |
 | LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Done | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | `TestMeasureFixedStrings`, `TestMeasureDeterminismAndScale` |
 | LAY-007 | Unicode shaping and fallback | LAY | P2 | M5 | Not Started | LAY-006 | [LAY](features/LAY.md) | INDEX | planned: Unicode fixture |
-| LAY-008 | Wrapping, clipping, alignment, rotation | LAY | P1 | M2 | Not Started | LAY-006 | [LAY](features/LAY.md) | [LAY-008-001](tasks/M2/032-LAY-008-001-text-wrapping-and-alignment.md) | planned: wrap fixture |
+| LAY-008 | Wrapping, clipping, alignment, rotation | LAY | P1 | M2 | Partial | LAY-006 | [LAY](features/LAY.md) | [LAY-008-001](tasks/M2/032-LAY-008-001-text-wrapping-and-alignment.md) | `internal/text/wrap_test.go`; `internal/layout/text_test.go`; rotation/clipping deferred |
 | LAY-009 | Styled text and markup subset | LAY | P2 | M3 | Not Started | LAY-008 | [LAY](features/LAY.md) | INDEX | planned: markup fixture |
 | LAY-010 | Variable band height and split types | LAY | P2 | M3 | Not Started | LAY-004, LAY-006 | [LAY](features/LAY.md) | INDEX | planned: split fixture |
 | LAY-011 | Column/page breaks and keep-together | LAY | P1 | M2 | Not Started | LAY-003 | [LAY](features/LAY.md) | INDEX | planned: break fixture |

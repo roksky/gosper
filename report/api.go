@@ -91,6 +91,10 @@ func Compile(ctx context.Context, r io.Reader, opts ...Option) (*CompiledReport,
 	if len(diags) > 0 {
 		return nil, diags.Err()
 	}
+	// Normalize supported 6.x syntax before building the layout and fill model.
+	// Uncertain normalization cases remain available to direct jrxml callers as
+	// warnings; the existing public Compile signature has no diagnostic channel.
+	jrxml.Normalize(tmpl)
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}

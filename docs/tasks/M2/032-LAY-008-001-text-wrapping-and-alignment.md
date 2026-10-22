@@ -1,6 +1,6 @@
 # LAY-008-001: Text wrapping and alignment
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [LAY-008](../../FEATURE_MATRIX.md#lay--layout-typography-pagination)
 - **Milestone:** M2
 - **Priority:** P1
@@ -38,9 +38,9 @@ Deterministic measurement exists.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement wrapping (greedy) + alignment.
-- [ ] Tests for wrap points and offsets.
-- [ ] Run `make check`.
+- [x] Implement wrapping (greedy) + alignment.
+- [x] Tests for wrap points and offsets.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
@@ -63,3 +63,7 @@ Implemented/tested; compatibility rows for wrapping/alignment updated.
 
 - Feature: `LAY-008`.
 - Unblocks: `LAY-009`, `LAY-010`.
+
+## Verification and compatibility
+
+`GOCACHE=/tmp/gosper-go-cache make check` passes. `internal/text/wrap_test.go` covers measured greedy wrapping and long words; `internal/layout/text_test.go` covers horizontal and vertical offsets and height overflow. Rotation, clipping, and Unicode line breaking remain deferred.

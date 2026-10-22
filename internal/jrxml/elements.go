@@ -30,6 +30,8 @@ type Element struct {
 	Expr            string
 	Pattern         string
 	IsBlankWhenNull bool
+	// TextAdjust holds the newer text sizing attribute until normalization.
+	TextAdjust string
 }
 
 func init() {
@@ -53,6 +55,8 @@ func parseTextField(p *parser, se xml.StartElement) (Element, error) {
 			el.Pattern = a.Value
 		case "isBlankWhenNull":
 			el.IsBlankWhenNull = parseBool(a.Value)
+		case "textAdjust":
+			el.TextAdjust = a.Value
 		}
 	}
 	if err := p.parseElementCommon(se, &el); err != nil {

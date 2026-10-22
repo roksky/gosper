@@ -61,3 +61,5 @@ page properties. Everything else produces a diagnostic or is deferred.
 ## Risks
 
 - Parsing XML into an over-general model. Keep the M1 model minimal.
+
+`JRX-020` normalizes the supported 6.x model in `report.Compile`: absent Java language, canonical dialect, and legacy/newer text stretch attributes. `internal/jrxml/normalize_test.go` compares version fixtures and checks warnings for uncertain cases.

@@ -65,6 +65,7 @@ compile/fill/export columns remain `Planned`.
 | Background/lastPageFooter/noData | 6.x | Planned | Planned | Planned | Planned | — | `JRX-009` |
 | `<staticText>` | 6.x | Verified | Planned | — | Planned | Planned | `JRX-010`; fixture `testdata/jrxml/JRX-010-001-basic-elements.jrxml` |
 | `<textField>` | 6.x | Verified | Planned | Planned | Planned | Planned | `JRX-010`; fixture `testdata/jrxml/JRX-010-001-basic-elements.jrxml` |
+| 6.x text stretch attribute normalization | 6.0 / 6.20.0 | Verified | Partial | — | — | — | `JRX-020`; fixtures `testdata/jrxml/versions/JRX-020-001-{legacy,modern}.jrxml`; `internal/jrxml/normalize_test.go`; stretch rendering remains deferred |
 | `<line>`, `<rectangle>`, `<ellipse>` | 6.x | Planned | Planned | — | Planned | Planned | `JRX-011` |
 | `<image>` | 6.x | Planned | Planned | Planned | Planned | — | `JRX-012` |
 | Element `printWhenExpression` | 6.x | Verified | Planned | Planned | Planned | Planned | `JRX-014`; fixture `testdata/jrxml/JRX-014-001-element-settings.jrxml` |

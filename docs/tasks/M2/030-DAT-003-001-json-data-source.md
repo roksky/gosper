@@ -1,6 +1,6 @@
 # DAT-003-001: JSON data source
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [DAT-003](../../FEATURE_MATRIX.md#dat--data-sources-and-queries)
 - **Milestone:** M2
 - **Priority:** P1
@@ -40,9 +40,9 @@ func FromJSON(r io.Reader) DataSource
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement decoding + record access.
-- [ ] Tests against `testdata/json/basic.json`.
-- [ ] Run `make check`.
+- [x] Implement decoding + record access.
+- [x] Tests against `testdata/json/basic.json`.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
@@ -61,3 +61,7 @@ Implemented/tested; compatibility note; linked in `features/DAT.md`.
 
 - Feature: `DAT-003`.
 - Unblocks: M2 DSL/fill coverage; `TST-012`.
+
+## Verification and compatibility
+
+`make check` passes; `internal/datasource/json_test.go` exercises `testdata/json/basic.json`. JSON numbers decode as `float64`; nested values remain maps/slices; explicit null is present with a nil value. Malformed input and non-object rows return parse diagnostics from `Open`.
