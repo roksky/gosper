@@ -147,7 +147,7 @@ Spec: [`features/LAY.md`](features/LAY.md) · Architect: [`architecture/layout-a
 | LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Not Started | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | planned: layout golden |
 | LAY-004 | Relative stretching | LAY | P1 | M2 | Not Started | LAY-003 | [LAY](features/LAY.md) | INDEX | planned: stretch fixture |
 | LAY-005 | Font resolver (bundled core fonts) | LAY | P0 | M1 | Done | — | [LAY](features/LAY.md) | [LAY-005-001](tasks/M1/016-LAY-005-001-font-resolver.md) | `TestResolveCoreFontsAndFallback`, `TestMetricTableStable` |
-| LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Not Started | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | planned: metrics test |
+| LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Done | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | `TestMeasureFixedStrings`, `TestMeasureDeterminismAndScale` |
 | LAY-007 | Unicode shaping and fallback | LAY | P2 | M5 | Not Started | LAY-006 | [LAY](features/LAY.md) | INDEX | planned: Unicode fixture |
 | LAY-008 | Wrapping, clipping, alignment, rotation | LAY | P1 | M2 | Not Started | LAY-006 | [LAY](features/LAY.md) | [LAY-008-001](tasks/M2/032-LAY-008-001-text-wrapping-and-alignment.md) | planned: wrap fixture |
 | LAY-009 | Styled text and markup subset | LAY | P2 | M3 | Not Started | LAY-008 | [LAY](features/LAY.md) | INDEX | planned: markup fixture |

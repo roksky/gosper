@@ -44,6 +44,10 @@ flowchart TD
   rendering; M1 widths use the same family metrics for every style.
 - Measurement must be deterministic given the same font set and locale
   (`LAY-015`); shaping/Unicode fallback is later (`LAY-007`).
+- `text.Measure` sums nominal rune advances and rounds once to twips. It
+  returns width, ascent (0.8 em), descent (0.2 em), and line height (1.2 em).
+  It accepts one line of UTF-8 up to 1 MiB, keeps no cache, and rejects
+  multiline input. These are M1 baseline metrics, not shaped glyph positions.
 - Line breaking, clipping, alignment and rotation consume measured metrics
   (`LAY-008`).
 

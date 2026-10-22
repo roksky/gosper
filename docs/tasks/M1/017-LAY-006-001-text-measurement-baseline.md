@@ -1,6 +1,6 @@
 # LAY-006-001: Text measurement baseline
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [LAY-006](../../FEATURE_MATRIX.md#lay--layout-typography-pagination)
 - **Milestone:** M1
 - **Priority:** P0
@@ -37,9 +37,9 @@ Font resolver exists.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement measurement over the font metric provider.
-- [ ] Tests: widths for known strings; determinism across calls.
-- [ ] Run `make check`.
+- [x] Implement measurement over the font metric provider.
+- [x] Tests: widths for known strings; determinism across calls.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
