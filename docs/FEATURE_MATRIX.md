@@ -190,7 +190,7 @@ Spec: [`features/OUT.md`](features/OUT.md) · Architect: [`architecture/exporter
 | OUT-007 | HTML exporter | OUT | P2 | M4 | Not Started | PRT-002 | [OUT](features/OUT.md) | INDEX | planned: HTML golden |
 | OUT-008 | CSV exporter | OUT | P2 | M4 | Not Started | PRT-002, FIL-001 | [OUT](features/OUT.md) | INDEX | planned: CSV golden |
 | OUT-009 | Streaming `io.Writer` output | OUT | P0 | M1 | Done | PRT-001 | [OUT](features/OUT.md) | [OUT-001-001](tasks/M1/023-OUT-001-001-baseline-pdf-exporter.md) | `TestPDFEmptyWriterErrorAndUnsupported` |
-| OUT-010 | Deterministic output | OUT | P1 | M1 | Not Started | OUT-001 | [OUT](features/OUT.md) | [OUT-010-001](tasks/M1/024-OUT-010-001-deterministic-output-tests.md) | planned: byte-stability test |
+| OUT-010 | Deterministic output | OUT | P1 | M1 | Done | OUT-001 | [OUT](features/OUT.md) | [OUT-010-001](tasks/M1/024-OUT-010-001-deterministic-output-tests.md) | `TestPDFByteIdenticalRepeated`, `TestPDFByteIdenticalParallel` |
 
 ## TST — Test infrastructure and correctness suites
 

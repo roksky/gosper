@@ -56,9 +56,12 @@ exporter rejects unsupported elements and propagates writer errors.
 
 ## Determinism
 
-- Font subsetting order, object numbering and compression must be stable for
-  identical input (`OUT-010`).
-- Timestamps in metadata must be fixed/injected in tests, not wall-clock.
+- M1 PDF object numbering follows page order, then first use of each core font.
+  There is no compression, font subsetting, creation date, modification date,
+  or document ID. Repeated exports of the same print document produce identical
+  bytes, including parallel exports (`OUT-010`). No PDF bytes are allowed to
+  vary for identical input within this implementation. Cross-version byte
+  stability is not promised.
 
 ## Failure modes
 
