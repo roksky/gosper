@@ -69,10 +69,18 @@ commands print an error to stderr and exit with a nonzero status.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
+Start at the [documentation hub](docs/README.md).
+
+- [Vision](docs/VISION.md)
+- [Status](docs/STATUS.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Feature matrix](docs/FEATURE_MATRIX.md)
+- [Compatibility](docs/COMPATIBILITY.md)
+- [Test strategy](docs/TEST_STRATEGY.md)
 - [Development](docs/development.md)
-- [Compatibility](docs/compatibility.md)
-- [Testing](docs/testing.md)
+- [Contribution / task tracking](docs/CONTRIBUTING_TASKS.md)
+- [Task index](docs/tasks/INDEX.md)
 - [Licensing (pending)](docs/LICENSING.md)
 - [Contributing](CONTRIBUTING.md)
 
