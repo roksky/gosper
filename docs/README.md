@@ -57,6 +57,7 @@ acceptance tests. The **canonical status register** remains
 - [`adr/0002-split-compiled-ir-from-print-ir.md`](adr/0002-split-compiled-ir-from-print-ir.md)
 - [`adr/0003-jrxml-6x-subset-first.md`](adr/0003-jrxml-6x-subset-first.md)
 - [`adr/0004-print-ir-unit-system.md`](adr/0004-print-ir-unit-system.md)
+- [`adr/0005-public-api-package.md`](adr/0005-public-api-package.md)
 
 ## Source-of-truth rules
 

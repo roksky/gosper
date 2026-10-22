@@ -1,6 +1,6 @@
 # FND-001-001: Define the public SDK surface contract
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FND-001](../../FEATURE_MATRIX.md#fnd--foundation-public-api-cli-infrastructure)
 - **Milestone:** M0
 - **Priority:** P0
@@ -52,12 +52,13 @@ directly — decide here (OQ-6).
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add `report` package with documented types and stubbed signatures
+- [x] Add `report` package with documented types and stubbed signatures
       returning `errors.New("not implemented")` **only if** the PR is explicitly
-      a contract PR; otherwise leave behavior for `FND-001-002`.
-- [ ] Ensure no `internal/*` package imports `report`.
-- [ ] Update `docs/ARCHITECTURE.md` with the chosen package path.
-- [ ] Add compile-only tests asserting the package builds and types exist.
+      a contract PR; otherwise leave behavior for `FND-001-002`. (This is the
+      contract PR; stubs return `report.ErrNotImplemented`.)
+- [x] Ensure no `internal/*` package imports `report`.
+- [x] Update `docs/ARCHITECTURE.md` with the chosen package path.
+- [x] Add compile-only tests asserting the package builds and types exist.
 
 ## Acceptance criteria (observable)
 

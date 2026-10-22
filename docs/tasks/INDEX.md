@@ -20,7 +20,7 @@ packages/docs, so they are broadly parallel-safe.
 | --- | --- | --- | --- | --- | --- | --- |
 | FND-003-001 | Diagnostic and error code model | FND-003 | Done | none | `internal/diag` | [file](M0/FND-003-001-diagnostic-error-code-model.md) |
 | FND-009-001 | Context and resource-budget contract | FND-009 | Done | none | `internal/limits` | [file](M0/FND-009-001-context-and-resource-budget-contract.md) |
-| FND-001-001 | Public SDK surface contract | FND-001 | Not Started | FND-003-001, FND-009-001 | `report` (proposed) | [file](M0/FND-001-001-public-sdk-surface-contract.md) |
+| FND-001-001 | Public SDK surface contract | FND-001 | Done | FND-003-001, FND-009-001 | `report` | [file](M0/FND-001-001-public-sdk-surface-contract.md) |
 | JRX-001-001 | Parser I/O contract and version detection | JRX-001 | Not Started | FND-003-001 | `internal/jrxml` | [file](M0/JRX-001-001-parser-io-contract-and-version-detection.md) |
 | DAT-002-001 | DataSource cursor interface contract | DAT-002 | Done | none | `internal/datasource` | [file](M0/DAT-002-001-datasource-cursor-interface-contract.md) |
 | EXP-001-001 | Expression symbol/scope contract | EXP-001 | Done | none | `internal/expression` | [file](M0/EXP-001-001-expression-symbol-scope-contract.md) |
