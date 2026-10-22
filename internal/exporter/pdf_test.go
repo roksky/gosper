@@ -11,6 +11,7 @@ import (
 	"github.com/roksky/gosper/internal/layout"
 	"github.com/roksky/gosper/internal/limits"
 	"github.com/roksky/gosper/internal/printdoc"
+	"github.com/roksky/gosper/internal/testutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -78,6 +79,14 @@ func TestPDFStructureAndText(t *testing.T) {
 			}
 		}
 	}
+}
+
+func TestPDFGolden(t *testing.T) {
+	var out bytes.Buffer
+	if err := PDF(context.Background(), testPDFDocument(t), &out); err != nil {
+		t.Fatal(err)
+	}
+	testutil.Golden(t, out.Bytes(), "../../testdata/m1/golden/hello.pdf")
 }
 func checkXref(t *testing.T, data []byte) {
 	t.Helper()

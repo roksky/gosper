@@ -199,7 +199,7 @@ Spec: [`features/TST.md`](features/TST.md) · Plan: [`TEST_STRATEGY.md`](TEST_ST
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TST-001 | Reproducible baseline and fixture infrastructure | TST | P0 | M0 | **Done** | — | [TST](features/TST.md) | [TST-001-001](tasks/M0/TST-001-001-deterministic-test-environment-helpers.md), [TST-001-002](tasks/M0/TST-001-002-fixture-conventions-and-golden-workflow.md) | baseline (`Makefile`, CI) + `internal/testutil` + fixture conventions (`testdata/README.md`) |
-| TST-002 | Golden fixture harness | TST | P0 | M1 | Not Started | TST-001 | [TST](features/TST.md) | [TST-002-001](tasks/M1/027-TST-002-001-golden-fixture-harness.md) | planned: harness test |
+| TST-002 | Golden fixture harness | TST | P0 | M1 | Done | TST-001 | [TST](features/TST.md) | [TST-002-001](tasks/M1/027-TST-002-001-golden-fixture-harness.md) | `TestGoldenUpdateCompareAndDiff`, `TestPDFGolden` |
 | TST-003 | Semantic assertions | TST | P1 | M2 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: assertion helpers |
 | TST-004 | Pagination/page-count assertions | TST | P1 | M2 | Not Started | TST-002, LAY-011 | [TST](features/TST.md) | INDEX | planned: page-count test |
 | TST-005 | Visual regression testing | TST | P2 | M5 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: render diff |

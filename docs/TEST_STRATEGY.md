@@ -39,8 +39,10 @@ The canonical, detailed conventions live in
   then reviewed with `git diff` before committing — never auto-overwritten or
   auto-committed. Missing goldens without `-update` fail with guidance.
 
-The comparison harness is `TST-002-001`; this section fixes the conventions it
-must follow.
+`internal/testutil.Golden` implements the comparison harness (`TST-002-001`).
+It reports the first differing byte and line/column with expected and actual
+content. Run a package test with `-args -update` to rewrite its goldens, then
+review the diff before committing. `internal/exporter` uses it for the M1 PDF.
 
 ## Deterministic inputs
 

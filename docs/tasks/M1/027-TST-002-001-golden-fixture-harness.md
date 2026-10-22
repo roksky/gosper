@@ -1,6 +1,6 @@
 # TST-002-001: Golden fixture harness
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [TST-002](../../FEATURE_MATRIX.md#tst--test-infrastructure-and-correctness-suites)
 - **Milestone:** M1
 - **Priority:** P0
@@ -37,9 +37,9 @@ Used by exporter/layout/parser tests.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement helper + `-update` flag.
-- [ ] Self-test.
-- [ ] Run `make check`.
+- [x] Implement helper + `-update` flag.
+- [x] Self-test.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
