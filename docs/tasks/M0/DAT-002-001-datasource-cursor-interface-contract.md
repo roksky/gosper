@@ -1,6 +1,6 @@
 # DAT-002-001: Define the DataSource cursor interface contract
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [DAT-002](../../FEATURE_MATRIX.md#dat--data-sources-and-queries)
 - **Milestone:** M0
 - **Priority:** P0
@@ -49,12 +49,12 @@ Integration: `internal/fill` opens and iterates.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Define interfaces and document semantics in the package comment.
-- [ ] Provide an in-test fake to validate the contract.
-- [ ] Test: `Next` after `Close` returns `(nil, false, nil)` or a defined error
-      — pick and document one.
-- [ ] Test: double `Close` returns nil.
-- [ ] Run `make check`.
+- [x] Define interfaces and document semantics in the package comment.
+- [x] Provide an in-test fake to validate the contract.
+- [x] Test: `Next` after `Close` returns `(nil, false, nil)` or a defined error
+      — pick and document one. (Chose `(nil, false, nil)`.)
+- [x] Test: double `Close` returns nil.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

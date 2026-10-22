@@ -55,10 +55,10 @@ From [`FEATURE_MATRIX.md`](FEATURE_MATRIX.md):
 
 | Status | Count |
 | --- | --- |
-| Done | 1 (`FND-011`) |
+| Done | 2 (`FND-011`, `DAT-002`) |
 | In Progress | 2 (`TST-001`, `JRX-022`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 140 |
+| Not Started | 139 |
 | **Total** | **146** |
 
 Conditional verification note: `go test ./...`, `go vet ./...`, `go build`, and
