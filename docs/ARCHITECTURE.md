@@ -100,7 +100,7 @@ marked *stub*.
 | `internal/datasource` | Pluggable business data providers. | stdlib | Cursor contract implemented |
 | `internal/printdoc` | Engine-neutral print document model. | stdlib | Model + unit implemented |
 | `internal/testutil` | Deterministic test environment helpers. | stdlib | Implemented |
-| `internal/jrxml` | Parse JRXML XML into a template model. | `internal/diag` | Stub |
+| `internal/jrxml` | Parse JRXML XML into a template model. | `internal/diag` | Parse contract implemented |
 | `internal/compiler` | Validate and produce an immutable compiled report. | `jrxml`, `expression`, `diag` | Stub |
 | `internal/fill` | Execute a compiled report; hold per-run state. | `compiler`, `expression`, `datasource`, `limits` | Stub |
 | `internal/layout` | Lay filled data into pages; text measurement. | `fill`, `printdoc`, `text` | Stub |

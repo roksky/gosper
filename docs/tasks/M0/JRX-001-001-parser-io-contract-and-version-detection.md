@@ -1,6 +1,6 @@
 # JRX-001-001: Define the parser I/O contract and version detection
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [JRX-001](../../FEATURE_MATRIX.md#jrx--jrxml-syntaxversion-compatibility-and-compilation)
 - **Milestone:** M0
 - **Priority:** P0
@@ -50,11 +50,11 @@ Integration: `internal/compiler` consumes `*Template`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Define `Dialect`, `Template`, `Parse`.
-- [ ] Detect version from the root element if present; else `unknown`.
-- [ ] Return diagnostics (not panic) on malformed XML.
-- [ ] Tests for `6.20.0`, `6.0`, and absent version.
-- [ ] Run `make check`.
+- [x] Define `Dialect`, `Template`, `Parse`.
+- [x] Detect version from the root element if present; else `unknown`.
+- [x] Return diagnostics (not panic) on malformed XML.
+- [x] Tests for `6.20.0`, `6.0`, and absent version.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

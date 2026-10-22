@@ -46,7 +46,7 @@ Spec: [`features/JRX.md`](features/JRX.md) · Compat: [`COMPATIBILITY.md`](COMPA
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| JRX-001 | JRXML parsing and version detection | JRX | P0 | M1 | Not Started | FND-003 | [JRX](features/JRX.md) | [JRX-001-001](tasks/M0/JRX-001-001-parser-io-contract-and-version-detection.md), [JRX-001-002](tasks/M1/JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) | planned: parse fixture |
+| JRX-001 | JRXML parsing and version detection | JRX | P0 | M1 | In Progress | FND-003 | [JRX](features/JRX.md) | [JRX-001-001](tasks/M0/JRX-001-001-parser-io-contract-and-version-detection.md), [JRX-001-002](tasks/M1/JRX-001-002-jrxml-decode-skeleton-and-version-detection.md) | parser contract + version detection (`internal/jrxml/contract_test.go`); element parsing pending |
 | JRX-002 | Report metadata, page properties, margins, columns | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-002-001](tasks/M1/JRX-002-001-report-metadata-and-page-properties.md) | planned: metadata fixture |
 | JRX-003 | Report parameter declarations | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-003-001](tasks/M1/JRX-003-001-parse-parameters.md) | planned: parameter fixture |
 | JRX-004 | Report field declarations | JRX | P0 | M1 | Not Started | JRX-001 | [JRX](features/JRX.md) | [JRX-004-001](tasks/M1/JRX-004-001-parse-fields.md) | planned: field fixture |
@@ -251,9 +251,9 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | --- | --- |
 | Total features | 146 |
 | Done | 7 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`) |
-| In Progress | 4 (`TST-001`, `EXP-001`, `PRT-001`, `FND-001`) |
+| In Progress | 5 (`TST-001`, `EXP-001`, `PRT-001`, `FND-001`, `JRX-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 132 |
+| Not Started | 131 |
 | M0 features | 7 |
 | M1 features | 35 |
 | M2 features | 33 |
