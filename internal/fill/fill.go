@@ -64,7 +64,8 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 	if err = ctx.Err(); err != nil {
 		return nil, err
 	}
-	params, err := resolveParameters(ctx, tmpl.Parameters, overrides)
+	guard := budget.Guard(ctx)
+	params, err := resolveParameters(ctx, tmpl.Parameters, overrides, guard)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +82,6 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 			result = nil
 		}
 	}()
-	guard := budget.Guard(ctx)
 	filled := &Filled{Parameters: cloneValues(params)}
 	for {
 		if err = ctx.Err(); err != nil {
@@ -102,8 +102,14 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 		if err = guard.Record(); err != nil {
 			return nil, err
 		}
+		if err = guard.Step(1); err != nil {
+			return nil, err
+		}
 		fields := make(map[string]expression.Value, len(tmpl.Fields))
 		for _, name := range tmpl.Fields {
+			if err = guard.Step(1); err != nil {
+				return nil, err
+			}
 			raw, found := rec.Value(name)
 			if !found {
 				continue
@@ -114,6 +120,9 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 				return nil, fmt.Errorf("field %q: %w", name, err)
 			}
 			fields[name] = value
+			if err = guard.Bytes(int64(len(name)) + valueSize(value)); err != nil {
+				return nil, err
+			}
 		}
 		filled.Records = append(filled.Records, FilledRecord{
 			Fields: fields, Parameters: cloneValues(params),

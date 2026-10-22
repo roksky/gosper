@@ -35,6 +35,13 @@ diagnostic with code `diag.CodeLimit` (`OPS-001`, `OPS-007`), never a panic or
 unbounded allocation. Each guard call checks the context first and returns
 `ctx.Err()` unchanged.
 
+`report.WithBudget` applies these per-run limits. The M1 fill loop counts one
+step per record, selected field, and parameter declaration; byte accounting
+covers retained scalar field and parameter payloads plus their names. Layout
+counts pages before appending them. The limits are checked at exact boundaries,
+and accounting saturates rather than overflowing. Full expression-operation
+and exporter-byte accounting remain for later budget work.
+
 ```go
 type Budget struct {
     MaxRecords int

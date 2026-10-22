@@ -2,6 +2,7 @@ package layout
 
 import (
 	"fmt"
+	"github.com/roksky/gosper/internal/limits"
 	"github.com/roksky/gosper/internal/printdoc"
 )
 
@@ -32,16 +33,22 @@ type Canvas struct {
 	Geometry PageGeometry
 	area     printdoc.Bounds
 	cursor   printdoc.Unit
+	guard    *limits.Guard
 }
 
 // NewCanvas validates geometry and starts with an empty document. The first
 // successful Place creates page one.
 func NewCanvas(g PageGeometry) (*Canvas, error) {
+	return NewCanvasWithGuard(g, nil)
+}
+
+// NewCanvasWithGuard accounts for each page before it is appended.
+func NewCanvasWithGuard(g PageGeometry, guard *limits.Guard) (*Canvas, error) {
 	area, err := g.PrintableArea()
 	if err != nil {
 		return nil, err
 	}
-	return &Canvas{Doc: &printdoc.Document{}, Geometry: g, area: area, cursor: area.Y}, nil
+	return &Canvas{Doc: &printdoc.Document{}, Geometry: g, area: area, cursor: area.Y, guard: guard}, nil
 }
 
 // Place reserves a fixed-height band and returns its absolute page origin.
@@ -54,6 +61,11 @@ func (c *Canvas) Place(height printdoc.Unit) (Placement, error) {
 		return Placement{}, fmt.Errorf("layout: band height %d exceeds printable height %d", height, c.area.Height)
 	}
 	if len(c.Doc.Pages) == 0 || height > c.area.Y+c.area.Height-c.cursor {
+		if c.guard != nil {
+			if err := c.guard.Page(); err != nil {
+				return Placement{}, err
+			}
+		}
 		if err := c.Doc.AppendPage(printdoc.Page{Width: c.Geometry.Width, Height: c.Geometry.Height}); err != nil {
 			return Placement{}, err
 		}

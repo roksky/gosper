@@ -33,7 +33,14 @@ func (f Format) String() string { return string(f) }
 
 // Option configures Compile, Fill or Export.
 type Option func(*config)
-type config struct{}
+type config struct{ budget limits.Budget }
+
+// Budget sets per-run record, page, step, and retained-field-byte limits.
+type Budget = limits.Budget
+
+// WithBudget applies resource limits to a Fill run. Zero or negative values
+// mean unlimited for that dimension.
+func WithBudget(b Budget) Option { return func(c *config) { c.budget = b } }
 
 // Params holds report parameter overrides. A nil map applies defaults.
 type Params map[string]any
@@ -119,6 +126,12 @@ func Fill(ctx context.Context, c *CompiledReport, params Params, ds DataSource, 
 	if c == nil || c.layout == nil {
 		return nil, fmt.Errorf("report: nil compiled report")
 	}
+	var cfg config
+	for _, opt := range opts {
+		if opt != nil {
+			opt(&cfg)
+		}
+	}
 	overrides := make(map[string]expression.Value, len(params))
 	for name, raw := range params {
 		value, err := fill.ValueOf(raw)
@@ -127,11 +140,11 @@ func Fill(ctx context.Context, c *CompiledReport, params Params, ds DataSource, 
 		}
 		overrides[name] = value
 	}
-	filled, err := fill.RunWithParams(ctx, &c.fields, ds, overrides, limits.Budget{})
+	filled, err := fill.RunWithParams(ctx, &c.fields, ds, overrides, cfg.budget)
 	if err != nil {
 		return nil, err
 	}
-	doc, err := layout.Layout(ctx, filled, c.layout)
+	doc, err := layout.LayoutWithBudget(ctx, filled, c.layout, cfg.budget)
 	if err != nil {
 		return nil, err
 	}

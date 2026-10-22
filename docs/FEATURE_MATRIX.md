@@ -217,7 +217,7 @@ Spec: [`features/OPS.md`](features/OPS.md) · Architect: [`architecture/concurre
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| OPS-001 | Resource limit enforcement | OPS | P0 | M1 | Not Started | FND-009 | [OPS](features/OPS.md) | [OPS-001-001](tasks/M1/028-OPS-001-001-resource-limits-enforcement.md) | planned: limit tests |
+| OPS-001 | Resource limit enforcement | OPS | P0 | M1 | Done | FND-009 | [OPS](features/OPS.md) | [OPS-001-001](tasks/M1/028-OPS-001-001-resource-limits-enforcement.md) | `TestFillBudgetBoundaries`, `TestLayoutPageBudget`, `TestPublicBudgetOption` |
 | OPS-002 | Resource URI allowlists (SSRF/path traversal) | OPS | P1 | M4 | Not Started | FND-002 | [OPS](features/OPS.md) | INDEX | planned: allowlist tests |
 | OPS-003 | SQL permissions and safe binding | OPS | P1 | M2 | Not Started | DAT-005, DAT-006 | [OPS](features/OPS.md) | INDEX | planned: injection tests |
 | OPS-004 | Recursion/decompression/archive limits | OPS | P2 | M4 | Not Started | FIL-013 | [OPS](features/OPS.md) | INDEX | planned: limit tests |
