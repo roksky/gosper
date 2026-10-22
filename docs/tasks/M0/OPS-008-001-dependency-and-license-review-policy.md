@@ -1,6 +1,6 @@
 # OPS-008-001: Dependency and license review policy with SBOM
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [OPS-008](../../FEATURE_MATRIX.md#ops--security-performance-diagnostics-integration)
 - **Milestone:** M0
 - **Priority:** P1
@@ -43,9 +43,9 @@ uncertain, document the manual review process instead.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Write the policy (in `docs/LICENSING.md` or a dedicated section).
-- [ ] Record the SBOM tooling decision (adopt + pin, or defer with rationale).
-- [ ] If adding CI, keep `permissions: contents: read` and no secrets.
+- [x] Write the policy (in `docs/LICENSING.md` or a dedicated section).
+- [x] Record the SBOM tooling decision (adopt + pin, or defer with rationale).
+- [x] If adding CI, keep `permissions: contents: read` and no secrets.
 
 ## Acceptance criteria (observable)
 

@@ -1,6 +1,6 @@
 # EXP-001-001: Define the expression symbol and scope contract
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [EXP-001](../../FEATURE_MATRIX.md#exp--expression-language-and-type-semantics)
 - **Milestone:** M0
 - **Priority:** P0
@@ -51,10 +51,10 @@ implements it over run state.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Define `Value` and `Symbols`; document null representation.
-- [ ] Leave decimal concrete type as a documented placeholder tied to OQ-1.
-- [ ] Tests for precedence and missing-symbol behavior.
-- [ ] Run `make check`.
+- [x] Define `Value` and `Symbols`; document null representation.
+- [x] Leave decimal concrete type as a documented placeholder tied to OQ-1.
+- [x] Tests for precedence and missing-symbol behavior.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

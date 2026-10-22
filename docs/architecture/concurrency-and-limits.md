@@ -3,7 +3,7 @@
 ## Purpose and scope
 
 Define concurrency safety, cache isolation, cancellation and resource budgets
-(`internal/limits`, proposed) so runs are predictable and safe.
+(`internal/limits`) so runs are predictable and safe.
 
 ## Concurrency model
 
@@ -23,19 +23,19 @@ Define concurrency safety, cache isolation, cancellation and resource budgets
 
 ## Resource budgets
 
-`internal/limits` (proposed) provides counters for:
+`internal/limits` provides a `Budget` and a single-goroutine `Guard` for:
 
 - maximum records/rows,
 - maximum pages,
 - maximum expression evaluation steps,
-- maximum recursion depth (subreports),
 - maximum bytes for resources and output.
 
-Exceeding a budget yields a diagnostic (`OPS-001`, `OPS-007`), never a panic or
-unbounded allocation.
+A limit that is zero or negative means "unlimited". Exceeding a budget yields a
+diagnostic with code `diag.CodeLimit` (`OPS-001`, `OPS-007`), never a panic or
+unbounded allocation. Each guard call checks the context first and returns
+`ctx.Err()` unchanged.
 
 ```go
-// Proposed — non-binding.
 type Budget struct {
     MaxRecords int
     MaxPages   int
@@ -43,6 +43,8 @@ type Budget struct {
     MaxBytes   int64
 }
 ```
+
+Recursion depth (subreports) is bounded by a separate mechanism (`FIL-013`).
 
 ## Determinism under concurrency
 
@@ -59,7 +61,7 @@ must produce identical bytes to serial fills for the same input.
 
 ## Linked features and tasks
 
-- `FND-009` context/budget API — task `FND-009-001`.
+- `FND-009` context/budget API — task `FND-009-001` (**Done**).
 - `OPS-001` enforcement — task `OPS-001-001`.
 - `OPS-007`, `DAT-008`, `FIL-013`, `TST-009`.
 

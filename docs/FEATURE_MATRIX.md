@@ -30,13 +30,13 @@ Spec: [`features/FND.md`](features/FND.md) · Architect: [`architecture/package-
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | FND-001 | Public SDK surface (compile/fill/export + convenience) | FND | P0 | M1 | Not Started | FND-003, FND-009 | [FND](features/FND.md) | [FND-001-001](tasks/M0/FND-001-001-public-sdk-surface-contract.md), [FND-001-002](tasks/M1/FND-001-002-public-sdk-walking-skeleton.md) | planned: API round-trip test |
 | FND-002 | Template loading and resource resolution | FND | P1 | M1 | Not Started | — | [FND](features/FND.md) | [FND-002-001](tasks/M1/FND-002-001-template-loading-and-resource-resolution.md) | planned: resolver allowlist test |
-| FND-003 | Error model and diagnostic codes with source spans | FND | P0 | M0 | Not Started | — | [FND](features/FND.md) | [FND-003-001](tasks/M0/FND-003-001-diagnostic-error-code-model.md) | planned: code/span unit tests |
+| FND-003 | Error model and diagnostic codes with source spans | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-003-001](tasks/M0/FND-003-001-diagnostic-error-code-model.md) | `internal/diag/diag_test.go`; branch `task/M0-contracts` |
 | FND-004 | Compilation cache with versioned keys | FND | P2 | M3 | Not Started | FND-001, JRX-020 | [FND](features/FND.md) | INDEX | planned: invalidation test |
 | FND-005 | CLI report commands (compile/fill/export) | FND | P2 | M4 | Not Started | FND-001, OUT-001 | [FND](features/FND.md) | INDEX | planned: CLI integration test |
 | FND-006 | Build/version metadata surfaced via API | FND | P2 | M1 | Not Started | — | [FND](features/FND.md) | [FND-006-001](tasks/M1/FND-006-001-build-and-version-metadata.md) | planned: version test |
 | FND-007 | Logging and telemetry hooks | FND | P3 | M5 | Not Started | — | [FND](features/FND.md) | INDEX | planned: hook invocation test |
 | FND-008 | Optional server transport module (deferred) | FND | P3 | M6 | Not Started | FND-001 | [FND](features/FND.md) | INDEX | planned: adapter smoke test |
-| FND-009 | Context cancellation and resource-budget API | FND | P0 | M0 | Not Started | — | [FND](features/FND.md) | [FND-009-001](tasks/M0/FND-009-001-context-and-resource-budget-contract.md) | planned: cancellation contract test |
+| FND-009 | Context cancellation and resource-budget API | FND | P0 | M0 | **Done** | — | [FND](features/FND.md) | [FND-009-001](tasks/M0/FND-009-001-context-and-resource-budget-contract.md) | `internal/limits/limits_test.go`; branch `task/M0-contracts` |
 | FND-010 | Public API stability and compatibility policy | FND | P1 | M5 | Not Started | FND-001 | [FND](features/FND.md) | INDEX | planned: doc + lint policy |
 | FND-011 | CLI metadata (help/version/unknown-command) | FND | P1 | M0 | **Done** | — | [FND](features/FND.md) | — | `cmd/gosper/main_test.go`; commit `7a787f4` |
 
@@ -67,7 +67,7 @@ Spec: [`features/JRX.md`](features/JRX.md) · Compat: [`COMPATIBILITY.md`](COMPA
 | JRX-019 | Unsupported-construct diagnostics and extension points | JRX | P1 | M1 | Not Started | JRX-001, FND-003 | [JRX](features/JRX.md) | [JRX-019-001](tasks/M1/JRX-019-001-unsupported-construct-diagnostics.md) | planned: diagnostic fixture |
 | JRX-020 | Version-aware normalization | JRX | P1 | M2 | Not Started | JRX-001, JRX-019 | [JRX](features/JRX.md) | [JRX-020-001](tasks/M2/JRX-020-001-version-aware-normalization.md) | planned: version fixture |
 | JRX-021 | Compiled `.jasper` binary loading | JRX | P3 | — | **Deferred** | — | [JRX](features/JRX.md) | — | Out of scope; see compat policy |
-| JRX-022 | Compatibility matrix and fixture registry | JRX | P1 | M0 | In Progress | — | [JRX](features/JRX.md) | [JRX-022-001](tasks/M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) | [`COMPATIBILITY.md`](COMPATIBILITY.md) established |
+| JRX-022 | Compatibility matrix and fixture registry | JRX | P1 | M0 | **Done** | — | [JRX](features/JRX.md) | [JRX-022-001](tasks/M0/JRX-022-001-compatibility-matrix-and-fixture-registry.md) | [`COMPATIBILITY.md`](COMPATIBILITY.md) fixture registry |
 | JRX-023 | Font declarations in JRXML | JRX | P2 | M4 | Not Started | LAY-005 | [JRX](features/JRX.md) | INDEX | planned: font fixture |
 | JRX-024 | Component elements (charts/crosstabs/barcodes) | JRX | P3 | M6 | Not Started | JRX-001 | [JRX](features/JRX.md) | INDEX | planned: component fixture |
 
@@ -77,7 +77,7 @@ Spec: [`features/EXP.md`](features/EXP.md) · Architect: [`architecture/expressi
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| EXP-001 | `$F`/`$P`/`$V` references and lexical scope | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-001-001](tasks/M0/EXP-001-001-expression-symbol-scope-contract.md), [EXP-001-002](tasks/M1/EXP-001-002-symbol-resolution.md) | planned: scope test |
+| EXP-001 | `$F`/`$P`/`$V` references and lexical scope | EXP | P0 | M1 | In Progress | — | [EXP](features/EXP.md) | [EXP-001-001](tasks/M0/EXP-001-001-expression-symbol-scope-contract.md), [EXP-001-002](tasks/M1/EXP-001-002-symbol-resolution.md) | value/symbol contract done (`symbols_test.go`); evaluator pending |
 | EXP-002 | Literals and constants | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/EXP-003-001-expression-parser-and-evaluator.md) | planned: literal test |
 | EXP-003 | Operator grammar and precedence | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/EXP-003-001-expression-parser-and-evaluator.md) | planned: precedence test |
 | EXP-004 | Boolean logic and comparisons | EXP | P0 | M1 | Not Started | EXP-003 | [EXP](features/EXP.md) | [EXP-003-001](tasks/M1/EXP-003-001-expression-parser-and-evaluator.md) | planned: boolean test |
@@ -95,7 +95,7 @@ Spec: [`features/EXP.md`](features/EXP.md) · Architect: [`architecture/expressi
 | EXP-016 | Compile-time type validation | EXP | P1 | M2 | Not Started | EXP-007 | [EXP](features/EXP.md) | INDEX | planned: validation test |
 | EXP-017 | Expression caching | EXP | P2 | M3 | Not Started | EXP-003 | [EXP](features/EXP.md) | INDEX | planned: cache test |
 | EXP-018 | Alternative expression languages (Groovy/JS) | EXP | P3 | — | **Deferred** | — | [EXP](features/EXP.md) | — | Not supported; see compat policy |
-| EXP-019 | Sandbox: no arbitrary code execution | EXP | P0 | M1 | Not Started | — | [EXP](features/EXP.md) | [EXP-019-001](tasks/M0/EXP-019-001-expression-sandbox-policy.md) | planned: sandbox test |
+| EXP-019 | Sandbox: no arbitrary code execution | EXP | P0 | M1 | **Done** | — | [EXP](features/EXP.md) | [EXP-019-001](tasks/M0/EXP-019-001-expression-sandbox-policy.md) | sandbox policy in `architecture/expressions-and-types.md` |
 
 ## DAT — Data sources and queries
 
@@ -167,7 +167,7 @@ Spec: [`features/PRT.md`](features/PRT.md) · Architect: [`architecture/intermed
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| PRT-001 | Typed print document model | PRT | P0 | M1 | Not Started | — | [PRT](features/PRT.md) | [PRT-001-001](tasks/M0/PRT-001-001-print-document-ir-contract.md), [PRT-001-002](tasks/M1/PRT-001-002-print-document-model.md) | planned: model test |
+| PRT-001 | Typed print document model | PRT | P0 | M1 | In Progress | — | [PRT](features/PRT.md) | [PRT-001-001](tasks/M0/PRT-001-001-print-document-ir-contract.md), [PRT-001-002](tasks/M1/PRT-001-002-print-document-model.md) | unit+model contract done (`model_test.go`); PRT-001-002 pending |
 | PRT-002 | Resolved style data in print IR | PRT | P1 | M1 | Not Started | PRT-001 | [PRT](features/PRT.md) | [PRT-002-001](tasks/M1/PRT-002-001-resolved-style-data.md) | planned: style test |
 | PRT-003 | Resource references (fonts/images) | PRT | P1 | M2 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: reference test |
 | PRT-004 | Lazy/streaming print storage | PRT | P2 | M3 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: streaming test |
@@ -198,7 +198,7 @@ Spec: [`features/TST.md`](features/TST.md) · Plan: [`TEST_STRATEGY.md`](TEST_ST
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TST-001 | Reproducible baseline and fixture infrastructure | TST | P0 | M0 | In Progress | — | [TST](features/TST.md) | [TST-001-001](tasks/M0/TST-001-001-deterministic-test-environment-helpers.md), [TST-001-002](tasks/M0/TST-001-002-fixture-conventions-and-golden-workflow.md) | `Makefile`, `.github/workflows/ci.yml` (baseline exists) |
+| TST-001 | Reproducible baseline and fixture infrastructure | TST | P0 | M0 | In Progress | — | [TST](features/TST.md) | [TST-001-001](tasks/M0/TST-001-001-deterministic-test-environment-helpers.md), [TST-001-002](tasks/M0/TST-001-002-fixture-conventions-and-golden-workflow.md) | baseline (`Makefile`, CI) + `internal/testutil` helpers |
 | TST-002 | Golden fixture harness | TST | P0 | M1 | Not Started | TST-001 | [TST](features/TST.md) | [TST-002-001](tasks/M1/TST-002-001-golden-fixture-harness.md) | planned: harness test |
 | TST-003 | Semantic assertions | TST | P1 | M2 | Not Started | TST-002 | [TST](features/TST.md) | INDEX | planned: assertion helpers |
 | TST-004 | Pagination/page-count assertions | TST | P1 | M2 | Not Started | TST-002, LAY-011 | [TST](features/TST.md) | INDEX | planned: page-count test |
@@ -224,7 +224,7 @@ Spec: [`features/OPS.md`](features/OPS.md) · Architect: [`architecture/concurre
 | OPS-005 | Debugging and tracing controls | OPS | P2 | M5 | Not Started | FND-003 | [OPS](features/OPS.md) | INDEX | planned: debug flag test |
 | OPS-006 | OpenTelemetry hooks | OPS | P3 | M5 | Not Started | FND-007 | [OPS](features/OPS.md) | INDEX | planned: span test |
 | OPS-007 | Memory/CPU budgets and predictable use | OPS | P1 | M3 | Not Started | OPS-001, PRT-004 | [OPS](features/OPS.md) | INDEX | planned: profile test |
-| OPS-008 | Third-party license/SBOM review | OPS | P1 | M0 | Not Started | — | [OPS](features/OPS.md) | [OPS-008-001](tasks/M0/OPS-008-001-dependency-and-license-review-policy.md) | planned: policy + tooling |
+| OPS-008 | Third-party license/SBOM review | OPS | P1 | M0 | **Done** | — | [OPS](features/OPS.md) | [OPS-008-001](tasks/M0/OPS-008-001-dependency-and-license-review-policy.md) | [`DEPENDENCY_POLICY.md`](DEPENDENCY_POLICY.md) |
 | OPS-009 | JasperReports interoperability/licensing review | OPS | P1 | M5 | Not Started | TST-006 | [OPS](features/OPS.md) | INDEX | planned: review record |
 | OPS-010 | Changelog and release guidance | OPS | P2 | M5 | Not Started | FND-006 | [OPS](features/OPS.md) | INDEX | planned: changelog check |
 | OPS-011 | Public examples and compatibility corpus | OPS | P2 | M5 | Not Started | OUT-001, FND-005 | [OPS](features/OPS.md) | INDEX | planned: example build |
@@ -250,10 +250,10 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | Metric | Count |
 | --- | --- |
 | Total features | 146 |
-| Done | 2 (`FND-011`, `DAT-002`) |
-| In Progress | 2 (`TST-001`, `JRX-022`) |
+| Done | 7 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`) |
+| In Progress | 3 (`TST-001`, `EXP-001`, `PRT-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 139 |
+| Not Started | 133 |
 | M0 features | 7 |
 | M1 features | 35 |
 | M2 features | 33 |
@@ -271,7 +271,7 @@ Spec: [`features/README.md`](features/README.md) (EXT group) · All P3, mileston
 | # | Question | Affects | Owner/process |
 | --- | --- | --- | --- |
 | OQ-1 | Decimal backend (`math/big.Rat`, third-party decimal, scaled ints)? | `EXP-008` | ADR when `EXP-008` starts |
-| OQ-2 | Internal unit system for print IR (twips/points/sub-point)? | `PRT-001`, `LAY-*` | `PRT-001-001` |
+| OQ-2 | Internal unit system for print IR (twips/points/sub-point)? | `PRT-001`, `LAY-*` | **Resolved: twips** (`ADR-0004`, `PRT-001-001`) |
 | OQ-3 | Text shaping backend (pure-Go vs dependency)? | `LAY-006`, `LAY-007` | ADR when `LAY-007` starts |
 | OQ-4 | Are remote fonts/images ever permitted, and under what policy? | `OPS-002`, `DAT-011` | `OPS-002` |
 | OQ-5 | PDF library choice (pure-Go vs dependency)? | `OUT-001` | `OUT-001-001` / ADR |

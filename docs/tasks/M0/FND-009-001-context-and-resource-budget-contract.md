@@ -1,6 +1,6 @@
 # FND-009-001: Define the context and resource-budget contract
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FND-009](../../FEATURE_MATRIX.md#fnd--foundation-public-api-cli-infrastructure)
 - **Milestone:** M0
 - **Priority:** P0
@@ -54,11 +54,11 @@ constructs the budget from options.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement `Budget`, `Guard` with `context` checks on each call.
-- [ ] Return a `diag` code `limit` on exceedance; return `ctx.Err()` on cancel.
-- [ ] Zero-value `Budget` means "unlimited" (document explicitly).
-- [ ] Table tests for each limit and for cancellation.
-- [ ] Run `make check`.
+- [x] Implement `Budget`, `Guard` with `context` checks on each call.
+- [x] Return a `diag` code `limit` on exceedance; return `ctx.Err()` on cancel.
+- [x] Zero-value `Budget` means "unlimited" (document explicitly).
+- [x] Table tests for each limit and for cancellation.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

@@ -24,7 +24,13 @@
 | CLI metadata: `--help`/`help`, `--version`/`version`, unknown-command error | Present | `cmd/gosper/main.go`, `cmd/gosper/main_test.go` |
 | Unit tests for CLI metadata | Present | `cmd/gosper/main_test.go` |
 | Formatting/vet/test/race automation | Present | `Makefile` (`check`, `test-race`) |
-| CI (gofmt, vet/test/build matrix, race) | Present | `.github/workflows/ci.yml` |
+| CI (gofmt, vet/test/build, race) | Present | `.github/workflows/ci.yml` (Linux; macOS/Windows temporarily disabled) |
+| Diagnostics model (`internal/diag`) | Present | `internal/diag/diag_test.go` |
+| Resource budgets (`internal/limits`) | Present | `internal/limits/limits_test.go` |
+| Expression symbols/value (`internal/expression`) | Present | `internal/expression/symbols_test.go` |
+| Print model + unit (`internal/printdoc`) | Present | `internal/printdoc/model_test.go` |
+| Data-source cursor contract (`internal/datasource`) | Present | `internal/datasource/datasource_test.go` |
+| Deterministic test helpers (`internal/testutil`) | Present | `internal/testutil/env_test.go` |
 | Editor/build hygiene | Present | `.editorconfig`, `.gitignore` |
 | Documentation (bootstrap) | Present | `README.md`, `CONTRIBUTING.md`, `docs/` |
 
@@ -36,9 +42,11 @@
 The following are **compile-only `doc.go` stubs** with no types or logic. Their
 presence does **not** indicate implemented features:
 
-`internal/jrxml`, `internal/compiler`, `internal/expression`,
-`internal/datasource`, `internal/fill`, `internal/layout`,
-`internal/printdoc`, `internal/exporter`.
+`internal/jrxml`, `internal/compiler`, `internal/fill`, `internal/layout`,
+`internal/exporter`.
+
+Packages with only contract-level code (interfaces/model, no engine behavior):
+`internal/expression`, `internal/datasource`, `internal/printdoc`.
 
 ## Not present
 
@@ -55,10 +63,10 @@ From [`FEATURE_MATRIX.md`](FEATURE_MATRIX.md):
 
 | Status | Count |
 | --- | --- |
-| Done | 2 (`FND-011`, `DAT-002`) |
-| In Progress | 2 (`TST-001`, `JRX-022`) |
+| Done | 7 (`FND-003`, `FND-009`, `FND-011`, `DAT-002`, `EXP-019`, `JRX-022`, `OPS-008`) |
+| In Progress | 3 (`TST-001`, `EXP-001`, `PRT-001`) |
 | Deferred | 3 (`JRX-021`, `EXP-018`, `PRT-006`) |
-| Not Started | 139 |
+| Not Started | 133 |
 | **Total** | **146** |
 
 Conditional verification note: `go test ./...`, `go vet ./...`, `go build`, and

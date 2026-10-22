@@ -14,6 +14,7 @@ ADR is **not settled**; do not treat proposed decisions as agreed.
 | [0001](0001-native-go-library-first-runtime.md) | Native-Go, library-first runtime with optional adapters | Proposed | 2026-10-22 | `FND-001`, `FND-008`, `EXT-006`, `EXT-007` |
 | [0002](0002-split-compiled-ir-from-print-ir.md) | Split compiled report IR from paginated print IR | Proposed | 2026-10-22 | `PRT-001`, `PRT-002`, `OUT-*` |
 | [0003](0003-jrxml-6x-subset-first.md) | JRXML 6.x subset-first, conservative compatibility claims | Proposed | 2026-10-22 | `JRX-001`, `JRX-020`, `EXT-008`, `COMPATIBILITY.md` |
+| [0004](0004-print-ir-unit-system.md) | Print IR internal unit system is the twip | Proposed | 2026-10-22 | `PRT-001`, `LAY-*`, `OUT-001` |
 
 ## Process
 

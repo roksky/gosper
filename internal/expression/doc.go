@@ -1,6 +1,9 @@
-// Package expression will own expression parsing and evaluation semantics used
-// by compiled templates, independent of any JVM-based implementation.
+// Package expression parses and evaluates report expressions used by compiled
+// templates, independent of any JVM-based implementation.
 //
-// It is intentionally empty in the bootstrap milestone; grammar, AST and
-// evaluation are deferred to a future change.
+// This package currently defines the expression value and symbol contracts
+// (Value, Symbols, Kind, Scope); the grammar and evaluator are deferred to
+// EXP-003. Evaluation is sandboxed: expressions are interpreted by a closed
+// implementation and never execute arbitrary Go or Java code. See the sandbox
+// policy in docs/architecture/expressions-and-types.md.
 package expression

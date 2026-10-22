@@ -1,10 +1,11 @@
 # Architecture
 
-> **Status: proposal.** No engine functionality is implemented. This document
-> describes the intended structure, invariants and contracts so future changes
-> can implement them in small, reviewable steps. Package names under
-> `internal/` exist as **compile-only `doc.go` stubs** unless a later change
-> adds code. Proposed packages are labelled *proposed*.
+> **Status: proposal.** Engine functionality is limited to a few M0 contracts
+> (diagnostics, limits, expression symbols, print model/unit, datasource cursor,
+> test helpers); everything else is unimplemented. This document describes the
+> intended structure, invariants and contracts so future changes can implement
+> them in small, reviewable steps. Packages with only a `doc.go` are stubs;
+> proposed packages are labelled *proposed*.
 
 This supersedes the earlier bootstrap document previously at
 `docs/architecture.md` (merged here). The architectural principles and package
@@ -86,18 +87,22 @@ and filling; layout produces the print representation; exporters consume it.
 
 ## Package responsibilities
 
-Existing packages (compile-only `doc.go` stubs today):
+Existing packages. Several now carry contracts; those with only a `doc.go` are
+marked *stub*.
 
 | Package | Responsibility | Intended dependencies | State |
 | --- | --- | --- | --- |
 | `cmd/gosper` | CLI front end (metadata only today). | `report` (proposed) | Metadata implemented |
-| `internal/jrxml` | Parse JRXML XML into a template model. | `internal/diag` (proposed) | Stub |
+| `internal/diag` | Diagnostics: error codes, severity, source spans. | stdlib | Contract implemented |
+| `internal/limits` | Resource budgets, cancellation plumbing. | `diag` | Contract implemented |
+| `internal/expression` | Parse and evaluate report expressions. | `diag` | Value/symbol contracts implemented |
+| `internal/datasource` | Pluggable business data providers. | stdlib | Cursor contract implemented |
+| `internal/printdoc` | Engine-neutral print document model. | stdlib | Model + unit implemented |
+| `internal/testutil` | Deterministic test environment helpers. | stdlib | Implemented |
+| `internal/jrxml` | Parse JRXML XML into a template model. | `internal/diag` | Stub |
 | `internal/compiler` | Validate and produce an immutable compiled report. | `jrxml`, `expression`, `diag` | Stub |
-| `internal/expression` | Parse and evaluate report expressions. | `diag` | Stub |
-| `internal/datasource` | Pluggable business data providers. | stdlib, `diag` | Stub |
 | `internal/fill` | Execute a compiled report; hold per-run state. | `compiler`, `expression`, `datasource`, `limits` | Stub |
 | `internal/layout` | Lay filled data into pages; text measurement. | `fill`, `printdoc`, `text` | Stub |
-| `internal/printdoc` | Engine-neutral print document model. | stdlib | Stub |
 | `internal/exporter` | Render a print document to output formats. | `printdoc` | Stub |
 
 Proposed additional packages (see
@@ -106,13 +111,10 @@ Proposed additional packages (see
 | Package | Responsibility |
 | --- | --- |
 | `report` (module root) | Public SDK facade: `Compile`, `Fill`, `Export`, convenience. |
-| `internal/diag` | Diagnostics: error codes, severity, source spans. |
-| `internal/limits` | Resource budgets, cancellation plumbing. |
 | `internal/resources` | Resource resolution (templates, images, fonts, URIs). |
 | `internal/text` | Font resolution, metrics, shaping, line breaking. |
 | `internal/cache` | Optional compilation cache with versioned keys. |
 | `internal/exec` | Orchestration of compile → fill → layout → export. |
-| `internal/testutil` | Deterministic test environment helpers. |
 
 ## Public API surface
 

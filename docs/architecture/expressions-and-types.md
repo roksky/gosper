@@ -16,19 +16,53 @@ the decimal/null/date rules needed to be JasperReports-compatible for a
 
 ## Symbol resolution
 
-`internal/expression` does **not** store symbols. Callers pass a resolver:
+`internal/expression` does **not** store symbols. Callers pass a resolver.
+The following types are defined in `internal/expression` (see `symbols.go`):
 
 ```go
-// Proposed — non-binding.
+type Value interface{ isValue() } // closed set: Null, Bool, Int, Decimal, String, Time
+
 type Symbols interface {
     Field(name string) (Value, bool)
     Parameter(name string) (Value, bool)
     Variable(name string) (Value, bool)
 }
+
+type Kind int // KindField, KindParameter, KindVariable
+type Scope []Symbols // first match wins; inner scopes shadow outer
 ```
+
+`Decimal` is a placeholder carrying a textual form; its concrete representation
+is deferred to `EXP-008` (OQ-1) and arithmetic on it is undefined until then.
+Names are case-sensitive; a missing symbol returns `(nil, false)` and must not
+panic.
 
 Unresolved symbols are a **compile-time** error when statically known
 (`EXP-016`), otherwise a runtime diagnostic with the expression span.
+
+## Sandbox policy
+
+This policy is **non-negotiable** (`EXP-019`). Reconciliation of a template must
+never be able to execute code or reach the environment.
+
+**Allowed:** interpreting a closed expression grammar over the `Value` set;
+calling functions from an explicit, reviewed allowlist (`EXP-015`); a bounded,
+documented subset of Java-style method translations (`EXP-014`).
+
+**Forbidden — always rejected, with a diagnostic, never executed:**
+
+- arbitrary Go or Java code execution, `eval`, or shelling out;
+- reflection, dynamic type/class loading, or `unsafe`;
+- method invocation on arbitrary/untrusted objects;
+- filesystem, network, process or environment access from an expression;
+- unbounded loops or recursion (evaluation is budgeted, `OPS-001`).
+
+The function registry is an **allowlist** (`EXP-015`): any function not on the
+list is a compile-time error. Groovy/JavaScript expressions and custom classes
+are `Unsupported` (see [`COMPATIBILITY.md`](../COMPATIBILITY.md)). Tests for
+`EXP-003-001` must assert that malicious expressions are rejected, not merely
+that they fail safely.
+
 
 ## Type semantics
 
@@ -76,10 +110,10 @@ layout stages, not by the evaluator, which only sees the current environment
 
 ## Linked features and tasks
 
-- `EXP-001` references — task `EXP-001-001` (contract), `EXP-001-002` (impl).
+- `EXP-001` references — task `EXP-001-001` (contract, **Done**), `EXP-001-002` (impl).
 - `EXP-003` grammar — task `EXP-003-001`.
 - `EXP-006` null semantics — task `EXP-006-001`.
-- `EXP-019` sandbox — task `EXP-019-001`.
+- `EXP-019` sandbox — task `EXP-019-001` (**Done**; see Sandbox policy).
 
 ## Assumptions and unresolved alternatives
 

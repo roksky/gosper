@@ -1,6 +1,6 @@
 # EXP-019-001: Define the expression sandbox policy
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [EXP-019](../../FEATURE_MATRIX.md#exp--expression-language-and-type-semantics)
 - **Milestone:** M0
 - **Priority:** P0
@@ -41,11 +41,11 @@ symbols introduced here.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Expand [`../../architecture/expressions-and-types.md`](../../architecture/expressions-and-types.md)
+- [x] Expand [`../../architecture/expressions-and-types.md`](../../architecture/expressions-and-types.md)
       with an explicit "Sandbox policy" section.
-- [ ] Add a note in [`../../COMPATIBILITY.md`](../../COMPATIBILITY.md) that custom
+- [x] Add a note in [`../../COMPATIBILITY.md`](../../COMPATIBILITY.md) that custom
       classes and Groovy/JS are `Unsupported`.
-- [ ] Reference the policy from `internal/expression/doc.go`.
+- [x] Reference the policy from `internal/expression/doc.go`.
 
 ## Acceptance criteria (observable)
 

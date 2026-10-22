@@ -1,6 +1,6 @@
 # TST-001-001: Deterministic test environment helpers
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [TST-001](../../FEATURE_MATRIX.md#tst--test-infrastructure-and-correctness-suites)
 - **Milestone:** M0
 - **Priority:** P0
@@ -47,9 +47,9 @@ Integration: used by all future engine tests.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Add helpers with docs.
-- [ ] Tests assert stable behavior across calls.
-- [ ] Run `make check` (including `-race`).
+- [x] Add helpers with docs.
+- [x] Tests assert stable behavior across calls.
+- [x] Run `make check` (including `-race`).
 
 ## Acceptance criteria (observable)
 

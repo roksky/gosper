@@ -21,6 +21,7 @@ engine (in bootstrap/scaffold state — no engine functionality is implemented).
 | [`TEST_STRATEGY.md`](TEST_STRATEGY.md) | Unit/contract/golden/differential/perf/security testing plan. |
 | [`CONTRIBUTING_TASKS.md`](CONTRIBUTING_TASKS.md) | Rules for agents: IDs, reservations, status transitions. |
 | [`development.md`](development.md) | Local setup, commands, CI, module conventions. |
+| [`DEPENDENCY_POLICY.md`](DEPENDENCY_POLICY.md) | How third-party dependencies are justified, licensed and tracked. |
 | [`LICENSING.md`](LICENSING.md) | Licensing decision (currently **pending**). |
 
 ### Architecture deep dives — [`architecture/`](architecture/)
@@ -55,6 +56,7 @@ acceptance tests. The **canonical status register** remains
 - [`adr/0001-native-go-library-first-runtime.md`](adr/0001-native-go-library-first-runtime.md)
 - [`adr/0002-split-compiled-ir-from-print-ir.md`](adr/0002-split-compiled-ir-from-print-ir.md)
 - [`adr/0003-jrxml-6x-subset-first.md`](adr/0003-jrxml-6x-subset-first.md)
+- [`adr/0004-print-ir-unit-system.md`](adr/0004-print-ir-unit-system.md)
 
 ## Source-of-truth rules
 
