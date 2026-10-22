@@ -103,7 +103,7 @@ Spec: [`features/DAT.md`](features/DAT.md) · Architect: [`architecture/data-and
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| DAT-001 | Slice/struct/map data source | DAT | P0 | M1 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-001-001](tasks/M1/013-DAT-001-001-slice-data-source.md) | planned: slice source test |
+| DAT-001 | Slice/struct/map data source | DAT | P0 | M1 | Done | DAT-002 | [DAT](features/DAT.md) | [DAT-001-001](tasks/M1/013-DAT-001-001-slice-data-source.md) | `TestSliceSourceRows`, `TestSliceCancellationAndClose` |
 | DAT-002 | DataSource cursor lifecycle interface | DAT | P0 | M0 | **Done** | — | [DAT](features/DAT.md) | [DAT-002-001](tasks/M0/DAT-002-001-datasource-cursor-interface-contract.md) | `internal/datasource/datasource_test.go`; branch `task/DAT-002-001` |
 | DAT-003 | JSON data source | DAT | P1 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-003-001](tasks/M2/030-DAT-003-001-json-data-source.md) | planned: JSON fixture |
 | DAT-004 | CSV data source | DAT | P2 | M2 | Not Started | DAT-002 | [DAT](features/DAT.md) | [DAT-004-001](tasks/M2/031-DAT-004-001-csv-data-source.md) | planned: CSV fixture |
@@ -121,8 +121,8 @@ Spec: [`features/FIL.md`](features/FIL.md) · Architect: [`architecture/filling-
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| FIL-001 | Report execution state and record iteration | FIL | P0 | M1 | Not Started | DAT-002, FND-001 | [FIL](features/FIL.md) | [FIL-001-001](tasks/M1/014-FIL-001-001-fill-record-iteration.md) | planned: iteration test |
-| FIL-002 | Built-in variables and parameter defaults | FIL | P1 | M1 | Not Started | FIL-001 | [FIL](features/FIL.md) | [FIL-002-001](tasks/M1/015-FIL-002-001-builtin-variables-and-parameter-defaults.md) | planned: builtin test |
+| FIL-001 | Report execution state and record iteration | FIL | P0 | M1 | Done | DAT-002, FND-001 | [FIL](features/FIL.md) | [FIL-001-001](tasks/M1/014-FIL-001-001-fill-record-iteration.md) | `TestRunSnapshotsAndMissing`, `TestRunConcurrentIsolation` |
+| FIL-002 | Built-in variables and parameter defaults | FIL | P1 | M1 | Done | FIL-001 | [FIL](features/FIL.md) | [FIL-002-001](tasks/M1/015-FIL-002-001-builtin-variables-and-parameter-defaults.md) | `TestReportCountPerRecord`, `TestParameterDefaultsAndOverrides` |
 | FIL-003 | Variable calculations (count/sum/avg/min/max) | FIL | P1 | M3 | Not Started | FIL-005 | [FIL](features/FIL.md) | INDEX | planned: calculation test |
 | FIL-004 | Distinct-count calculation | FIL | P2 | M3 | Not Started | FIL-003 | [FIL](features/FIL.md) | INDEX | planned: distinct test |
 | FIL-005 | Evaluation/increment/reset scopes and timing | FIL | P1 | M3 | Not Started | FIL-001 | [FIL](features/FIL.md) | INDEX | planned: scope test |
@@ -146,8 +146,8 @@ Spec: [`features/LAY.md`](features/LAY.md) · Architect: [`architecture/layout-a
 | LAY-002 | Absolute/float positioning | LAY | P0 | M1 | Not Started | LAY-001 | [LAY](features/LAY.md) | [LAY-002-001](tasks/M1/020-LAY-002-001-absolute-positioning.md) | planned: position test |
 | LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Not Started | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | planned: layout golden |
 | LAY-004 | Relative stretching | LAY | P1 | M2 | Not Started | LAY-003 | [LAY](features/LAY.md) | INDEX | planned: stretch fixture |
-| LAY-005 | Font resolver (bundled core fonts) | LAY | P0 | M1 | Not Started | — | [LAY](features/LAY.md) | [LAY-005-001](tasks/M1/016-LAY-005-001-font-resolver.md) | planned: resolver test |
-| LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Not Started | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | planned: metrics test |
+| LAY-005 | Font resolver (bundled core fonts) | LAY | P0 | M1 | Done | — | [LAY](features/LAY.md) | [LAY-005-001](tasks/M1/016-LAY-005-001-font-resolver.md) | `TestResolveCoreFontsAndFallback`, `TestMetricTableStable` |
+| LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Done | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | `TestMeasureFixedStrings`, `TestMeasureDeterminismAndScale` |
 | LAY-007 | Unicode shaping and fallback | LAY | P2 | M5 | Not Started | LAY-006 | [LAY](features/LAY.md) | INDEX | planned: Unicode fixture |
 | LAY-008 | Wrapping, clipping, alignment, rotation | LAY | P1 | M2 | Not Started | LAY-006 | [LAY](features/LAY.md) | [LAY-008-001](tasks/M2/032-LAY-008-001-text-wrapping-and-alignment.md) | planned: wrap fixture |
 | LAY-009 | Styled text and markup subset | LAY | P2 | M3 | Not Started | LAY-008 | [LAY](features/LAY.md) | INDEX | planned: markup fixture |
@@ -167,13 +167,13 @@ Spec: [`features/PRT.md`](features/PRT.md) · Architect: [`architecture/intermed
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| PRT-001 | Typed print document model | PRT | P0 | M1 | In Progress | — | [PRT](features/PRT.md) | [PRT-001-001](tasks/M0/PRT-001-001-print-document-ir-contract.md), [PRT-001-002](tasks/M1/018-PRT-001-002-print-document-model.md) | unit+model contract done (`model_test.go`); PRT-001-002 pending |
+| PRT-001 | Typed print document model | PRT | P0 | M1 | Done | — | [PRT](features/PRT.md) | [PRT-001-001](tasks/M0/PRT-001-001-print-document-ir-contract.md), [PRT-001-002](tasks/M1/018-PRT-001-002-print-document-model.md) | `TestDocumentAppendAndIterate`, `TestDocumentRejectsInvalidElementsAndStopsOnError` |
 | PRT-002 | Resolved style data in print IR | PRT | P1 | M1 | Not Started | PRT-001 | [PRT](features/PRT.md) | [PRT-002-001](tasks/M1/022-PRT-002-001-resolved-style-data.md) | planned: style test |
 | PRT-003 | Resource references (fonts/images) | PRT | P1 | M2 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: reference test |
 | PRT-004 | Lazy/streaming print storage | PRT | P2 | M3 | Not Started | PRT-001 | [PRT](features/PRT.md) | INDEX | planned: streaming test |
 | PRT-005 | Spill-to-disk storage for large documents | PRT | P3 | M5 | Not Started | PRT-004 | [PRT](features/PRT.md) | INDEX | planned: large-doc test |
 | PRT-006 | Print IR serialization policy | PRT | P3 | — | **Deferred** | PRT-004 | [PRT](features/PRT.md) | — | No public IR format planned |
-| PRT-007 | Page metadata (numbers, size, count) | PRT | P1 | M1 | Not Started | PRT-001 | [PRT](features/PRT.md) | [PRT-001-002](tasks/M1/018-PRT-001-002-print-document-model.md) | planned: metadata test |
+| PRT-007 | Page metadata (numbers, size, count) | PRT | P1 | M1 | Done | PRT-001 | [PRT](features/PRT.md) | [PRT-001-002](tasks/M1/018-PRT-001-002-print-document-model.md) | `TestDocumentAppendAndIterate`, `TestEmptyDocumentAndValidation` |
 
 ## OUT — Exporters
 

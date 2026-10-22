@@ -1,6 +1,6 @@
 # PRT-001-002: Print document model
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [PRT-001](../../FEATURE_MATRIX.md#prt--print-document-and-storage)
 - **Milestone:** M1
 - **Priority:** P0
@@ -38,9 +38,9 @@ Consumed by `internal/exporter`; produced by `internal/layout`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement model + helpers.
-- [ ] Tests for construction and metadata.
-- [ ] Run `make check`.
+- [x] Implement model + helpers.
+- [x] Tests for construction and metadata.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

@@ -1,6 +1,6 @@
 # FIL-002-001: Built-in variables and parameter defaults
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FIL-002](../../FEATURE_MATRIX.md#fil--fill-engine-and-report-semantics)
 - **Milestone:** M1
 - **Priority:** P1
@@ -32,10 +32,10 @@ Expose built-ins through the `Symbols` implementation used by fill.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement `REPORT_COUNT` increment per record.
-- [ ] Evaluate parameter defaults when missing.
-- [ ] Tests for both.
-- [ ] Run `make check`.
+- [x] Implement `REPORT_COUNT` increment per record.
+- [x] Evaluate parameter defaults when missing.
+- [x] Tests for both.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

@@ -9,6 +9,18 @@ semantics, group events and subreport boundaries in `internal/fill`.
 
 A fill creates exactly one state object per run. It holds current record,
 variable values, group status, and counters. It is **never shared** across runs.
+`fill.Run` currently snapshots the template's selected fields per record into
+`Filled.Records`; missing fields stay absent and present nil fields become
+expression null. Supported values are expression values, Go strings, booleans,
+and signed or fitting unsigned integers. Other conversions await `DAT-007` and
+return an error. The cursor is closed on every return path, including errors
+and cancellation.
+`RunWithParams` accepts expression-value overrides. Missing parameters use
+compiled defaults, evaluated in declaration order; later defaults can use
+earlier parameters. All overrides are available before defaults run. An
+unresolved forward reference evaluates as null. An explicit null override
+suppresses the default. Each filled record snapshots `REPORT_COUNT` after the
+record increment, starting at 1.
 
 ## Record iteration
 

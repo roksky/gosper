@@ -53,6 +53,12 @@ read-only value; consumers do not get setters.
 - Resource references (font/image handles) rather than raw bytes where
   possible (`PRT-003`).
 
+The M1 `printdoc.Document` stores ordered pages with one-based numbers, sizes,
+and a page count maintained by `AppendPage`. Elements carry exact twip bounds
+and text, image-reference, or primitive-shape payloads. `Validate` checks the
+document and accepts an empty document. `ForEachPage` and `ForEachElement`
+visit in document order and stop on the first error.
+
 ## Units
 
 The print IR uses a single integral unit, the **twip** (1/1440 inch), stored as
@@ -83,7 +89,7 @@ or with half-away-from-zero rounding at the boundary. This resolves OQ-2; see
 
 ## Linked features and tasks
 
-- `PRT-001` Typed print document — tasks `PRT-001-001` (contract, **Done**), `PRT-001-002`.
+- `PRT-001` Typed print document — tasks `PRT-001-001` (contract, **Done**), `PRT-001-002` (**Done**).
 - `PRT-002` Resolved styles — task `PRT-002-001`.
 - `FND-004` Compile cache; `PRT-005` spill-to-disk; `PRT-006` serialization.
 - Decision: [`adr/0002-split-compiled-ir-from-print-ir.md`](../adr/0002-split-compiled-ir-from-print-ir.md).

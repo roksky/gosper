@@ -19,8 +19,13 @@ type Record interface {
 }
 ```
 
-Planned concrete sources: slices/structs/maps (`DAT-001`), JSON (`DAT-003`),
-CSV (`DAT-004`), SQL via `database/sql` (`DAT-005`).
+`datasource.FromSlice` accepts structs, string-keyed maps, and positional
+slices/arrays (`DAT-001`). Struct fields use `jrxml` tags first, then `json`
+tags, then exported Go field names; `-` omits a field. Map keys are exact and
+case-sensitive. Positional fields use zero-based decimal names (`"0"`, `"1"`).
+Unsupported row types return an error from `Next`. The source copies the outer
+slice, while callers retain responsibility for avoiding concurrent row mutation.
+JSON (`DAT-003`), CSV (`DAT-004`), and SQL (`DAT-005`) remain planned.
 
 ## Query and parameter binding
 
