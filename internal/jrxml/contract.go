@@ -40,6 +40,10 @@ type Template struct {
 	Parameters []Parameter
 	Fields     []Field
 	Bands      []Band
+	Query      string
+	Variables  []Variable
+	Groups     []Group
+	Styles     map[string]Element
 }
 
 // parseDialect parses a version string such as "6.20.0", "6.0" or "6".

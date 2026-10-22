@@ -45,6 +45,7 @@ type DetailSpec struct {
 	Page                          PageGeometry
 	Title, PageHeader, PageFooter *Band
 	Detail                        Band
+	Native                        *NativeSpec
 }
 
 // FromJRXML converts the supported JRXML page and text bands into a layout
@@ -52,6 +53,9 @@ type DetailSpec struct {
 func FromJRXML(t *jrxml.Template) (*DetailSpec, error) {
 	if t == nil {
 		return nil, fmt.Errorf("layout: nil JRXML template")
+	}
+	if useNative(t) {
+		return nativeSpec(t)
 	}
 	if t.Page.ColumnCount != 1 {
 		return nil, fmt.Errorf("layout: M1 supports one column")
@@ -109,6 +113,9 @@ func LayoutWithBudget(ctx context.Context, filled *fill.Filled, spec *DetailSpec
 	}
 	if err := ctx.Err(); err != nil {
 		return nil, err
+	}
+	if spec.Native != nil {
+		return layoutNative(ctx, filled, spec.Native, budget)
 	}
 	headerH, footerH := bandHeight(spec.PageHeader), bandHeight(spec.PageFooter)
 	if headerH < 0 || footerH < 0 || spec.Page.Top < 0 || spec.Page.Bottom < 0 || spec.Page.Height <= 0 || headerH > spec.Page.Height-spec.Page.Top || footerH > spec.Page.Height-spec.Page.Bottom-headerH-spec.Page.Top {

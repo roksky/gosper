@@ -2,11 +2,16 @@ package fill
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/roksky/gosper/internal/datasource"
 	"github.com/roksky/gosper/internal/expression"
 	"github.com/roksky/gosper/internal/limits"
+	"image"
+	"math"
+	"strconv"
+	"time"
 )
 
 // Template is the immutable field selection for a fill run. Callers must not
@@ -14,6 +19,9 @@ import (
 type Template struct {
 	Fields     []string
 	Parameters []ParameterDefault
+	FieldTypes map[string]string
+	Variables  []Variable
+	Groups     []Group
 }
 
 // FilledRecord owns a snapshot of the requested fields for one source record.
@@ -21,6 +29,7 @@ type FilledRecord struct {
 	Fields     map[string]expression.Value
 	Parameters map[string]expression.Value
 	Variables  map[string]expression.Value
+	Groups     map[string]expression.Value
 }
 
 // Field implements the field part of expression.Symbols.
@@ -69,6 +78,9 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 	if err != nil {
 		return nil, err
 	}
+	if _, ok := params["REPORT_TIME"]; !ok {
+		params["REPORT_TIME"] = expression.Time(time.Now())
+	}
 	cur, err := ds.Open(ctx)
 	if err != nil {
 		return nil, err
@@ -83,6 +95,7 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 		}
 	}()
 	filled := &Filled{Parameters: cloneValues(params)}
+	state := newVariableState(tmpl)
 	for {
 		if err = ctx.Err(); err != nil {
 			return nil, err
@@ -115,7 +128,7 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 				continue
 			}
 			var value expression.Value
-			value, err = ValueOf(raw)
+			value, err = typedValue(raw, tmpl.FieldTypes[name])
 			if err != nil {
 				return nil, fmt.Errorf("field %q: %w", name, err)
 			}
@@ -124,10 +137,11 @@ func RunWithParams(ctx context.Context, tmpl *Template, ds datasource.DataSource
 				return nil, err
 			}
 		}
-		filled.Records = append(filled.Records, FilledRecord{
-			Fields: fields, Parameters: cloneValues(params),
-			Variables: map[string]expression.Value{"REPORT_COUNT": expression.Int(len(filled.Records) + 1)},
-		})
+		record := FilledRecord{Fields: fields, Parameters: cloneValues(params), Variables: map[string]expression.Value{"REPORT_COUNT": expression.Int(len(filled.Records) + 1)}}
+		if err := state.apply(ctx, tmpl, &record); err != nil {
+			return nil, err
+		}
+		filled.Records = append(filled.Records, record)
 	}
 	return filled, nil
 }
@@ -143,6 +157,30 @@ func ValueOf(raw any) (expression.Value, error) {
 	switch v := raw.(type) {
 	case string:
 		return expression.String(v), nil
+	case image.Image:
+		return expression.Image{Value: v}, nil
+	case []byte:
+		return expression.String(string(v)), nil
+	case float64:
+		if math.IsNaN(v) || math.IsInf(v, 0) {
+			return nil, fmt.Errorf("non-finite number")
+		}
+		return expression.Decimal(strconv.FormatFloat(v, 'f', -1, 64)), nil
+	case float32:
+		if math.IsNaN(float64(v)) || math.IsInf(float64(v), 0) {
+			return nil, fmt.Errorf("non-finite number")
+		}
+		return expression.Decimal(strconv.FormatFloat(float64(v), 'f', -1, 32)), nil
+	case json.Number:
+		if n, err := v.Int64(); err == nil {
+			return expression.Int(n), nil
+		}
+		if _, err := v.Float64(); err != nil {
+			return nil, err
+		}
+		return expression.Decimal(v.String()), nil
+	case time.Time:
+		return expression.Time(v), nil
 	case bool:
 		return expression.Bool(v), nil
 	case int:

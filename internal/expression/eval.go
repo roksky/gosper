@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"strings"
 	"time"
 )
 
@@ -35,6 +36,31 @@ func (p *Program) eval(ctx context.Context, scope Scope, n *node) (Value, error)
 		}
 		return v, nil
 	}
+	if n.op == "?:" {
+		condition, err := p.eval(ctx, scope, n.left)
+		if err != nil {
+			return nil, err
+		}
+		if b, ok := condition.(Bool); ok && bool(b) {
+			return p.eval(ctx, scope, n.middle)
+		}
+		return p.eval(ctx, scope, n.right)
+	}
+	if strings.HasPrefix(n.op, "method:") {
+		receiver, err := p.eval(ctx, scope, n.left)
+		if err != nil {
+			return nil, err
+		}
+		args := make([]Value, len(n.args))
+		for i, arg := range n.args {
+			v, err := p.eval(ctx, scope, arg)
+			if err != nil {
+				return nil, err
+			}
+			args[i] = v
+		}
+		return callMethod(strings.TrimPrefix(n.op, "method:"), receiver, args)
+	}
 	if n.left == nil {
 		v, err := p.eval(ctx, scope, n.right)
 		if err != nil {
@@ -61,6 +87,17 @@ func unary(op string, v Value, src string, offset int) (Value, error) {
 	if result, handled := nullUnary(v); handled {
 		return result, nil
 	}
+	if _, ok := v.(Decimal); ok {
+		number, valid := numberRat(v)
+		if valid {
+			if op == "u+" {
+				return v, nil
+			}
+			if op == "u-" {
+				return decimalValue(number.Neg(number)), nil
+			}
+		}
+	}
 	switch op {
 	case "u!":
 		if b, ok := v.(Bool); ok {
@@ -81,6 +118,15 @@ func unary(op string, v Value, src string, offset int) (Value, error) {
 	return nil, runtimeError(src, offset, "invalid unary operand")
 }
 func binary(op string, a, b Value, src string, offset int) (Value, error) {
+	if op == "+" {
+		if x, ok := a.(String); ok {
+			return String(string(x) + scalarString(b)), nil
+		}
+		if y, ok := b.(String); ok {
+			return String(scalarString(a) + string(y)), nil
+		}
+	}
+
 	if result, handled, err := nullBinary(op, a, b); handled {
 		if err != nil {
 			return nil, runtimeError(src, offset, err.Error())
@@ -98,6 +144,16 @@ func binary(op string, a, b Value, src string, offset int) (Value, error) {
 		}
 		return Bool(bool(x) || bool(y)), nil
 	}
+	if _, ok := a.(Decimal); ok {
+		if _, valid := numberRat(b); valid {
+			return numericBinary(op, a, b)
+		}
+	}
+	if _, ok := b.(Decimal); ok {
+		if _, valid := numberRat(a); valid {
+			return numericBinary(op, a, b)
+		}
+	}
 	if op == "==" || op == "!=" {
 		equal, err := equalValues(a, b)
 		if err != nil {
@@ -110,9 +166,10 @@ func binary(op string, a, b Value, src string, offset int) (Value, error) {
 	}
 	if op == "+" {
 		if x, ok := a.(String); ok {
-			if y, ok := b.(String); ok {
-				return x + y, nil
-			}
+			return String(string(x) + scalarString(b)), nil
+		}
+		if y, ok := b.(String); ok {
+			return String(scalarString(a) + string(y)), nil
 		}
 	}
 	x, xok := a.(Int)
@@ -189,4 +246,54 @@ func equalValues(a, b Value) (bool, error) {
 		return ok && time.Time(x).Equal(time.Time(y)), nil
 	}
 	return false, fmt.Errorf("incompatible equality operands")
+}
+
+func scalarString(v Value) string {
+	switch x := v.(type) {
+	case String:
+		return string(x)
+	case Decimal:
+		return string(x)
+	case Time:
+		return time.Time(x).Format(time.RFC3339)
+	case Null:
+		return "null"
+	default:
+		return fmt.Sprint(v)
+	}
+}
+func callMethod(name string, receiver Value, args []Value) (Value, error) {
+	if isNull(receiver) {
+		return nil, fmt.Errorf("method %s on null", name)
+	}
+	if (name == "formatDate" || name == "formatNumber") && len(args) == 1 {
+		if pattern, ok := receiver.(String); ok {
+			value, err := FormatValue(args[0], string(pattern))
+			return String(value), err
+		}
+	}
+	if name == "equals" && len(args) == 1 {
+		eq, err := equalValues(receiver, args[0])
+		return Bool(eq), err
+	}
+	if name == "toString" && len(args) == 0 {
+		return String(scalarString(receiver)), nil
+	}
+	if s, ok := receiver.(String); ok && len(args) == 0 {
+		switch name {
+		case "trim":
+			return String(strings.TrimSpace(string(s))), nil
+		case "toLowerCase":
+			return String(strings.ToLower(string(s))), nil
+		case "toUpperCase":
+			return String(strings.ToUpper(string(s))), nil
+		}
+	}
+	if len(args) == 1 {
+		ops := map[string]string{"add": "+", "subtract": "-", "multiply": "*", "divide": "/"}
+		if op, ok := ops[name]; ok {
+			return numericBinary(op, receiver, args[0])
+		}
+	}
+	return nil, fmt.Errorf("unsupported %s method operands", name)
 }

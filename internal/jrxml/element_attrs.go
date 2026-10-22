@@ -3,6 +3,8 @@ package jrxml
 import (
 	"encoding/xml"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/roksky/gosper/internal/diag"
 	"github.com/roksky/gosper/internal/printdoc"
@@ -41,6 +43,20 @@ func defaultElementAttrs() elementAttrs {
 // applyElementStartAttrs reads geometry/evaluation attributes from an element or
 // <reportElement> start tag.
 func (p *parser) applyElementStartAttrs(se xml.StartElement, el *Element) {
+	if name, ok := attribute(se, "style"); ok {
+		el.StyleName = name
+		if style, found := p.tmpl.Styles[name]; found {
+			el.Font = style.Font
+			el.FontSize = style.FontSize
+			el.Bold = style.Bold
+			el.Italic = style.Italic
+			el.Forecolor = style.Forecolor
+			el.Backcolor = style.Backcolor
+			el.Opaque = style.Opaque
+			el.Padding = style.Padding
+		}
+	}
+
 	for _, a := range se.Attr {
 		switch a.Name.Local {
 		case "x":
@@ -59,6 +75,12 @@ func (p *parser) applyElementStartAttrs(se xml.StartElement, el *Element) {
 			p.setEvalTime(a.Value, el)
 		case "evaluationGroup":
 			el.EvalGroup = a.Value
+		case "forecolor":
+			el.Forecolor = parseColor(a.Value)
+		case "backcolor":
+			el.Backcolor = parseColor(a.Value)
+		case "mode":
+			el.Opaque = a.Value == "Opaque"
 		case "uuid":
 			// Ignored: identity is not needed before layout.
 		}
@@ -84,6 +106,10 @@ func (p *parser) parseReportElement(se xml.StartElement, el *Element) error {
 		switch t := tok.(type) {
 		case xml.StartElement:
 			switch t.Name.Local {
+			case "property":
+				if err := p.skipElement(); err != nil {
+					return err
+				}
 			case "printWhenExpression":
 				v, err := p.readText()
 				if err != nil {
@@ -115,6 +141,22 @@ func (p *parser) parseElementCommon(se xml.StartElement, el *Element) error {
 		switch t := tok.(type) {
 		case xml.StartElement:
 			switch t.Name.Local {
+			case "property":
+				if err := p.skipElement(); err != nil {
+					return err
+				}
+			case "graphicElement":
+				if err := p.parseGraphic(t, el); err != nil {
+					return err
+				}
+			case "box":
+				if err := p.parseBox(t, el); err != nil {
+					return err
+				}
+			case "textElement":
+				if err := p.parseTextStyle(t, el); err != nil {
+					return err
+				}
 			case "reportElement":
 				if err := p.parseReportElement(t, el); err != nil {
 					return err
@@ -125,7 +167,7 @@ func (p *parser) parseElementCommon(se xml.StartElement, el *Element) error {
 					return err
 				}
 				el.Text = v
-			case "textFieldExpression":
+			case "textFieldExpression", "imageExpression":
 				v, err := p.readText()
 				if err != nil {
 					return err
@@ -138,6 +180,16 @@ func (p *parser) parseElementCommon(se xml.StartElement, el *Element) error {
 				}
 				el.PrintWhenExpr = v
 			default:
+				if el.Kind == KindFrame {
+					child, ok, err := p.parseElement(t)
+					if err != nil {
+						return err
+					}
+					if ok {
+						el.Children = append(el.Children, child)
+					}
+					continue
+				}
 				p.unsupported(t, t.Name.Local)
 				if err := p.skipElement(); err != nil {
 					return err
@@ -151,4 +203,47 @@ func (p *parser) parseElementCommon(se xml.StartElement, el *Element) error {
 
 func newAttrDiag(p *parser, format string, args ...any) *diag.Diagnostic {
 	return diag.New(diag.CodeValidation, diag.SeverityWarning, fmt.Sprintf(format, args...), p.span())
+}
+
+func parseColor(raw string) uint32 {
+	value, _ := strconv.ParseUint(strings.TrimPrefix(raw, "#"), 16, 24)
+	return uint32(value)
+}
+
+func (p *parser) parseTextStyle(se xml.StartElement, el *Element) error {
+	el.TextAlignment, _ = attribute(se, "textAlignment")
+	el.VerticalAlignment, _ = attribute(se, "verticalAlignment")
+	for {
+		tok, err := p.dec.Token()
+		if err != nil {
+			return err
+		}
+		switch t := tok.(type) {
+		case xml.StartElement:
+			if t.Name.Local != "font" {
+				p.unsupported(t, t.Name.Local)
+				if err := p.skipElement(); err != nil {
+					return err
+				}
+				continue
+			}
+			if value, ok := attribute(t, "fontName"); ok {
+				el.Font = value
+			}
+			if raw, ok := attribute(t, "size"); ok {
+				el.FontSize, _ = strconv.ParseFloat(raw, 64)
+			}
+			if raw, ok := attribute(t, "isBold"); ok {
+				el.Bold = parseBool(raw)
+			}
+			if raw, ok := attribute(t, "isItalic"); ok {
+				el.Italic = parseBool(raw)
+			}
+			if err := p.skipElement(); err != nil {
+				return err
+			}
+		case xml.EndElement:
+			return nil
+		}
+	}
 }

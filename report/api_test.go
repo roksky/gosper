@@ -93,7 +93,7 @@ func TestFillWithoutExportAndEmptyExport(t *testing.T) {
 	if !strings.Contains(out.String(), "/Count 0") {
 		t.Fatal("empty PDF count missing")
 	}
-	if err := report.Export(context.Background(), filled, io.Discard, report.FormatHTML); !errors.Is(err, report.ErrNotImplemented) {
+	if err := report.Export(context.Background(), filled, io.Discard, report.Format("unknown")); !errors.Is(err, report.ErrNotImplemented) {
 		t.Fatalf("HTML error=%v", err)
 	}
 }

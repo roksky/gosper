@@ -20,6 +20,10 @@ const (
 	tokOperator
 	tokLParen
 	tokRParen
+	tokDot
+	tokComma
+	tokQuestion
+	tokColon
 )
 
 type token struct {
@@ -138,6 +142,18 @@ func lex(src string) ([]token, error) {
 			default:
 				out = append(out, token{kind: tokName, text: word, offset: start})
 			}
+		case r == '.':
+			i++
+			out = append(out, token{kind: tokDot, offset: start})
+		case r == ',':
+			i++
+			out = append(out, token{kind: tokComma, offset: start})
+		case r == '?':
+			i++
+			out = append(out, token{kind: tokQuestion, offset: start})
+		case r == ':':
+			i++
+			out = append(out, token{kind: tokColon, offset: start})
 		case r == '(':
 			i++
 			out = append(out, token{kind: tokLParen, offset: start})

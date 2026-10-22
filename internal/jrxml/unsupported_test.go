@@ -39,13 +39,13 @@ func TestUnsupportedConstructs(t *testing.T) {
 
 func TestDeferredConstructIsUnsupportedNotParse(t *testing.T) {
 	_, list, err := Parse(strings.NewReader(
-		`<jasperReport version="6.20.0"><group name="g"/></jasperReport>`))
+		`<jasperReport version="6.20.0"><chart/></jasperReport>`))
 	if err != nil {
 		t.Fatalf("Parse: %v", err)
 	}
-	d := findUnsupported(list, "group")
+	d := findUnsupported(list, "chart")
 	if d == nil {
-		t.Fatalf("want unsupported diagnostic for <group>, got %v", list)
+		t.Fatalf("want unsupported diagnostic for <chart>, got %v", list)
 	}
 	if d.Code != diag.CodeUnsupported {
 		t.Errorf("code = %q, want unsupported", d.Code)
