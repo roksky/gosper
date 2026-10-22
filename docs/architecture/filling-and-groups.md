@@ -9,6 +9,12 @@ semantics, group events and subreport boundaries in `internal/fill`.
 
 A fill creates exactly one state object per run. It holds current record,
 variable values, group status, and counters. It is **never shared** across runs.
+`fill.Run` currently snapshots the template's selected fields per record into
+`Filled.Records`; missing fields stay absent and present nil fields become
+expression null. Supported values are expression values, Go strings, booleans,
+and signed or fitting unsigned integers. Other conversions await `DAT-007` and
+return an error. The cursor is closed on every return path, including errors
+and cancellation.
 
 ## Record iteration
 

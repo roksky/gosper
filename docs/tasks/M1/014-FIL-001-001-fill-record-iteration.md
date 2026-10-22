@@ -1,6 +1,6 @@
 # FIL-001-001: Fill record iteration
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [FIL-001](../../FEATURE_MATRIX.md#fil--fill-engine-and-report-semantics)
 - **Milestone:** M1
 - **Priority:** P0
@@ -44,10 +44,10 @@ func Run(ctx context.Context, tmpl *Template, ds DataSource, params Params, b li
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement the loop with `defer cursor.Close()` and `ctx` checks.
-- [ ] Bind field values per record.
-- [ ] Tests for count, error, cancellation, isolation across runs.
-- [ ] Run `make check` and `-race`.
+- [x] Implement the loop with `defer cursor.Close()` and `ctx` checks.
+- [x] Bind field values per record.
+- [x] Tests for count, error, cancellation, isolation across runs.
+- [x] Run `make check` and `-race`.
 
 ## Acceptance criteria (observable)
 
