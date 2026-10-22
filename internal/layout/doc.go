@@ -1,6 +1,3 @@
-// Package layout will turn filled report data into a laid-out page
-// representation, handling bands, measurement and page breaking.
-//
-// It is intentionally empty in the bootstrap milestone; text shaping, band
-// layout and pagination are deferred to a future change.
+// Package layout places fixed-height bands into a paginated print document.
+// Text shaping and advanced pagination are deferred to later changes.
 package layout

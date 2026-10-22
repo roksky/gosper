@@ -142,7 +142,7 @@ Spec: [`features/LAY.md`](features/LAY.md) · Architect: [`architecture/layout-a
 
 | ID | Feature | Domain | Priority | Milestone | Status | Dependencies | Specification | Tasks | Verification evidence / note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LAY-001 | Page geometry and band placement | LAY | P0 | M1 | Not Started | JRX-002, PRT-001 | [LAY](features/LAY.md) | [LAY-001-001](tasks/M1/019-LAY-001-001-page-geometry-and-band-placement.md) | planned: geometry test |
+| LAY-001 | Page geometry and band placement | LAY | P0 | M1 | Done | JRX-002, PRT-001 | [LAY](features/LAY.md) | [LAY-001-001](tasks/M1/019-LAY-001-001-page-geometry-and-band-placement.md) | `TestPrintableAreaAndBandPlacement`, `TestGeometryInvalidAndOversizeBand` |
 | LAY-002 | Absolute/float positioning | LAY | P0 | M1 | Not Started | LAY-001 | [LAY](features/LAY.md) | [LAY-002-001](tasks/M1/020-LAY-002-001-absolute-positioning.md) | planned: position test |
 | LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Not Started | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | planned: layout golden |
 | LAY-004 | Relative stretching | LAY | P1 | M2 | Not Started | LAY-003 | [LAY](features/LAY.md) | INDEX | planned: stretch fixture |
