@@ -16,12 +16,23 @@ import (
 // TextItem is one fixed text box within a band. Expr, when present, is
 // evaluated against the current filled record; otherwise Literal is used.
 type TextItem struct {
-	Bounds  printdoc.Bounds
-	Literal string
-	Expr    *expression.Program
-	Font    string
-	Size    float64
+	Bounds     printdoc.Bounds
+	Literal    string
+	Expr       *expression.Program
+	Font       string
+	Size       float64
+	Horizontal printdoc.Align
+	Vertical   VerticalAlign
 }
+
+// VerticalAlign controls placement of a text block within its box.
+type VerticalAlign uint8
+
+const (
+	AlignTop VerticalAlign = iota
+	AlignMiddle
+	AlignBottom
+)
 
 // Band is a fixed-height collection of text items.
 type Band struct {
@@ -176,12 +187,14 @@ func bandHeight(b *Band) printdoc.Unit {
 func isNewPagePlacement(c *Canvas, p Placement) bool { return p.Y == c.area.Y }
 func appendBodyBand(ctx context.Context, c *Canvas, p Placement, b Band, record *fill.FilledRecord) error {
 	for _, item := range b.Texts {
-		value, bounds, style, err := measuredText(ctx, item, record)
+		lines, err := laidOutText(ctx, item, record)
 		if err != nil {
 			return err
 		}
-		if err := c.PlaceStyledText(p, bounds, value, style); err != nil {
-			return err
+		for _, line := range lines {
+			if err := c.PlaceStyledText(p, line.bounds, line.value, line.style); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
@@ -192,23 +205,33 @@ func appendBand(ctx context.Context, c *Canvas, page int, x, y printdoc.Unit, b 
 		return err
 	}
 	for _, item := range b.Texts {
-		value, bounds, style, err := measuredText(ctx, item, record)
+		lines, err := laidOutText(ctx, item, record)
 		if err != nil {
 			return err
 		}
-		if bounds.X < 0 || bounds.Y < 0 || bounds.Width < 0 || bounds.Height < 0 || bounds.X > area.Width || bounds.Width > area.Width-bounds.X || bounds.Y > b.Height || bounds.Height > b.Height-bounds.Y {
-			return fmt.Errorf("layout: element outside header or footer band")
+		for _, line := range lines {
+			bounds := line.bounds
+			if bounds.X < 0 || bounds.Y < 0 || bounds.Width < 0 || bounds.Height < 0 || bounds.X > area.Width || bounds.Width > area.Width-bounds.X || bounds.Y > b.Height || bounds.Height > b.Height-bounds.Y {
+				return fmt.Errorf("layout: element outside header or footer band")
+			}
+			absolute := printdoc.Bounds{X: x + bounds.X, Y: y + bounds.Y, Width: bounds.Width, Height: bounds.Height}
+			element := printdoc.NewTextElement(absolute, line.value)
+			element.Style = line.style
+			c.Doc.Pages[page-1].Elements = append(c.Doc.Pages[page-1].Elements, element)
 		}
-		absolute := printdoc.Bounds{X: x + bounds.X, Y: y + bounds.Y, Width: bounds.Width, Height: bounds.Height}
-		element := printdoc.NewTextElement(absolute, value)
-		element.Style = style
-		c.Doc.Pages[page-1].Elements = append(c.Doc.Pages[page-1].Elements, element)
 	}
 	return nil
 }
-func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord) (string, printdoc.Bounds, printdoc.Style, error) {
+
+type positionedLine struct {
+	value  string
+	bounds printdoc.Bounds
+	style  printdoc.Style
+}
+
+func laidOutText(ctx context.Context, item TextItem, record *fill.FilledRecord) ([]positionedLine, error) {
 	if err := ctx.Err(); err != nil {
-		return "", printdoc.Bounds{}, printdoc.Style{}, err
+		return nil, err
 	}
 	value := item.Literal
 	if item.Expr != nil {
@@ -218,7 +241,7 @@ func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord)
 		}
 		result, err := item.Expr.Eval(ctx, scope)
 		if err != nil {
-			return "", printdoc.Bounds{}, printdoc.Style{}, err
+			return nil, err
 		}
 		value = valueString(result)
 	}
@@ -228,21 +251,58 @@ func measuredText(ctx context.Context, item TextItem, record *fill.FilledRecord)
 	}
 	font, err := text.Resolve(item.Font, 0, size)
 	if err != nil {
-		return "", printdoc.Bounds{}, printdoc.Style{}, err
+		return nil, err
 	}
-	metrics, err := text.Measure(value, font)
+	if item.Horizontal > printdoc.AlignRight || item.Vertical > AlignBottom {
+		return nil, fmt.Errorf("layout: invalid text alignment")
+	}
+	lines, err := text.Wrap(value, font, item.Bounds.Width)
 	if err != nil {
-		return "", printdoc.Bounds{}, printdoc.Style{}, err
+		return nil, err
 	}
-	bounds := item.Bounds
-	if metrics.Width > bounds.Width {
-		return "", printdoc.Bounds{}, printdoc.Style{}, fmt.Errorf("layout: text width %d exceeds box width %d", metrics.Width, bounds.Width)
+	metrics, err := text.Measure("", font)
+	if err != nil {
+		return nil, err
 	}
-	bounds.Width = metrics.Width
+	blockHeight := printdoc.Unit(len(lines)) * metrics.LineHeight
+	if len(lines) == 1 {
+		blockHeight = metrics.Ascent + metrics.Descent
+	}
+	if blockHeight > item.Bounds.Height {
+		return nil, fmt.Errorf("layout: wrapped text height %d exceeds box height %d", blockHeight, item.Bounds.Height)
+	}
+	y := item.Bounds.Y
+	switch item.Vertical {
+	case AlignMiddle:
+		y += (item.Bounds.Height - blockHeight) / 2
+	case AlignBottom:
+		y += item.Bounds.Height - blockHeight
+	}
 	style := printdoc.DefaultStyle()
 	style.Font = font.Name
 	style.Size = printdoc.FromPoints(size)
-	return value, bounds, style, nil
+	style.Align = item.Horizontal
+	result := make([]positionedLine, 0, len(lines))
+	for _, line := range lines {
+		m, err := text.Measure(line, font)
+		if err != nil {
+			return nil, err
+		}
+		x := item.Bounds.X
+		switch item.Horizontal {
+		case printdoc.AlignCenter:
+			x += (item.Bounds.Width - m.Width) / 2
+		case printdoc.AlignRight:
+			x += item.Bounds.Width - m.Width
+		}
+		height := metrics.LineHeight
+		if len(lines) == 1 {
+			height = blockHeight
+		}
+		result = append(result, positionedLine{line, printdoc.Bounds{X: x, Y: y, Width: m.Width, Height: height}, style})
+		y += metrics.LineHeight
+	}
+	return result, nil
 }
 func valueString(v expression.Value) string {
 	switch x := v.(type) {

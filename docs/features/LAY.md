@@ -49,3 +49,5 @@ placement, text measurement, dynamic sizing, page breaking.
 
 - Pagination is the highest-risk area; couple golden + semantic + page-count
   assertions (`TST-004`).
+
+`LAY-008-001` implements measured word wrapping and horizontal/vertical alignment (`internal/text/wrap_test.go`, `internal/layout/text_test.go`). It returns an error when a glyph cannot fit or wrapped lines exceed a box. Rotation and clipping remain outside this task.
