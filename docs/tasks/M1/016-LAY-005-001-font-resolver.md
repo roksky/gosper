@@ -1,6 +1,6 @@
 # LAY-005-001: Font resolver
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [LAY-005](../../FEATURE_MATRIX.md#lay--layout-typography-pagination)
 - **Milestone:** M1
 - **Priority:** P0
@@ -45,10 +45,10 @@ type Resolver interface{ Resolve(name string, style Style, size float64) (Font, 
 
 ## Implementation checklist (future agent only)
 
-- [ ] Bundle metric data (no network; license-check any asset via `OPS-008`).
-- [ ] Implement resolver + fallback.
-- [ ] Tests for resolution and stable widths.
-- [ ] Run `make check`.
+- [x] Bundle metric data (no network; license-check any asset via `OPS-008`).
+- [x] Implement resolver + fallback.
+- [x] Tests for resolution and stable widths.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

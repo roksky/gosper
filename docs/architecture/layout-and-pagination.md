@@ -37,6 +37,11 @@ flowchart TD
 ## Text measurement
 
 - A font resolver maps logical fonts to metric providers (`LAY-005`).
+- `internal/text.Resolve` maps SansSerif, Serif and Monospaced names to
+  bundled, original ASCII metric tables. Empty or unknown names fall back to
+  SansSerif; non-ASCII runes use a fixed advance. There are no font binaries or
+  third-party assets to license in M1. Bold/italic are recorded for later
+  rendering; M1 widths use the same family metrics for every style.
 - Measurement must be deterministic given the same font set and locale
   (`LAY-015`); shaping/Unicode fallback is later (`LAY-007`).
 - Line breaking, clipping, alignment and rotation consume measured metrics
