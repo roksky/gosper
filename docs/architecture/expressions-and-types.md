@@ -36,6 +36,11 @@ type Scope []Symbols // first match wins; inner scopes shadow outer
 is deferred to `EXP-008` (OQ-1) and arithmetic on it is undefined until then.
 Names are case-sensitive; a missing symbol returns `(nil, false)` and must not
 panic.
+`ParseReference` accepts explicit `$F{}`, `$P{}` and `$V{}` forms and bare
+names. Explicit references use only their named namespace. Bare names resolve
+in variable, parameter, field order; within each namespace the first (inner)
+scope wins. Braced names may have surrounding whitespace. Empty names and
+nested braces are invalid.
 
 Unresolved symbols are a **compile-time** error when statically known
 (`EXP-016`), otherwise a runtime diagnostic with the expression span.
@@ -66,13 +71,26 @@ that they fail safely.
 
 ## Type semantics
 
+The evaluator accepts integer and decimal literals, strings, booleans, null,
+references, unary `!`/`+`/`-`, arithmetic, comparisons and boolean operators.
+Precedence from low to high is `||`, `&&`, equality, ordering, `+`/`-`,
+`*`/`/`/`%`, unary operators. Jasper keywords `or`, `and`, `not` are aliases.
+Integer arithmetic detects overflow; division and modulo by zero are errors.
+String concatenation uses `+` for two strings. Decimal arithmetic awaits
+`EXP-008` and returns a runtime diagnostic.
+
 - A small closed type set: null, boolean, integer (`int64`), decimal
   (arbitrary precision), string, date/time, and opaque/unknown.
 - **Decimals are mandatory for financial expressions.** Binary floating point
   must not be the default (`EXP-008`); the concrete decimal representation is
   an open decision (see below).
-- **Null propagation** follows Jasper-like rules; comparisons and arithmetic
-  with null produce null unless a function defines otherwise (`EXP-006`).
+- **Null propagation:** arithmetic and ordering with null produce null. Equality
+  is null aware: `null == null` is true, `null != null` is false, and a null
+  compared to a non-null value is unequal. Boolean operators use three valued
+  logic: false dominates `&&`, true dominates `||`, and the remaining cases
+  with null produce null. `!null` produces null. Missing symbols are null.
+  The equality and boolean choices are explicit subset semantics; they may
+  differ from Jasper expressions compiled as Java depending on operand types.
 - **Coercion** between numeric types is explicit and documented (`EXP-007`).
 
 ## Proposed contract — non-binding

@@ -1,6 +1,6 @@
 # EXP-003-001: Expression parser and evaluator (arithmetic/comparison/boolean)
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [EXP-003](../../FEATURE_MATRIX.md#exp--expression-language-and-type-semantics)
 - **Milestone:** M1
 - **Priority:** P0
@@ -46,11 +46,11 @@ func (p *Program) Eval(ctx context.Context, env Env) (Value, error)
 
 ## Implementation checklist (future agent only)
 
-- [ ] Lexer with positions for diagnostics.
-- [ ] Recursive-descent parser with documented precedence.
-- [ ] Evaluator honoring `EXP-006` null rules once available.
-- [ ] Fuzz the lexer/parser (no panics).
-- [ ] Run `make check`.
+- [x] Lexer with positions for diagnostics.
+- [x] Recursive-descent parser with documented precedence.
+- [x] Evaluator honoring `EXP-006` null rules once available.
+- [x] Fuzz the lexer/parser (no panics).
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

@@ -1,6 +1,6 @@
 # EXP-006-001: Null semantics
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [EXP-006](../../FEATURE_MATRIX.md#exp--expression-language-and-type-semantics)
 - **Milestone:** M1
 - **Priority:** P0
@@ -38,10 +38,10 @@ Central helpers used by the evaluator; no new exported API.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Implement null rules per decision table.
-- [ ] Encode the table as tests.
-- [ ] Document the choices in the package/architecture doc.
-- [ ] Run `make check`.
+- [x] Implement null rules per decision table.
+- [x] Encode the table as tests.
+- [x] Document the choices in the package/architecture doc.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 

@@ -1,6 +1,6 @@
 # EXP-001-002: Implement expression symbol resolution
 
-- **Status:** Not Started
+- **Status:** Done
 - **Feature:** [EXP-001](../../FEATURE_MATRIX.md#exp--expression-language-and-type-semantics)
 - **Milestone:** M1
 - **Priority:** P0
@@ -40,9 +40,9 @@ Integrates with the evaluator built by `EXP-003-001`.
 
 ## Implementation checklist (future agent only)
 
-- [ ] Recognize `$F{}`/`$P{}`/`$V{}` and resolve.
-- [ ] Tests for each kind, precedence, and missing names.
-- [ ] Run `make check`.
+- [x] Recognize `$F{}`/`$P{}`/`$V{}` and resolve.
+- [x] Tests for each kind, precedence, and missing names.
+- [x] Run `make check`.
 
 ## Acceptance criteria (observable)
 
