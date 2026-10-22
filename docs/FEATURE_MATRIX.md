@@ -144,7 +144,7 @@ Spec: [`features/LAY.md`](features/LAY.md) · Architect: [`architecture/layout-a
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | LAY-001 | Page geometry and band placement | LAY | P0 | M1 | Done | JRX-002, PRT-001 | [LAY](features/LAY.md) | [LAY-001-001](tasks/M1/019-LAY-001-001-page-geometry-and-band-placement.md) | `TestPrintableAreaAndBandPlacement`, `TestGeometryInvalidAndOversizeBand` |
 | LAY-002 | Absolute/float positioning | LAY | P0 | M1 | Done | LAY-001 | [LAY](features/LAY.md) | [LAY-002-001](tasks/M1/020-LAY-002-001-absolute-positioning.md) | `TestAbsoluteTextPlacement`, `TestAbsolutePositionRejectsOverflow` |
-| LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Not Started | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | planned: layout golden |
+| LAY-003 | Fixed-height detail band layout | LAY | P0 | M1 | Done | LAY-002, FIL-001 | [LAY](features/LAY.md) | [LAY-003-001](tasks/M1/021-LAY-003-001-fixed-height-detail-band-layout.md) | `TestDetailLayoutFromJRXML`, `TestDetailExactlyFullPageAndCancel` |
 | LAY-004 | Relative stretching | LAY | P1 | M2 | Not Started | LAY-003 | [LAY](features/LAY.md) | INDEX | planned: stretch fixture |
 | LAY-005 | Font resolver (bundled core fonts) | LAY | P0 | M1 | Done | — | [LAY](features/LAY.md) | [LAY-005-001](tasks/M1/016-LAY-005-001-font-resolver.md) | `TestResolveCoreFontsAndFallback`, `TestMetricTableStable` |
 | LAY-006 | Text measurement (baseline metrics) | LAY | P0 | M1 | Done | LAY-005 | [LAY](features/LAY.md) | [LAY-006-001](tasks/M1/017-LAY-006-001-text-measurement-baseline.md) | `TestMeasureFixedStrings`, `TestMeasureDeterminismAndScale` |

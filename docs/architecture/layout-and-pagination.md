@@ -22,6 +22,13 @@ the print IR.
 
 ## Layout flow
 
+The M1 `layout.FromJRXML` converts one-column title, page header, detail, and
+page footer bands into a fixed-height specification. `layout.Layout` places a
+detail band for each filled record, reserves header/footer space on each page,
+and measures each single-line text run before emitting it to the print IR.
+Text wider than its declared box returns an error. Empty data yields an empty
+document unless a title band is present.
+
 ```mermaid
 flowchart TD
     A[Start page: title/pageHeader/columnHeader] --> B[Band queue]
