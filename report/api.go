@@ -227,3 +227,16 @@ func Export(ctx context.Context, f *FilledReport, w io.Writer, format Format, op
 		return fmt.Errorf("report: format %q: %w", format, ErrNotImplemented)
 	}
 }
+
+// ParameterNames returns the JRXML parameter names in declaration order.
+// The returned slice belongs to the caller and can be safely modified.
+func (c *CompiledReport) ParameterNames() []string {
+	if c == nil {
+		return nil
+	}
+	names := make([]string, len(c.fields.Parameters))
+	for i, p := range c.fields.Parameters {
+		names[i] = p.Name
+	}
+	return names
+}

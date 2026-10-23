@@ -28,6 +28,12 @@ func compileMedulla(t *testing.T, name string) *report.CompiledReport {
 func TestClassListTotalsAndLogo(t *testing.T) {
 	c := compileMedulla(t, "students_class_list")
 	rows := []map[string]any{{"name": "Alice", "gender": "female", "student_class": "One"}, {"name": "Bob", "gender": "male", "student_class": "One"}, {"name": "Cara", "gender": "female", "student_class": "Two"}}
+	rows = append(rows,
+		map[string]any{"name": "Null gender", "gender": nil},
+		map[string]any{"name": "Missing gender"},
+		map[string]any{"name": "Blank gender", "gender": " "},
+		map[string]any{"name": "Other gender", "gender": "OTHER"},
+	)
 	filled, err := report.Fill(context.Background(), c, report.Params{"logo": image.NewRGBA(image.Rect(0, 0, 2, 2))}, report.FromSlice(rows))
 	if err != nil {
 		t.Fatal(err)
@@ -49,12 +55,12 @@ func TestClassListTotalsAndLogo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Final summary uses the final variable snapshot (3 students, 1 male, 2 female).
+	// Final summary uses the final variable snapshot (7 students, 1 male, 2 female).
 	text := ""
 	for _, row := range data {
 		text += strings.Join(row, "|") + "\n"
 	}
-	for _, want := range []string{"3", "1", "2"} {
+	for _, want := range []string{"7", "1", "2"} {
 		if !strings.Contains(text, want) {
 			t.Errorf("summary missing %s: %s", want, text)
 		}

@@ -32,3 +32,16 @@ func TestJasperExpressions(t *testing.T) {
 		}
 	}
 }
+
+func TestMissingGenderMethodChainContributesZero(t *testing.T) {
+	p, err := Compile(`(($F{gender}.trim().toLowerCase().equals("male")) ? 1 : 0)`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, fields := range []map[string]Value{nil, {"gender": NullValue}, {"gender": String("")}, {"gender": String("OTHER")}} {
+		value, err := p.Eval(context.Background(), Scope{fakeSymbols{fields: fields}})
+		if err != nil || value != Int(0) {
+			t.Fatalf("fields=%v result=%v error=%v", fields, value, err)
+		}
+	}
+}

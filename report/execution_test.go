@@ -116,3 +116,15 @@ func TestDollarQuotedSQLPreservesLiteralParameters(t *testing.T) {
 		t.Fatalf("%q %v %v", q, args, err)
 	}
 }
+
+func TestParameterNamesAreIndependent(t *testing.T) {
+	c := fixture(t)
+	names := c.ParameterNames()
+	if len(names) != 1 || names[0] != "suffix" {
+		t.Fatalf("unexpected names: %v", names)
+	}
+	names[0] = "changed"
+	if c.ParameterNames()[0] != "suffix" {
+		t.Fatal("parameter names mutate compiled report")
+	}
+}

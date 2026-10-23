@@ -264,6 +264,12 @@ func scalarString(v Value) string {
 }
 func callMethod(name string, receiver Value, args []Value) (Value, error) {
 	if isNull(receiver) {
+		// Preserve nulls through scalar method chains, just as arithmetic
+		// operators do. A null gender comparison then contributes zero to Sum.
+		switch name {
+		case "trim", "toLowerCase", "toUpperCase", "equals", "toString":
+			return NullValue, nil
+		}
 		return nil, fmt.Errorf("method %s on null", name)
 	}
 	if (name == "formatDate" || name == "formatNumber") && len(args) == 1 {

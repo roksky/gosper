@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/roksky/gosper/internal/printdoc"
+	"github.com/roksky/gosper/internal/text"
 )
 
 // exportDocument exports the supported positioned-text print model. Spreadsheet
@@ -25,7 +26,7 @@ func exportDocument(ctx context.Context, doc *printdoc.Document, w io.Writer, fo
 	}
 	var b strings.Builder
 	if format == FormatHTML {
-		b.WriteString("<!doctype html><html><head><meta charset=\"utf-8\"><title>Report</title></head><body>")
+		b.WriteString(`<!doctype html><html><head><meta charset="utf-8"><title>Report</title><style>html,body{margin:0;padding:0;background:#fff}section{box-sizing:border-box;overflow:hidden;isolation:isolate}@media print{section{break-after:page}section:last-child{break-after:auto}}</style></head><body>`)
 		for _, p := range doc.Pages {
 			if err := ctx.Err(); err != nil {
 				return err
@@ -38,18 +39,9 @@ func exportDocument(ctx context.Context, doc *printdoc.Document, w io.Writer, fo
 					}
 					continue
 				}
-				s := e.EffectiveStyle()
-				weight := "normal"
-				if s.Bold {
-					weight = "bold"
+				if err := htmlText(&b, e); err != nil {
+					return err
 				}
-				italic := "normal"
-				if s.Italic {
-					italic = "italic"
-				}
-				align := []string{"left", "center", "right"}[s.Align]
-				font := map[string]string{"SansSerif": "sans-serif", "Serif": "serif", "Monospaced": "monospace"}[s.Font]
-				fmt.Fprintf(&b, `<div style="position:absolute;white-space:pre-wrap;left:%gpt;top:%gpt;width:%gpt;height:%gpt;font-family:%s;font-size:%gpt;font-weight:%s;font-style:%s;text-align:%s;color:#%06x">%s</div>`, e.Bounds.X.Points(), e.Bounds.Y.Points(), e.Bounds.Width.Points(), e.Bounds.Height.Points(), font, s.Size.Points(), weight, italic, align, s.Color, html.EscapeString(e.Text))
 			}
 			b.WriteString("</section>")
 		}
@@ -196,19 +188,32 @@ func htmlGraphic(b *strings.Builder, e printdoc.Element) error {
 		if !strings.HasPrefix(e.Image.Resource, "data:image/png;base64,") {
 			return fmt.Errorf("report: unsupported image resource")
 		}
-		fmt.Fprintf(b, `<img alt="" style="%s;object-fit:contain" src="%s">`, style, html.EscapeString(e.Image.Resource))
+		fmt.Fprintf(b, `<img alt="" style="%s;display:block;max-width:none;object-fit:contain" src="%s">`, style, html.EscapeString(e.Image.Resource))
 	case printdoc.ElementShape:
 		shape := e.Shape
-		if shape.Kind == printdoc.ShapeEllipse {
-			style += ";border-radius:50%"
-		}
+		fill := "none"
 		if shape.Fill {
-			style += fmt.Sprintf(";background:#%06x", shape.FillColor)
+			fill = fmt.Sprintf("#%06x", shape.FillColor)
 		}
-		if shape.Stroke {
-			style += fmt.Sprintf(";border:%gpt solid #%06x", shape.StrokeWidth.Points(), shape.StrokeColor)
+		stroke := "none"
+		if shape.Stroke || !shape.Fill {
+			stroke = fmt.Sprintf("#%06x", shape.StrokeColor)
 		}
-		fmt.Fprintf(b, `<div style="%s"></div>`, style)
+		width := shape.StrokeWidth.Points()
+		if width == 0 {
+			width = 1
+		}
+		w, h := bounds.Width.Points(), bounds.Height.Points()
+		fmt.Fprintf(b, `<svg xmlns="http://www.w3.org/2000/svg" style="%s;overflow:visible" viewBox="0 0 %g %g" aria-hidden="true">`, style, max(w, 1), max(h, 1))
+		switch shape.Kind {
+		case printdoc.ShapeLine:
+			fmt.Fprintf(b, `<line x1="0" y1="0" x2="%g" y2="%g" stroke="%s" stroke-width="%g"/>`, w, h, stroke, width)
+		case printdoc.ShapeEllipse:
+			fmt.Fprintf(b, `<ellipse cx="%g" cy="%g" rx="%g" ry="%g" fill="%s" stroke="%s" stroke-width="%g"/>`, w/2, h/2, w/2, h/2, fill, stroke, width)
+		case printdoc.ShapeRectangle:
+			fmt.Fprintf(b, `<rect width="%g" height="%g" fill="%s" stroke="%s" stroke-width="%g"/>`, w, h, fill, stroke, width)
+		}
+		b.WriteString("</svg>")
 	default:
 		return fmt.Errorf("report: unsupported HTML element %s", e.Kind)
 	}
@@ -220,4 +225,44 @@ func gridX(e printdoc.Element) printdoc.Unit {
 		return e.GridX
 	}
 	return e.Bounds.X
+}
+
+// Layout already split and positioned each line. SVG supplies the same text
+// baseline as PDF without allowing the browser to wrap the line a second time.
+func htmlText(b *strings.Builder, e printdoc.Element) error {
+	s := e.EffectiveStyle()
+	flags := text.Style(0)
+	weight, italic := "normal", "normal"
+	if s.Bold {
+		flags |= text.Bold
+		weight = "bold"
+	}
+	if s.Italic {
+		flags |= text.Italic
+		italic = "italic"
+	}
+	font, err := text.Resolve(s.Font, flags, s.Size.Points())
+	if err != nil {
+		return err
+	}
+	metrics, err := text.Measure(e.Text, font)
+	if err != nil {
+		return err
+	}
+	x := s.Padding.Left
+	available := e.Bounds.Width - s.Padding.Left - s.Padding.Right
+	if available < 0 {
+		return fmt.Errorf("report: padding exceeds HTML element width")
+	}
+	if available > metrics.Width {
+		switch s.Align {
+		case printdoc.AlignCenter:
+			x += (available - metrics.Width) / 2
+		case printdoc.AlignRight:
+			x += available - metrics.Width
+		}
+	}
+	family := map[string]string{"SansSerif": "Arial,Helvetica,sans-serif", "Serif": "Times New Roman,Times,serif", "Monospaced": "Courier New,Courier,monospace"}[s.Font]
+	fmt.Fprintf(b, `<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;overflow:visible;left:%gpt;top:%gpt;width:%gpt;height:%gpt" viewBox="0 0 %g %g"><text x="%g" y="%g" xml:space="preserve" style="white-space:pre;font-family:%s;font-size:%gpx;font-weight:%s;font-style:%s;fill:#%06x">%s</text></svg>`, e.Bounds.X.Points(), e.Bounds.Y.Points(), max(e.Bounds.Width.Points(), 1), max(e.Bounds.Height.Points(), 1), max(e.Bounds.Width.Points(), 1), max(e.Bounds.Height.Points(), 1), x.Points(), (s.Padding.Top + metrics.Ascent).Points(), family, s.Size.Points(), weight, italic, s.Color, html.EscapeString(e.Text))
+	return nil
 }

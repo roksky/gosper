@@ -25,10 +25,13 @@ Supported features include standard bands, nested frames, text fonts/colors,
 shapes, image parameters (`image.Image`), page numbers, report/group Sum and
 Count variables, group headers/footers, typed database values, decimal sums,
 ternaries, common string methods, and the date/number formatting expressions
-used by Medulla templates. Missing JRXML version attributes are accepted for
+used by Medulla templates. Null receivers in scalar string-method chains
+propagate null, allowing missing values to contribute zero to conditional sums.
+Missing JRXML version attributes are accepted for
 standard Jasper 6 templates. No Java/JVM is used.
 
-PDF and HTML preserve positioned elements and embed logos. CSV and XLSX export
+PDF and HTML preserve positioned elements and embed logos. HTML uses inline
+SVG text with the same baselines as PDF, without browser re-wrapping. CSV and XLSX export
 a text grid; XLSX currently does not preserve drawings, images, or cell styling.
 XML exports the print model and is not a complete JasperPrint interchange
 implementation. PDF currently uses core Latin fonts with printable ASCII text;
