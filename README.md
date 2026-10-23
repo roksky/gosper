@@ -1,5 +1,9 @@
 # gosper
 
+> **Beta (0.1.0-beta.1).** Pre-1.0: the public API may change between releases
+> while the engine and compatibility coverage mature. See
+> [Status](docs/STATUS.md) and [Compatibility](docs/COMPATIBILITY.md).
+
 A native Go library for a JasperReports-compatible reporting engine. The goal
 is to parse JasperReports-style JRXML templates and run the full report
 lifecycle — parse → compile → fill → print document → export — entirely in Go,
@@ -78,11 +82,24 @@ CLI report commands are not implemented yet.
 ...
 
 $ ./bin/gosper --version
-gosper dev
+gosper 0.1.0-beta.1
 ```
 
 `gosper help` and `gosper version` behave the same as the flags above. Unknown
 commands print an error to stderr and exit with a nonzero status.
+
+## Version
+
+The current release is **0.1.0-beta.1**. Both the library and CLI report a
+single build identifier, `report.Version()`, which defaults to the release
+version and can be overridden at link time:
+
+```sh
+go build -ldflags "-X github.com/roksky/gosper/report.version=<value>" ./cmd/gosper
+```
+
+`make build` injects the `VERSION` variable (default `0.1.0-beta.1`); pass a
+different value with `make build VERSION=...`.
 
 ## Documentation
 
