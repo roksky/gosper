@@ -102,6 +102,12 @@ func PDF(ctx context.Context, doc *printdoc.Document, w io.Writer) error {
 			if err := ctx.Err(); err != nil {
 				return err
 			}
+			if elem.Kind != printdoc.ElementText {
+				if err := writeGraphic(out, page, elem); err != nil {
+					return err
+				}
+				continue
+			}
 			if err := writeText(out, page, elem, index); err != nil {
 				return err
 			}
@@ -145,6 +151,9 @@ func scanFonts(doc *printdoc.Document) ([]pdfFont, map[string]int, error) {
 	for _, page := range doc.Pages {
 		for _, elem := range page.Elements {
 			if elem.Kind != printdoc.ElementText {
+				if elem.Kind == printdoc.ElementShape || elem.Kind == printdoc.ElementImage {
+					continue
+				}
 				return nil, nil, fmt.Errorf("pdf: unsupported element kind %s", elem.Kind)
 			}
 			for _, r := range elem.Text {

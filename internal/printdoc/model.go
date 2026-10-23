@@ -79,9 +79,11 @@ func (k ElementKind) String() string {
 // are meaningful; richer payloads (fonts, images, shapes) are added by later
 // tasks (PRT-002, PRT-003).
 type Element struct {
-	Kind   ElementKind
-	Bounds Bounds
-	Style  Style
+	Kind     ElementKind
+	Bounds   Bounds
+	Style    Style
+	GridX    Unit
+	HasGridX bool
 	// Text is set when Kind is ElementText.
 	Text string
 	// Image is set when Kind is ElementImage.

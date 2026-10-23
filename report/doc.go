@@ -7,8 +7,10 @@
 //	*CompiledReport + data -> Fill -> *FilledReport
 //	*FilledReport -> Export -> output
 //
-// The M1 path compiles supported JRXML text bands, fills them from a data
-// source, and exports a PDF. Other formats return ErrNotImplemented.
+// Compile prepares JRXML bands, expressions, groups, and parameter defaults.
+// Query binds embedded SQL for a caller-owned database. Fill accepts rows and
+// image parameters; Export supports PDF, HTML, CSV, XLSX and print XML.
+// Unsupported constructs return diagnostics rather than executing Java code.
 //
 // The package lives at the module root (import path
 // "github.com/roksky/gosper/report"). See docs/adr/0005-public-api-package.md.

@@ -1,22 +1,57 @@
 # gosper
 
+> **Beta (0.1.0-beta.1).** Pre-1.0: the public API may change between releases
+> while the engine and compatibility coverage mature. See
+> [Status](docs/STATUS.md) and [Compatibility](docs/COMPATIBILITY.md).
+
 A native Go library for a JasperReports-compatible reporting engine. The goal
 is to parse JasperReports-style JRXML templates and run the full report
 lifecycle — parse → compile → fill → print document → export — entirely in Go,
 with no JVM required at runtime.
 
-> ## ⚠️ Scaffold only — report generation is not implemented
->
-> This repository is currently a **bootstrap scaffold**. It contains project
-> structure, tooling, documentation and a metadata-only CLI. It **cannot parse,
-> compile, fill or export any report**, and it exposes no report API. See the
-> status table below for what actually works today.
+Gosper compiles JRXML, fills it from caller-provided rows, and exports PDF,
+HTML, CSV, XLSX, or Jasper-style print XML. Embedded SQL can be bound with
+`CompiledReport.Query`; the application owns database access.
 
-## Future lifecycle
+```go
+compiled, err := report.Compile(ctx, strings.NewReader(jrxml))
+// Handle err after each operation.
+query, args, err := compiled.Query(ctx, report.Params{"school_id": schoolID},
+    func(n int) string { return fmt.Sprintf("$%d", n) })
+// Execute query with args through your application's repository.
+filled, err := report.Fill(ctx, compiled, params, report.FromSlice(rows))
+err = report.Export(ctx, filled, output, report.FormatPDF)
+```
 
-```
-JRXML template → compile → fill → print document → export (PDF/XLSX/HTML/CSV)
-```
+## Native compatibility
+
+Supported features include standard bands, nested frames, text fonts/colors,
+shapes, image parameters (`image.Image`), page numbers, report/group Sum and
+Count variables, group headers/footers, typed database values, decimal sums,
+ternaries, common string methods, and the date/number formatting expressions
+used by Medulla templates. Null receivers in scalar string-method chains
+propagate null, allowing missing values to contribute zero to conditional sums.
+Missing JRXML version attributes are accepted for
+standard Jasper 6 templates. No Java/JVM is used.
+
+PDF and HTML preserve positioned elements and embed logos. HTML uses inline
+SVG text with the same baselines as PDF, without browser re-wrapping. CSV and XLSX export
+a text grid; XLSX currently does not preserve drawings, images, or cell styling.
+XML exports the print model and is not a complete JasperPrint interchange
+implementation. PDF currently uses core Latin fonts with printable ASCII text;
+Unicode font embedding remains unsupported.
+
+Compatibility is scoped to the implemented constructs, not arbitrary Jasper
+Java/Groovy code. Subreports, charts, crosstabs, dataset runs, referenced
+conditional styles, multi-column layout, band splitting/stretching, and complex
+variable calculations remain unsupported. Inert, unreferenced dataset/style
+declarations do not execute. Unknown constructs produce diagnostics. SQL
+`$P{name}` values use bound arguments; `$P!{}` and `$X{}` clauses are rejected.
+
+Regression fixtures in `testdata/medulla` cover receipts, class-list totals and
+grouped balances. Medulla's backend tests additionally compile and export all
+shipped JRXML templates with synthetic rows. This does not assert visual or
+live-database parity with Jasper.
 
 ## Requirements
 
@@ -43,29 +78,28 @@ The CLI currently exposes metadata only:
 $ ./bin/gosper --help
 gosper - a Go-native, JasperReports-compatible reporting engine.
 
-Scaffold only: report generation is not implemented yet.
+CLI report commands are not implemented yet.
 ...
 
 $ ./bin/gosper --version
-gosper dev
+gosper 0.1.0-beta.1
 ```
 
 `gosper help` and `gosper version` behave the same as the flags above. Unknown
 commands print an error to stderr and exit with a nonzero status.
 
-## Status
+## Version
 
-| Area | State |
-| --- | --- |
-| Repository scaffold, tooling, docs | ✅ Done |
-| CLI help/version metadata | ✅ Done |
-| JRXML parsing | ⛔ Not implemented |
-| Template compilation | ⛔ Not implemented |
-| Expression evaluation | ⛔ Not implemented |
-| Data sources | ⛔ Not implemented |
-| Fill / iteration / grouping | ⛔ Not implemented |
-| Layout / pagination | ⛔ Not implemented |
-| Exporters (PDF/XLSX/HTML/CSV) | ⛔ Not implemented |
+The current release is **0.1.0-beta.1**. Both the library and CLI report a
+single build identifier, `report.Version()`, which defaults to the release
+version and can be overridden at link time:
+
+```sh
+go build -ldflags "-X github.com/roksky/gosper/report.version=<value>" ./cmd/gosper
+```
+
+`make build` injects the `VERSION` variable (default `0.1.0-beta.1`); pass a
+different value with `make build VERSION=...`.
 
 ## Documentation
 

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fee_balance" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="329bca4b-39cb-46c1-8a50-7a37451fd0b1">
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="349"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="642"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Medulla Shelf DataSource"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="school_id" class="java.lang.String"/>
+	<parameter name="logo" class="java.awt.Image"/>
+	<queryString>
+		<![CDATA[select s.id , p.first_name , p.last_name , p.other_name , s.admission_number , s.global_number , sc."name" current_class , ss."name" current_stream , invoices.invoiced_total , coalesce(payments.paid_total,0) paid_total , 
+coalesce(invoices.invoiced_total,0) - coalesce(payments.paid_total,0) balance   , sch."name" school_name , c.physical_address, c.postal_address
+from student s 
+inner join person p on p.id = s.person 
+inner join school sch on sch.id = s.school 
+left join contact c on sch.contact  = c.id 
+left join school_class sc on sc.id = s.current_class 
+left join school_stream ss on ss.id = s.current_stream 
+left join (
+	select i.student , sum(ii.amount) invoiced_total
+	from invoice i 
+	inner join invoice_item ii on i.id = ii.invoice and ii.date_deleted is null 
+	where i.date_deleted is null and i.document_status = 'POSTED'
+	group by i.student
+) invoices on invoices.student = s.id
+left join (
+	select r.student , sum(r.total) paid_total
+	from receipt r 
+	where r.date_deleted is null and r.document_status = 'POSTED'
+	group by r.student
+) payments on payments.student = s.id
+where s.school = cast($P{school_id} as uuid) and s.date_deleted is null
+and s.student_status = 'ON_GOING' and (coalesce(invoices.invoiced_total,0) - coalesce(payments.paid_total,0)) > 0
+order by  sc."position" , sc."name"  , p.first_name , p.last_name , p.other_name]]>
+	</queryString>
+	<field name="id" class="java.util.UUID">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="person"/>
+	</field>
+	<field name="last_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="person"/>
+	</field>
+	<field name="other_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="other_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="other_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="person"/>
+	</field>
+	<field name="admission_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="admission_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="admission_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="global_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="global_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="global_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="current_class" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="current_class"/>
+		<property name="com.jaspersoft.studio.field.label" value="current_class"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="school_class"/>
+	</field>
+	<field name="current_stream" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="current_stream"/>
+		<property name="com.jaspersoft.studio.field.label" value="current_stream"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="school_stream"/>
+	</field>
+	<field name="invoiced_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="invoiced_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="invoiced_total"/>
+	</field>
+	<field name="paid_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="paid_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="paid_total"/>
+	</field>
+	<field name="balance" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="balance"/>
+	</field>
+	<field name="school_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="school_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="school_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="school"/>
+	</field>
+	<field name="physical_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="physical_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="physical_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contact"/>
+	</field>
+	<field name="postal_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="postal_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="postal_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contact"/>
+	</field>
+	<variable name="ClassGroup_Invoiced" class="java.lang.Double" resetType="Group" resetGroup="ClassGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{invoiced_total}]]></variableExpression>
+	</variable>
+	<variable name="ClassGroup_Paid" class="java.lang.String" resetType="Group" resetGroup="ClassGroup"/>
+	<variable name="ClassGroup_Balance" class="java.lang.Double" resetType="Group" resetGroup="ClassGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{balance}]]></variableExpression>
+	</variable>
+	<variable name="v_invoiced_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{invoiced_total}]]></variableExpression>
+	</variable>
+	<variable name="v_paid_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{paid_total}]]></variableExpression>
+	</variable>
+	<variable name="v_balanced_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{balance}]]></variableExpression>
+	</variable>
+	<group name="ClassGroup">
+		<groupExpression><![CDATA[($F{current_class} == null ? "" : $F{current_class} ) +
+($F{current_stream}  == null ? "" : "  - " + $F{current_class} )]]></groupExpression>
+		<groupHeader>
+			<band height="52">
+				<textField>
+					<reportElement x="0" y="20" width="430" height="20" uuid="0bdfad0c-877a-4d4f-b3bf-125cc3dff6c9"/>
+					<textElement verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{current_class} == null ? "" : $F{current_class} ) +
+($F{current_stream}  == null ? "" : "  - " + $F{current_class} )]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<textField pattern="#,##0.00;¤-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="360" y="12" width="97" height="14" uuid="d910312c-9ffe-4a92-869b-543923ca1722"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{ClassGroup_Paid}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;¤-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="458" y="12" width="95" height="14" uuid="43e6e560-551a-4a04-9d92-b84c0355f9d9"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{ClassGroup_Balance}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;¤-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="257" y="12" width="104" height="14" uuid="5e6d4784-3ff5-4a07-b88d-f9aae2059e71"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{ClassGroup_Invoiced}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="130">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="150" backcolor="#006699" uuid="4ed74601-c5b8-4b44-9191-2006688fc0eb"/>
+				<staticText>
+					<reportElement x="20" y="110" width="240" height="30" forecolor="#FFFFFF" uuid="ce8073c4-0a96-4bbb-8d6f-b5c757f6baa1"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fee Balance]]></text>
+				</staticText>
+				<image hAlign="Center">
+					<reportElement x="20" y="5" width="65" height="60" uuid="956152d5-c72d-4c4c-ac2e-fefee273bbeb"/>
+					<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="300" y="10" width="290" height="98" forecolor="#FFFFFF" uuid="9fb126b1-7f48-485f-81e1-6bcc09d774a5"/>
+					<textElement textAlignment="Right">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{school_name} + "\n" + $F{physical_address} + "\n" +$F{postal_address}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35">
+			<line>
+				<reportElement x="-20" y="34" width="595" height="1" forecolor="#666666" uuid="bafafb30-43d0-48bd-a8b0-adcf9a848c8b"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="14" width="157" height="16" uuid="46e24cc5-28a3-4bfc-a21d-9a000aca0f40"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Student Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="14" width="100" height="16" uuid="8c5ceb57-500c-4a69-84e2-841f8a502fb3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Adm No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="14" width="104" height="16" uuid="90655e03-e6ca-4199-8e32-c4dc42c7e1b6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Invoice Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="14" width="96" height="16" uuid="41d7c0a4-8729-4f29-93d5-6113ff3af318"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Paid Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="14" width="95" height="16" uuid="4b2fefc0-75c2-449b-85cf-46a9eeefd305"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="34" width="555" height="1" uuid="126d7c0a-e308-4e8a-8056-2d137afc4c48"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="10" width="160" height="15" uuid="529e633c-5ba7-4bf0-970c-f0c8eab6d185"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($F{first_name} ==  null ?  "" :  $F{first_name}  + " "  ) + 
+($F{other_name} ==  null ?  "" :  $F{other_name}  + " "  ) +
+($F{last_name} ==  null ?  "" :  $F{last_name}  + " ")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="10" width="100" height="15" uuid="d7efc136-47e1-4677-99c3-9b2d44d1e9b3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($F{admission_number} ==  null ?  "" :  $F{admission_number}  + " "  )]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;¤-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="261" y="10" width="102" height="15" uuid="406be7d4-3390-4770-9e0b-b13ee6847cbb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{invoiced_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;¤-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="" x="364" y="10" width="96" height="15" uuid="aa051195-5de4-4827-9e15-99d94bafc222"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{paid_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;¤-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="460" y="10" width="96" height="15" uuid="33bbf346-3e88-482b-925e-679a2884e169"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{balance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="ddcdfef5-6fda-4e6f-85cc-a9873cc37dd4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="904faf98-7a06-445d-beeb-a34cb83258ad"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="b8e5d62a-522a-4db4-a4ea-28d6663d8f02"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="60">
+			<textField pattern="#,##0.00#;(#,##0.00#)">
+				<reportElement x="439" y="36" width="115" height="20" uuid="0b04f388-2e67-4f00-bc01-e77bc3a8181e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{v_balanced_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#;(#,##0.00#)">
+				<reportElement x="305" y="35" width="120" height="20" uuid="04850190-70fc-4746-ba7e-d4b867b93c18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{v_paid_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#;(#,##0.00#)">
+				<reportElement x="164" y="35" width="123" height="20" uuid="2c5ff41a-b664-41a9-b6a0-7bf8b1f9d4a5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{v_invoiced_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="187" y="14" width="100" height="22" uuid="b20ea355-9d3c-4121-b494-b31a1177db46"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Invoiced]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="14" width="100" height="22" uuid="76c514ad-abdb-488b-9434-d094847fd28c"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Paid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="13" width="100" height="22" uuid="add327d1-35bd-48d2-b12e-db6f0b8efce5"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Balance]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

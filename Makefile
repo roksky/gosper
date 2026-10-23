@@ -1,5 +1,5 @@
 GO ?= go
-VERSION ?= dev
+VERSION ?= 0.1.0-beta.1
 BIN_DIR ?= bin
 BIN := $(BIN_DIR)/gosper
 PKG := ./...

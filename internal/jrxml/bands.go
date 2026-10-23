@@ -13,19 +13,22 @@ type BandKind string
 // Core band kinds (JRX-008). Advanced bands (background, lastPageFooter,
 // noData) and group bands are later tasks (JRX-009, JRX-015).
 const (
-	BandTitle        BandKind = "title"
-	BandPageHeader   BandKind = "pageHeader"
-	BandColumnHeader BandKind = "columnHeader"
-	BandDetail       BandKind = "detail"
-	BandColumnFooter BandKind = "columnFooter"
-	BandPageFooter   BandKind = "pageFooter"
-	BandSummary      BandKind = "summary"
+	BandTitle          BandKind = "title"
+	BandPageHeader     BandKind = "pageHeader"
+	BandColumnHeader   BandKind = "columnHeader"
+	BandDetail         BandKind = "detail"
+	BandColumnFooter   BandKind = "columnFooter"
+	BandPageFooter     BandKind = "pageFooter"
+	BandSummary        BandKind = "summary"
+	BandBackground     BandKind = "background"
+	BandNoData         BandKind = "noData"
+	BandLastPageFooter BandKind = "lastPageFooter"
 )
 
 // coreBands lists the sections parsed in declaration order.
 var coreBands = []BandKind{
 	BandTitle, BandPageHeader, BandColumnHeader, BandDetail,
-	BandColumnFooter, BandPageFooter, BandSummary,
+	BandColumnFooter, BandPageFooter, BandSummary, BandBackground, BandNoData, BandLastPageFooter,
 }
 
 // Band is one report section with its height and elements.

@@ -3,6 +3,8 @@ package expression
 import (
 	"fmt"
 	"github.com/roksky/gosper/internal/diag"
+	"regexp"
+	"strings"
 )
 
 const maxParseDepth = 128
@@ -13,6 +15,8 @@ type node struct {
 	ref         Reference
 	left, right *node
 	offset      int
+	middle      *node
+	args        []*node
 }
 
 // Program is an immutable parsed expression, safe to evaluate concurrently.
@@ -29,9 +33,10 @@ type parser struct {
 }
 
 // Compile parses the closed expression grammar. It does not execute code or
-// read external state. Decimal literals are accepted but arithmetic on them
-// awaits the decimal backend.
+// read external state. Only explicitly supported Java-style constructors and
+// methods are normalized; arbitrary Java or Groovy code is never executed.
 func Compile(src string) (*Program, error) {
+	src = normalizeJavaConstructors(src)
 	tokens, err := lex(src)
 	if err != nil {
 		return nil, err
@@ -87,6 +92,37 @@ func (p *parser) parse(min int) (*node, error) {
 	default:
 		return nil, sourceError(p.src, t.offset, "expected expression")
 	}
+
+	for p.current().kind == tokDot {
+		offset := p.current().offset
+		p.pos++
+		method := p.current()
+		if method.kind != tokName || !allowedMethod(method.text) {
+			return nil, sourceError(p.src, offset, "unsupported method")
+		}
+		p.pos++
+		if p.current().kind != tokLParen {
+			return nil, sourceError(p.src, offset, "expected method arguments")
+		}
+		p.pos++
+		var args []*node
+		for p.current().kind != tokRParen {
+			arg, err := p.parse(1)
+			if err != nil {
+				return nil, err
+			}
+			args = append(args, arg)
+			if p.current().kind != tokComma {
+				break
+			}
+			p.pos++
+		}
+		if p.current().kind != tokRParen {
+			return nil, sourceError(p.src, offset, "expected ')'")
+		}
+		p.pos++
+		left = &node{op: "method:" + method.text, left: left, args: args, offset: offset}
+	}
 	for {
 		t = p.current()
 		if t.kind != tokOperator {
@@ -102,6 +138,23 @@ func (p *parser) parse(min int) (*node, error) {
 			return nil, err
 		}
 		left = &node{op: t.text, left: left, right: right, offset: t.offset}
+	}
+	if min == 1 && p.current().kind == tokQuestion {
+		offset := p.current().offset
+		p.pos++
+		yes, err := p.parse(1)
+		if err != nil {
+			return nil, err
+		}
+		if p.current().kind != tokColon {
+			return nil, sourceError(p.src, offset, "expected ':'")
+		}
+		p.pos++
+		no, err := p.parse(1)
+		if err != nil {
+			return nil, err
+		}
+		left = &node{op: "?:", left: left, middle: yes, right: no, offset: offset}
 	}
 	return left, nil
 }
@@ -136,4 +189,67 @@ func sourceError(src string, offset int, message string) error {
 }
 func runtimeError(src string, offset int, message string) error {
 	return fmt.Errorf("%s", sourceError(src, offset, message))
+}
+
+func allowedMethod(name string) bool {
+	switch name {
+	case "formatDate", "formatNumber", "trim", "toLowerCase", "toUpperCase", "equals", "toString", "subtract", "add", "multiply", "divide":
+		return true
+	}
+	return false
+}
+
+var constructorFormat = regexp.MustCompile(`new (SimpleDateFormat|DecimalFormat)\(("(?:[^"\\]|\\.)*")\)\.format\(`)
+
+func normalizeJavaConstructors(src string) string {
+	var out strings.Builder
+	for i := 0; i < len(src); {
+		if src[i] == '"' || src[i] == '\'' {
+			start := i
+			quote := src[i]
+			i++
+			for i < len(src) {
+				if src[i] == '\\' {
+					i += 2
+					continue
+				}
+				if src[i] == quote {
+					i++
+					break
+				}
+				i++
+			}
+			if i > len(src) {
+				i = len(src)
+			}
+			out.WriteString(src[start:i])
+			continue
+		}
+		matched := false
+		for _, constructor := range []string{"new java.util.Date()", "new Date()"} {
+			if strings.HasPrefix(src[i:], constructor) {
+				out.WriteString("$P{REPORT_TIME}")
+				i += len(constructor)
+				matched = true
+				break
+			}
+		}
+		if matched {
+			continue
+		}
+		if indexes := constructorFormat.FindStringSubmatchIndex(src[i:]); len(indexes) > 0 && indexes[0] == 0 {
+			match := src[i : i+indexes[1]]
+			parts := constructorFormat.FindStringSubmatch(match)
+			method := "formatDate"
+			if parts[1] == "DecimalFormat" {
+				method = "formatNumber"
+			}
+			out.WriteString("(" + parts[2] + ")." + method + "(")
+			i += indexes[1]
+			continue
+		}
+		out.WriteByte(src[i])
+		i++
+	}
+	return out.String()
 }

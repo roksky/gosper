@@ -30,7 +30,7 @@ func TestEvaluation(t *testing.T) {
 	}
 }
 func TestEvaluationFailures(t *testing.T) {
-	for _, src := range []string{"1 / 0", "1 % 0", "9223372036854775807 + 1", "-(-9223372036854775807 - 1)", "1 + true", "1.2 + 2.3"} {
+	for _, src := range []string{"1 / 0", "1 % 0", "9223372036854775807 + 1", "-(-9223372036854775807 - 1)", "1 + true"} {
 		p, err := Compile(src)
 		if err != nil {
 			t.Fatalf("compile %q: %v", src, err)

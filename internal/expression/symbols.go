@@ -1,6 +1,9 @@
 package expression
 
-import "time"
+import (
+	"image"
+	"time"
+)
 
 // Value is a value produced or consumed by an expression. The set of concrete
 // value types is closed: implementations outside this package cannot create one.
@@ -30,6 +33,10 @@ type String string
 // Time is a date/time value. Locale and timezone semantics are deferred to
 // EXP-011.
 type Time time.Time
+
+type Image struct{ Value image.Image }
+
+func (Image) isValue() {}
 
 func (Null) isValue()    {}
 func (Bool) isValue()    {}

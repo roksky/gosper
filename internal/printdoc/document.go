@@ -17,7 +17,14 @@ const (
 
 // ShapePayload identifies a vector primitive. Stroke and fill styles are
 // supplied by the resolved-style task.
-type ShapePayload struct{ Kind ShapeKind }
+type ShapePayload struct {
+	Kind        ShapeKind
+	Fill        bool
+	Stroke      bool
+	FillColor   uint32
+	StrokeColor uint32
+	StrokeWidth Unit
+}
 
 // NewTextElement creates a positioned text element.
 func NewTextElement(bounds Bounds, text string) Element {

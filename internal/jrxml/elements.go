@@ -2,6 +2,7 @@ package jrxml
 
 import (
 	"encoding/xml"
+	"github.com/roksky/gosper/internal/printdoc"
 	"strconv"
 	"strings"
 )
@@ -12,6 +13,11 @@ type ElementKind string
 const (
 	// KindStaticText is <staticText>.
 	KindStaticText ElementKind = "staticText"
+	KindFrame      ElementKind = "frame"
+	KindImage      ElementKind = "image"
+	KindLine       ElementKind = "line"
+	KindRectangle  ElementKind = "rectangle"
+	KindEllipse    ElementKind = "ellipse"
 	// KindTextField is <textField>.
 	KindTextField ElementKind = "textField"
 )
@@ -31,7 +37,18 @@ type Element struct {
 	Pattern         string
 	IsBlankWhenNull bool
 	// TextAdjust holds the newer text sizing attribute until normalization.
-	TextAdjust string
+	TextAdjust                       string
+	Children                         []Element
+	Font                             string
+	FontSize                         float64
+	Bold, Italic                     bool
+	Forecolor, Backcolor             uint32
+	Opaque                           bool
+	TextAlignment, VerticalAlignment string
+	Padding                          printdoc.Insets
+	LineWidth                        printdoc.Unit
+	Border                           bool
+	StyleName                        string
 }
 
 func init() {
@@ -40,7 +57,7 @@ func init() {
 }
 
 func parseStaticText(p *parser, se xml.StartElement) (Element, error) {
-	el := Element{Kind: KindStaticText, elementAttrs: defaultElementAttrs()}
+	el := Element{Kind: KindStaticText, elementAttrs: defaultElementAttrs(), Backcolor: 0xffffff}
 	if err := p.parseElementCommon(se, &el); err != nil {
 		return Element{}, err
 	}
@@ -48,7 +65,7 @@ func parseStaticText(p *parser, se xml.StartElement) (Element, error) {
 }
 
 func parseTextField(p *parser, se xml.StartElement) (Element, error) {
-	el := Element{Kind: KindTextField, elementAttrs: defaultElementAttrs()}
+	el := Element{Kind: KindTextField, elementAttrs: defaultElementAttrs(), Backcolor: 0xffffff}
 	for _, a := range se.Attr {
 		switch a.Name.Local {
 		case "pattern":

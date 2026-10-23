@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/roksky/gosper/internal/datasource"
+	"github.com/roksky/gosper/internal/diag"
 	"github.com/roksky/gosper/internal/exporter"
 	"github.com/roksky/gosper/internal/expression"
 	"github.com/roksky/gosper/internal/fill"
@@ -16,7 +17,7 @@ import (
 	"strings"
 )
 
-// ErrNotImplemented identifies export formats outside the M1 PDF subset.
+// ErrNotImplemented identifies an unsupported format or query construct.
 var ErrNotImplemented = errors.New("report: not implemented")
 
 // Format identifies an export format.
@@ -27,6 +28,7 @@ const (
 	FormatXLSX Format = "xlsx"
 	FormatHTML Format = "html"
 	FormatCSV  Format = "csv"
+	FormatXML  Format = "xml"
 )
 
 func (f Format) String() string { return string(f) }
@@ -59,6 +61,7 @@ func FromSlice[T any](rows []T) DataSource { return datasource.FromSlice(rows) }
 type CompiledReport struct {
 	fields fill.Template
 	layout *layout.DetailSpec
+	query  string
 }
 
 // FilledReport owns the per-run print document for export.
@@ -72,7 +75,7 @@ func (f *FilledReport) PageCount() int {
 	return f.document.Metadata.PageCount
 }
 
-// Compile parses a JRXML template and prepares its supported M1 bands and
+// Compile parses a JRXML template and prepares supported bands and
 // parameter defaults. Diagnostics for unsupported constructs are returned.
 func Compile(ctx context.Context, r io.Reader, opts ...Option) (*CompiledReport, error) {
 	if ctx == nil {
@@ -88,7 +91,11 @@ func Compile(ctx context.Context, r io.Reader, opts ...Option) (*CompiledReport,
 	if err != nil {
 		return nil, err
 	}
-	if len(diags) > 0 {
+	for _, d := range diags {
+		// Standard Jasper 6 JRXML does not declare a version attribute.
+		if d.Code == diag.CodeUnsupported && strings.Contains(d.Message, "unsupported or missing JRXML version") && tmpl.Dialect.Raw == "" {
+			continue
+		}
 		return nil, diags.Err()
 	}
 	// Normalize supported 6.x syntax before building the layout and fill model.
@@ -101,6 +108,51 @@ func Compile(ctx context.Context, r io.Reader, opts ...Option) (*CompiledReport,
 	spec, err := layout.FromJRXML(tmpl)
 	if err != nil {
 		return nil, err
+	}
+	fieldTypes := map[string]string{}
+	for _, field := range tmpl.Fields {
+		fieldTypes[field.Name] = field.Type
+	}
+	var variables []fill.Variable
+	seenVariables := map[string]bool{}
+	for _, v := range tmpl.Variables {
+		if seenVariables[v.Name] {
+			return nil, fmt.Errorf("duplicate variable %q", v.Name)
+		}
+		seenVariables[v.Name] = true
+		if v.Calculation != "Nothing" && v.Calculation != "Count" && v.Calculation != "Sum" {
+			return nil, fmt.Errorf("unsupported variable calculation %s", v.Calculation)
+		}
+		if v.ResetType != "Report" && v.ResetType != "Group" && v.ResetType != "None" {
+			return nil, fmt.Errorf("unsupported variable reset %s", v.ResetType)
+		}
+		variable := fill.Variable{Name: v.Name, Calculation: v.Calculation, ResetType: v.ResetType, ResetGroup: v.ResetGroup}
+		if strings.TrimSpace(v.Expr) != "" {
+			variable.Expr, err = expression.Compile(v.Expr)
+			if err != nil {
+				return nil, err
+			}
+		}
+		if strings.TrimSpace(v.InitialExpr) != "" {
+			variable.Initial, err = expression.Compile(v.InitialExpr)
+			if err != nil {
+				return nil, err
+			}
+		}
+		variables = append(variables, variable)
+	}
+	var groups []fill.Group
+	seenGroups := map[string]bool{}
+	for _, g := range tmpl.Groups {
+		if seenGroups[g.Name] {
+			return nil, fmt.Errorf("duplicate group %q", g.Name)
+		}
+		seenGroups[g.Name] = true
+		program, err := expression.Compile(g.Expr)
+		if err != nil {
+			return nil, err
+		}
+		groups = append(groups, fill.Group{Name: g.Name, Expr: program})
 	}
 	fields := make([]string, len(tmpl.Fields))
 	for i, f := range tmpl.Fields {
@@ -116,7 +168,7 @@ func Compile(ctx context.Context, r io.Reader, opts ...Option) (*CompiledReport,
 			}
 		}
 	}
-	return &CompiledReport{fields: fill.Template{Fields: fields, Parameters: defaults}, layout: spec}, nil
+	return &CompiledReport{fields: fill.Template{Fields: fields, FieldTypes: fieldTypes, Parameters: defaults, Variables: variables, Groups: groups}, layout: spec, query: tmpl.Query}, nil
 }
 
 // Fill executes the compiled report and lays out a per-run document.
@@ -155,7 +207,7 @@ func Fill(ctx context.Context, c *CompiledReport, params Params, ds DataSource, 
 	return &FilledReport{document: doc}, nil
 }
 
-// Export writes a filled report in the requested format. PDF is the M1 format.
+// Export writes a filled report as PDF, HTML, CSV, XLSX or Jasper print XML.
 func Export(ctx context.Context, f *FilledReport, w io.Writer, format Format, opts ...Option) error {
 	if ctx == nil {
 		return fmt.Errorf("report: nil context")
@@ -166,8 +218,25 @@ func Export(ctx context.Context, f *FilledReport, w io.Writer, format Format, op
 	if f == nil || f.document == nil {
 		return fmt.Errorf("report: nil filled report")
 	}
-	if format != FormatPDF {
+	switch format {
+	case FormatPDF:
+		return exporter.PDF(ctx, f.document, w)
+	case FormatHTML, FormatCSV, FormatXML, FormatXLSX:
+		return exportDocument(ctx, f.document, w, format)
+	default:
 		return fmt.Errorf("report: format %q: %w", format, ErrNotImplemented)
 	}
-	return exporter.PDF(ctx, f.document, w)
+}
+
+// ParameterNames returns the JRXML parameter names in declaration order.
+// The returned slice belongs to the caller and can be safely modified.
+func (c *CompiledReport) ParameterNames() []string {
+	if c == nil {
+		return nil
+	}
+	names := make([]string, len(c.fields.Parameters))
+	for i, p := range c.fields.Parameters {
+		names[i] = p.Name
+	}
+	return names
 }

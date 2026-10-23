@@ -154,8 +154,8 @@ func TestPDFEmptyWriterErrorAndUnsupported(t *testing.T) {
 	}
 	bad := &printdoc.Document{}
 	_ = bad.AppendPage(printdoc.Page{Width: 100, Height: 100, Elements: []printdoc.Element{printdoc.NewShapeElement(printdoc.Bounds{}, printdoc.ShapeLine)}})
-	if err := PDF(context.Background(), bad, &out); err == nil {
-		t.Fatal("unsupported shape accepted")
+	if err := PDF(context.Background(), bad, &out); err != nil {
+		t.Fatal(err)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
